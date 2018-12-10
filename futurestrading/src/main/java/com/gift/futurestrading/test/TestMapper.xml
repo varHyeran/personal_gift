@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.gift.futurestrading.test.TestMapper">
+
+	<select id="selectSeller" resultType="com.gift.futurestrading.test.SellerVo">
+		SELECT 
+			s.seller_id_pk AS sellerId, 
+			s.seller_password AS sellerPassword, 
+			s.seller_name AS sellerName, 
+			s.seller_email AS sellerEmail, 
+			s.seller_jumin_no AS sellerJuminNo, 
+			s.seller_sign_up_date AS sellerSignUpDate, 
+			s.seller_address AS sellerAddress, 
+			s.seller_corporate_name AS sellerCorporateName,
+			s.seller_phone AS sellerPhone,
+			s.seller_right AS sellerRight,
+			s.seller_admit_admin AS sellerAdmitAdmin,
+			s.seller_admit_date AS sellerAdmitDate
+		FROM seller AS s
+	</select>
+
+</mapper>
