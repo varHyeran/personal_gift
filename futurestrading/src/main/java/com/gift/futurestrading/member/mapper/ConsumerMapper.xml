@@ -1,1 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.gift.futurestrading.member.mapper.ConsumerMapper">
+
+	<insert id="insertConsumer" parameterType="map">
+		INSERT 
+			INTO consumer
+				(consumer_id_pk,
+				consumer_password,
+				consumer_name,
+				consumer_email,
+				consumer_jumin_no,
+				consumer_address,
+				consumer_phone,
+				consumer_sign_up_date,
+				consumer_status,
+				consumer_admit_check_flag) 
+			VALUES(#{consumer_id_pk},
+				#{consumer_password},
+				#{consumer_name},
+				#{consumer_email},
+				#{consumer_jumin_no},
+				#{consumer_address},
+				#{consumer_phone},
+				now(),
+				'정상',
+				'TRUE');
+	</insert>
+	
+</mapper>
