@@ -28,4 +28,8 @@
 				'TRUE');
 	</insert>
 	
+	<select id="selectIdCheck" parameterType="String" resultType="int">
+		SELECT COUNT(*) FROM view_total_id WHERE total_id = #{id};
+	</select>
+	
 </mapper>

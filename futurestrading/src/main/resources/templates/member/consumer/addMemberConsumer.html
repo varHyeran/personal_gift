@@ -13,7 +13,10 @@
 	<!-- daum 주소 API -->
 	<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 	<script>
-		// 주소API 유효성 검사
+		console.log("jQuery ready !");
+		/* jQuery -> $로 씀. 여러 프레임 워크를 사용할시 풀네임 사용권장 */
+		
+		/* 주소API 유효성 검사 */
 		function execPostcode() {
 			new daum.Postcode({
 			    oncomplete: function(data) {
@@ -57,8 +60,41 @@
 			}).open();
 		}
 	
-		// jQuery -> $로 씀. 여러 프레임 워크를 사용할시 풀네임 사용권장
-		console.log("jQuery ready !");
+		
+		/* 아이디 중복확인 유효성 검사 */
+		var isIdCheck = 0;		// 아이디 중복이거나 중복확인을 하지않은 경우 = 0, 중복이 아닐 경우 = 1
+		function idCheck() {
+			console.log("::: 아이디 중복확인 유효성 검사 :::");
+			
+			var idHelper = $('#idHelper');
+			var id = $('#id').val();	// param으로 id 던져줄 것임.
+			console.log(id+" <--id");
+			
+			$.ajax({
+				async: true,
+				type: "POST",
+				url: "/idchcek",
+				data: id,
+				dataType: "json",
+				contentType: "application/json; charset=UTF-8",
+				success: function(data) {				
+					console.log("data 받아오기 성공 !");
+					console.log(data+" <---count");				
+					if(data > 0) {		// 아이디 존재
+						idHelper.text('아이디가 존재합니다. 다른 아이디를 입력해 주세요.');						
+					} else {			// 아이디 사용 가능
+						idHelper.text('사용 가능한 아이디 입니다.');
+						isIdCheck = 1;	// form submit할 때, 유효성 검사에 필요
+					}	
+				},
+				error: function(error) {					
+					console.log("error: "+error);
+				}	
+			});		// end ajax
+		};	// end idCheck()
+		
+
+		/* form submit할 때, 유효성 검사 */
 		function validateForm() {	   	
 		   	// 정규식을 변수에 할당
 		   	// 변수 이름을 're_'로 정한 것은 'Regular Expression(정규식)'의 머릿글자
@@ -66,7 +102,7 @@
 		   	var re_pw = /^(?=.*[a-zA-Z])((?=.*\d)(?=.*\W)).{8,12}$/;	// pw 검사식
 		   	var re_name = /^[가-힣]{2,4}$/;		// name 검사식
 		   	var re_email = /^[a-z0-9_+.-]+@([a-z0-9-]+\.)+[a-z0-9]{2,4}$/;		// email 검사식
-		   	var re_juminNo = /^(?:[0-9]{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[1,2][0-9]|3[0,1]))-[1-4]{1}$/;	// 주민번호 검사식
+		   	var re_juminNo = /^(?:[0-9]{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[1,2][0-9]|3[0,1]))-[1-4]{1}$/;	// 주민등록번호 검사식
 		   	var re_PhoneNo = /(01[016789])([1-9]{1}[0-9]{2,3})([0-9]{4})$/;		// 전화번호 검사식
 		   	
 		   	// 선택할 요소를 변수에 할당
@@ -93,6 +129,10 @@
 		   	// 아이디 유효성 검사
 			if(re_id.test(id.val()) != true || id.val() == "") {
 				idHelper.text('유효한 아이디를 입력해 주세요.');
+				id.focus();
+				return false;
+			} else if(isIdCheck == 0) {
+				idHelper.text('아이디 중복확인을 해주세요.');
 				id.focus();
 				return false;
 			} else {
@@ -164,10 +204,10 @@
 				return false;
 			} else {
 				PhoneNoHelper.text('')
-			}		
+			}
 		
 		   	return true;
-		  };
+		  };	// end validateForm()
 
 	</script>
 </head>
@@ -183,10 +223,7 @@
 				<div class="form-group">
 					<label for="InputId">아이디</label>
 					<input type="text" class="form-control" id="id" name="consumerIdPk" maxlength="12" placeholder="4자 이상 20자 이하로 입력" value="abcabc123">
-					<button type="button" class="btn btn-default" id="idCheck">
-						<a href="#" method="post">중복확인</a>
-					</button>
-
+					<input type="button" class="btn btn-default" onclick="idCheck();" value="중복확인">
 					<span id="idHelper" class="text-danger"></span>
 				</div>
 				<div class="form-group">
@@ -212,11 +249,12 @@
 				<div class="form-group">
 					<label for="InputEmail">주민등록번호</label>
 					<input type="text" class="form-control" id="juminNo" name="consumerJuminNo" maxlength="8" placeholder="주민등록번호를 입력해 주세요" value="891212-2">
+					<input type="button" class="btn btn-default" value="실명확인">
 					<span id="juminNoHelper" class="text-danger"></span>
 				</div>
 				<div class="form-group">
 					<label for="InputEmail">주소</label><br>
-					<!-- VO에 주소 분기 시켜 넣어야겠다. 서비스 계층에서 얘네 합쳐서 맵퍼 호출해야지 -->
+					<!-- VO에 주소 분기 시켜 넣기 -->
 					<input type="text" class="form-control" style="width: 40%; display: inline;" id="postcode" name="postcode" placeholder="우편번호" readonly>
 					<input type="button" class="btn btn-default" onclick="execPostcode();" value="우편번호 찾기"><br>
 					<input type="text" class="form-control" style="top: 5px;" id="roadAddress" name="roadAddress" placeholder="도로명주소" readonly>
