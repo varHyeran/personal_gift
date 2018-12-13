@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gift.futurestrading.admin.mapper.AdminMapper">
+	<!-- 구매자리스트(페이징포함) -->
+	<select id="selectConsumerAll" resultType="com.gift.futurestrading.member.vo.ConsumerVo" parameterType="com.gift.futurestrading.page.vo.Criteria">
+		SELECT 
+			consumer_id_pk as consumerIdPk,
+			consumer_password as consumerPassword,
+			consumer_name as consumerName,
+			consumer_email as consumerEmail,
+			consumer_jumin_no as consumerJuminNo,
+			consumer_phone as consumerPhone,
+			consumer_sign_up_date as consumerSignUpDate,
+			consumer_status as consumerStatus,
+			consumer_admit_check_flag as consumerAdmitCheckFlag,
+			consumer_admit_admin as consumerAdmitAdmin,
+			consumer_admit_date as consumerAdmitDate 
+		FROM consumer
+		LIMIT #{pageStart}, #{perPageNum}
+	</select>
+	<!-- 구매자의 전체 행 구하기 -->
+	<select id="selectConsumerAllCount" resultType="int">
+		SELECT COUNT(*) FROM consumer
+	</select>
+	
+	<!-- 판매자리스트(페이징포함) -->
+	<select id="selectSellerAll" resultType="com.gift.futurestrading.member.vo.SellerVo" parameterType="com.gift.futurestrading.page.vo.Criteria">
+		SELECT
+			seller_id_pk as sellerIdPk,
+			seller_password as sellerPassword,
+			seller_name as sellerName,
+			seller_email as sellerEmail,
+			seller_jumin_no as sellerJuminNo,
+			seller_sign_up_date as sellerSignUpDate,
+			seller_address as sellerAddress,
+			seller_corporate_name as sellerCorporateName,
+			seller_phone as sellerPhone,
+			seller_right as sellerRight,
+			seller_admit_admin as sellerAdmitAdmin,
+			seller_admit_date as sellerAdmitDate
+		FROM seller
+		LIMIT #{pageStart}, #{perPageNum}
+	</select>
+	<!-- 판매자의 전체 행 구하기 -->
+	<select id="selectSellerAllCount" resultType="int">
+		SELECT COUNT(*) FROM seller
+	</select>
+</mapper>
