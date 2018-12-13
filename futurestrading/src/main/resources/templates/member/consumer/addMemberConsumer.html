@@ -73,18 +73,20 @@
 			$.ajax({
 				async: true,
 				type: "POST",
-				url: "/idchcek",
+				url: "/idcheck",
 				data: id,
 				dataType: "json",
 				contentType: "application/json; charset=UTF-8",
 				success: function(data) {				
 					console.log("data 받아오기 성공 !");
 					console.log(data+" <---count");				
-					if(data > 0) {		// 아이디 존재
+					if(data == 1) {		// 아이디 존재
 						idHelper.text('아이디가 존재합니다. 다른 아이디를 입력해 주세요.');						
-					} else {			// 아이디 사용 가능
+					} else if(data == 0) {			// 아이디 사용 가능
 						idHelper.text('사용 가능한 아이디 입니다.');
 						isIdCheck = 1;	// form submit할 때, 유효성 검사에 필요
+					} else if(data == 3) {
+						idHelper.text('특수문자는 사용할 수 없습니다');	
 					}	
 				},
 				error: function(error) {					

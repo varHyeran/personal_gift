@@ -1,6 +1,8 @@
 // 애플리케이션 클래스
 package com.gift.futurestrading.member.controller;
 
+import java.util.regex.Pattern;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -51,15 +53,21 @@ public class ConsumerController {
 	 * @return
 	 * @since JDK1.8
 	 */
-	@RequestMapping(value="/idchcek", method=RequestMethod.POST)	
+	@RequestMapping(value="/idcheck", method=RequestMethod.POST)	
 	@ResponseBody
 	public int idCheck(@RequestBody String id) {
 		System.out.println("ConsumerController.idCheck() 호출");
 		System.out.println(id+" <---id");
-		int count = 0;
-	
-		/* 서비스 계층의 메서드 호출 */
-		count = consumerService.idCheck(id);			
+		String pattern = "^[a-zA-Z0-9]*$"; 
+		int count = 1;
+        boolean result = Pattern.matches(pattern, id);
+		if(result) {
+			/* 서비스 계층의 메서드 호출 */		
+			
+			count = consumerService.idCheck(id);
+		}else {
+			count = 3;
+		}
 		return count;
 	}
 
