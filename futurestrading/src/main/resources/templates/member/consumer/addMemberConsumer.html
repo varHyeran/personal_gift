@@ -85,8 +85,10 @@
 					} else if(data == 0) {			// 아이디 사용 가능
 						idHelper.text('사용 가능한 아이디 입니다.');
 						isIdCheck = 1;	// form submit할 때, 유효성 검사에 필요
+					} else if(data == 2) {
+						idHelper.text('문자가 포함되어야 합니다');	
 					} else if(data == 3) {
-						idHelper.text('특수문자는 사용할 수 없습니다');	
+						idHelper.text('영문 대소문자나 숫자만 입력가능합니다');	
 					}	
 				},
 				error: function(error) {					
@@ -221,7 +223,7 @@
 			</h1>
 		</div>
 		<div class="col-md-6 col-md-offset-3">
-			<form onsubmit="return validateForm();" id="form" action="/addconsumer" method="post">
+			<form onsubmit="return validateForm();" id="form" action="/addconsumer" method="post" >
 				<div class="form-group">
 					<label for="InputId">아이디</label>
 					<input type="text" class="form-control" id="id" name="consumerIdPk" maxlength="12" placeholder="4자 이상 20자 이하로 입력" value="abcabc123">

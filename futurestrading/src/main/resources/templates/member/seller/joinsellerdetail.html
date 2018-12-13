@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="/webjars/bootstrap/4.1.3/css/bootstrap.min.css">
+<script src="/webjars/jquery/3.0.0/jquery.min.js"></script>
+<script src="/webjars/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+  <head>
+    <meta charset="utf-8">
+ 	<link rel="stylesheet" href="/webjars/bootstrap/4.1.3/css/bootstrap.min.css">
+	<script src="/webjars/jquery/3.0.0/jquery.min.js"></script>
+	<script src="/webjars/bootstrap/4.1.3/js/bootstrap.min.js"></script> 
+
+<title>SIGN-UP AMPM</title>
+<style type="text/css">
+.test {
+	margin-top: 100px;
+	margin-left: auto;
+	margin-right: auto;
+	text-align: center;
+}
+</style>
+</head>
+<body>
+
+	<div class="container">
+		<div class="page-header">
+			<h1>
+				회원가입 <small>Sign up</small>
+			</h1>
+		</div>
+		<div class="col-md-6 col-md-offset-3">
+
+			<form action="#" method="post" enctype="multipart/form-data">
+
+				<div class="form-group">
+					<label for="sellerId" >판매자 아이디</label> <input type="text"
+						class="form-control" id="Id" name="sellerId" value="">
+				</div>
+
+				<div class="form-group">
+					<label for="sellerName">판매자 이름</label> <input type="text"
+						class="form-control" id="Name" name="sellerName" value="">
+				</div>
+
+				<div class="form-group">
+					<label for="accountNo">계좌 번호</label>
+						<br>
+						<select name="bank">
+							<option value="국민은행">국민은행</option>
+							<option value="신한은행">신한은행</option>
+							<option value="우리은행 ">우리은행</option>
+							<option value="KEB하나은행">KEB하나은행</option>
+							<option value="한국씨티은행">한국씨티은행</option>
+							<option value="한국스탠다드차타드은행" >한국스탠다드차타드은행</option>
+							<option value="카카오뱅크">카카오뱅크</option>
+							<option value="농협">농협</option>
+							<option value="기업은행 ">기업은행</option>
+						</select>
+						<input type="text" class="form-control" id="Account" name="sellerAccount"
+								placeholder="계좌번호를 입력해 주세요">
+					<br>
+				</div>
+					<div class="border border-secondary">		
+					<label for="license" class="font-weight-bold">사업자등록증</label>
+					<div class="text-center" id="fileDiv">
+						
+						<p>
+						    <input type="file" name="license"/>
+						    <a href="#this" name="delete" class="btn">삭제하기</a>
+						</p> 
+        			</div>
+        			
+        			<label for="bankCopy" class="font-weight-bold">대표자통장사본</label>
+        			<div class="text-center" id="fileDiv">
+        				
+						<p>
+						    <input type="file" name="bankCopy"/>
+						    <a href="#this" name="delete" class="btn">삭제하기</a>
+						</p> 
+        			</div>
+        			
+        			<label for="certification" class="font-weight-bold">개인인감증명서(또는 본인서명사실확인서)</label>
+        			<div class="text-center"  id="fileDiv">
+        				
+						<p>
+						    <input type="file" name="certification"/>
+						    <a href="#this" name="delete" class="btn">삭제하기</a>
+						</p> 
+        			</div>
+        			
+        			<label for="communiSales" class="font-weight-bold">통신판매업 신고증</label>
+        			<div class="text-center"  id="fileDiv">
+      
+						<p>
+						    <input type="file" name="communiSales"/>
+						    <a href="#this" name="delete" class="btn">삭제하기</a>
+						</p> 
+        			</div>
+        			
+        			<label for="productGrade" class="font-weight-bold">상품등급확인서</label>
+        			<div class="text-center"  id="fileDiv">
+        				
+						<p>
+						    <input type="file" name="productGrade"/>
+						    <a href="#this" name="delete" class="btn">삭제하기</a>
+						</p> 
+        			</div>
+				</div>
+				<div class="form-group text-center">
+					<button type="submit" class="btn btn-info">
+						계좌 인증<i class="fa fa-check spaceLeft"></i>
+					</button>
+					<button type="submit" class="btn btn-warning">
+						계좌 인증 취수<i class="fa fa-times spaceLeft"></i>
+					</button>
+				</div>
+
+			</form>
+
+		</div>
+
+	</div>
+</body>
+</html>

@@ -58,16 +58,35 @@ public class ConsumerController {
 	public int idCheck(@RequestBody String id) {
 		System.out.println("ConsumerController.idCheck() 호출");
 		System.out.println(id+" <---id");
+		
 		String pattern = "^[a-zA-Z0-9]*$"; 
+		String pattern2 = "^[0-9]*$"; 
+		
 		int count = 1;
-        boolean result = Pattern.matches(pattern, id);
-		if(result) {
-			/* 서비스 계층의 메서드 호출 */		
-			
+			//문자 숫자
+		 boolean result = Pattern.matches(pattern, id);
+		 	//문자만
+		 boolean result2  = Pattern.matches(pattern2, id);
+		 	//숫자만
+		/*
+		 * count o 사용가능
+		  count 1 중복됨
+		  count 2  숫자만
+		  count 3 특수문자가 있음
+		 */
+		 
+		 // 특수문자 있는지 확인
+		 if(!result) {
+			 System.out.println("특수문자가 포함되어 있음");
+			 count = 3; 
+			// 숫자만 있는지 확인
+		 }else if(result2) {
+			 	count = 2 ;				
+		}else{
+			System.out.println("완벽함");
+			/* id로 중복성 체크 메소드 호출*/
 			count = consumerService.idCheck(id);
-		}else {
-			count = 3;
-		}
+			}
 		return count;
 	}
 

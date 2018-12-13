@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="com.gift.futurestrading.member.mapper.SellerMapper">
+
+	<insert id="insertSeller" parameterType="map">
+		INSERT
+		INTO seller
+		(seller_id_pk,
+		seller_password,
+		seller_name,
+		seller_email,
+		seller_jumin_no,
+		seller_address,
+		seller_phone,
+		seller_sign_up_date,
+		seller_status,
+		seller_admit_check_flag)
+		VALUES(#{seller_id_pk},
+		#{seller_password},
+		#{seller_name},
+		#{seller_email},
+		#{seller_jumin_no},
+		#{seller_address},
+		#{seller_phone},
+		now(),
+		'정상',
+		'TRUE');
+	</insert>
+	<select id="selectIdCheck" parameterType="String"
+		resultType="int">
+		SELECT COUNT(*) FROM view_total_id WHERE total_id = #{id};
+	</select>
+
+</mapper>

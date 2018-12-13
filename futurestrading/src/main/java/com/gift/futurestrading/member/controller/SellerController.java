@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 	@Controller
 	public class SellerController {
-		@RequestMapping("/selleradd")
+		@RequestMapping("joinseller")
 		public String test() {
 			System.out.println("출력");
 			return "member/seller/addMemberSeller";
@@ -13,10 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 		
 	@Controller
 	public class SellerDetailController {
-		@RequestMapping("/sellerdetail")
+		@RequestMapping("/joinsellerdetail")
 		public String test() {
 			System.out.println("출력");
-			return "member/seller/addMemberSeller2";
+			return "member/seller/joinsellerdetail";
 		}
 	}
 }
