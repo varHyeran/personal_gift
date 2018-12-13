@@ -20,7 +20,7 @@ public class AdminController {
 	@Autowired
 	private AdminService adminService;
 	/*1. 구매자 리스트*/
-	@GetMapping("/admin/listConsumer")
+	@GetMapping("/listConsumer")
 	public String getConsumerAll(@ModelAttribute("cri") Criteria cri, Model model) {
 		System.out.println("AdminController.getConsumerAll() 호출");
 		List<ConsumerVo> consumerList = adminService.getConsumerAll(cri);
@@ -32,7 +32,7 @@ public class AdminController {
 		return "admin/listConsumer";
 	}
 	/*2. 판매자 리스트*/
-	@GetMapping("/admin/listSeller")
+	@GetMapping("/listSeller")
 	public String getSellerAll(@ModelAttribute("cri") Criteria cri, Model model) {
 		System.out.println("AdminController.getSellerAll() 호출");
 		List<SellerVo> sellerList = adminService.getSellerAll(cri);

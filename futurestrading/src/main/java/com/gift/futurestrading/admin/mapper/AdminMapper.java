@@ -18,5 +18,4 @@ public interface AdminMapper {
 	/*판매자 전체 행*/
 	int selectSellerAllCount();
 	
-	
 }
