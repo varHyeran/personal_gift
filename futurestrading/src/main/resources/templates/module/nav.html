@@ -1,0 +1,68 @@
+<!-- 네비게이션 -->
+<header>
+    <nav class="navbar navbar-expand-md bg-dark navbar-dark fixed-top">
+        <div class="nav-width">
+            <a class="navbar-brand" href="#"><img class="logo-img" src="imgs/giftFuturesLogo-03.png"></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse nav-ul" id="collapsibleNavbar">
+                <ul class="navbar-nav nav-futures">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">거래소</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">주문매수</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">부가서비스</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav nav-memeber">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">로그인</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">회원가입</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<script>
+    $(document).ready(function() {
+        // 슬라이드
+        // Activate Carousel
+        // interval 속도
+        $("#myCarousel").carousel({
+            interval: 5000
+        });
+        // Enable Carousel Indicators
+        $(".item1").click(function() {
+            $("#myCarousel").carousel(0);
+        });
+        $(".item2").click(function() {
+            $("#myCarousel").carousel(1);
+        });
+        $(".item3").click(function() {
+            $("#myCarousel").carousel(2);
+        });
+        // prev,next
+        // Enable Carousel Controls
+        $(".carousel-control-prev").click(function(e) {
+            $("#myCarousel").carousel("prev");
+            e.preventDefault();
+        });
+        $(".carousel-control-next").click(function(e) {
+            $("#myCarousel").carousel("next");
+            e.preventDefault();
+        });
+        // 탭
+        $(".nav-tabs a").click(function(e) {
+            $(this).tab('show');
+            e.preventDefault();
+        });
+    });
+</script>

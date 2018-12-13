@@ -1,0 +1,711 @@
+@charset "UTF-8";
+
+/*폰트적용*/
+
+@import url('https://fonts.googleapis.com/css?family=Noto+Sans+KR');
+body {
+    font-family: 'Noto Sans KR', sans-serif;
+    margin: 0;
+    padding-top: 3rem;
+}
+
+h1,h2,h3,h4,h5,h6{
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+/*부트스트랩 a태그 밑줄속성 삭제*/
+a.active,a.hover,a:link,a:default,a:focus,a:visited,a:empty{
+    text-decoration: none !important;
+    border: 0px !important;
+    color: #333;
+}
+
+/* 네비게이션 */
+
+nav.bg-dark{
+    background-color: #333 !important;
+}
+
+.nav-width {
+    width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.logo-img {
+    width: 150px;
+}
+
+.nav-futures .nav-item {
+    margin-left: 40px;
+    font-weight: 400;
+}
+
+.nav-memeber {
+    font-size: 10pt;
+}
+
+.nav-memeber li.nav-item {
+    float: right;
+    margin-left: 30px;
+}
+
+.nav-ul {
+    justify-content: space-between;
+}
+
+@media only screen and (max-width: 767px) {
+    .nav-ul {
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+    .nav-futures .nav-item {
+        margin-left: 30px;
+    }
+    .nav-memeber {
+        margin-top: 30px;
+    }
+    .nav-memeber li.nav-item {
+        margin-left: 30px;
+    }
+}
+
+
+
+
+/* 푸터 */
+
+footer{
+    width: 100%;
+}
+
+.first-footer{
+    background-color: #555;
+}
+
+.first-footer-text{
+    height: 60px;
+    margin: 0 auto;
+    text-align: center;
+    color: #ddd;
+    line-height: 4.3;
+    font-size: 10pt;
+}
+
+.first-footer-text img{
+    width: 95px;
+    padding: 0 5px;
+}
+
+.second-footer{
+    height: 300px;
+    background-color: #222;
+}
+
+.second-footer .second-footer-div{
+    width: 1100px;
+    margin: 0 auto;
+    color: #888;
+}
+
+.second-footer .second-footer-div .second-footer-fr
+,.second-footer .second-footer-div .second-footer-se{
+    margin-top: 40px;
+}
+
+.second-footer .second-footer-div .second-footer-fr{
+    float: left;
+    width: 210px;
+    margin-right: 20px;
+    font-size: 8pt;
+    word-break: keep-all;
+}
+
+.second-footer .second-footer-div .second-footer-fr img{
+    width: 120px;
+    margin-bottom: 20px
+}
+
+.second-footer .second-footer-div .second-footer-fr .team-name{
+    font-size: 15px;
+    font-weight: 900;
+    letter-spacing: 3px;
+}
+.second-footer .second-footer-div .footer-company {
+    float: left;
+    margin-left: 40px;
+}
+
+.second-footer .second-footer-div .footer-company a
+,.second-footer .second-footer-div .footer-company a:hover{
+    color: #888;
+    font-size: 8pt;
+}
+
+.second-footer .second-footer-div .second-footer-se{
+    display: inline-block;
+    float: right;
+    margin-left: 60px;
+}
+
+.second-footer .second-footer-div .second-footer-se .footer-company-title{
+    font-size: 10pt;
+    font-weight: 600;
+}
+
+.second-footer .second-footer-div .second-footer-se .footer-company-content{
+    list-style: none;
+    padding-left: 0px;
+    font-size: 9pt;
+    line-height: 2.5;
+}
+
+@media (max-width: 1000px){
+    .second-footer .second-footer-div{
+        width: 1000px;
+        margin: 0 auto;
+        color: #888;
+    }
+    .second-footer .second-footer-div{
+        margin: 0 auto;
+        color: #888;
+    }
+    .second-footer .second-footer-div .second-footer-se{
+        margin-left: 20px;
+    }    
+}
+
+@media (max-width: 768px){
+    .second-footer{
+        height: 550px;
+        background-color: #222;
+    }
+    .second-footer .second-footer-div{
+        width: 100%;
+    }
+    .second-footer .second-footer-div .second-footer-fr{
+        clear: both;
+        width: 100%;
+        margin-right: 20px;
+        font-size: 8pt;
+    }
+    .second-footer .second-footer-div .second-footer-se{
+        display: block;
+        float: left;
+        margin-left: -20px;
+        margin-right: 0px;
+    }
+    
+    .second-footer .second-footer-div .footer-company {
+        float: left;
+        margin-left: 20px;
+    }
+
+    .second-footer .second-footer-div .second-footer-se .footer-company-title{
+        font-size: 10pt;
+        font-weight: 600;
+    }
+
+    .second-footer .second-footer-div .second-footer-se .footer-company-content{
+        list-style: none;
+        padding-left: 0px;
+        font-size: 9pt;
+        line-height: 2.5;
+    }
+}
+
+@media (max-width: 576px){
+    
+    .second-footer{
+        height: 550px;
+        background-color: #222;
+    }
+    .second-footer .second-footer-div{
+        width: 100%;
+    }
+    .second-footer .second-footer-div .second-footer-fr{
+        clear: both;
+        width: 100%;
+        margin-right: 20px;
+        font-size: 8pt;
+    }
+    
+    .second-footer .second-footer-div .second-footer-se{
+        display: block;
+        clear: both;
+        margin-left: -20px;
+        margin-right: 0px;
+    }
+    
+    .second-footer .second-footer-div .footer-company {
+        float: left;
+        margin-left: 20px;
+    }
+
+    .second-footer .second-footer-div .second-footer-se .footer-company-title{
+        font-size: 10pt;
+        font-weight: 600;
+    }
+
+    .second-footer .second-footer-div .second-footer-se .footer-company-content{
+        list-style: none;
+        padding-left: 0px;
+        font-size: 9pt;
+        line-height: 2.5;
+    }
+}
+
+/****************************************************/
+
+/* 메인화면 */
+
+/* 슬라이드 */
+
+.slide {
+    height: 400px;
+    background-color: #333;
+}
+
+.slide-item-div {
+    display: flex;
+    height: 400px;
+    align-items: center;
+}
+
+.slide-text {
+    position: absolute;
+    align-items: center;
+    color: #fff;
+    text-align: center;
+    margin-top: -50px;
+    top: 50%;
+    bottom: 50%;
+    left: 0px;
+    right: 0px;
+}
+
+.slide-text img {
+    width: 150px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.slide-text h1 {
+    padding-top: 10px;
+    font-size: 17pt;
+    color: #eee;
+}
+
+@media only screen and (min-width: 1600px) {
+    .carousel-control-next {
+        margin-right: 12%;
+    }
+    .carousel-control-prev {
+        margin-left: 12%;
+    }
+}
+
+/* 슬라이드 img */
+
+.slide-img {
+    width: 100%;
+}
+
+@media only screen and (max-width: 600px) {
+    .slide-img {
+        height: 100%;
+        width: auto;
+    }
+}
+
+/* 슬라이드 버튼 */
+
+.carousel-indicators li {
+    width: 7px;
+    height: 7px;
+    border-radius: 100%;
+    margin-right: 5px;
+    margin-left: 5px;
+}
+
+/* 탭 */
+
+.main-tab {
+    background-color: #ddd;
+    margin: 0;
+}
+
+/* 탭 nav */
+.main-tab .main-tab-nav {
+    padding-top: 2rem;
+    max-width: 100%;
+    background-color: #ccc;
+}
+
+.main-tab .main-tab-nav .nav-item {
+    width: 28%;
+    height: 8rem;
+    margin-right: 2%;
+    margin-left: 2%;
+    
+}
+
+.main-tab .main-tab-nav .nav-tabs .nav-link{
+    height: 8rem;
+    background-color: #eee;
+    color: #333;
+}
+
+.main-tab .main-tab-nav .nav-tabs .nav-link.active
+,.main-tab .main-tab-nav .nav-tabs .nav-link.hover{
+    height: 8rem;
+    background-color: #333;
+    color: #eee;
+    border: none;
+}
+
+.tab-content {
+    width: 100%;
+    background-color: #333;
+}
+
+a.nav-link:hover{
+    color: #333;
+}
+
+.main-tab .main-tab-nav .nav-tabs .nav-link h5{
+    margin-top: 5px;
+    margin-bottom: 0px;
+    font-size: 15pt;
+    font-weight: 800;
+}
+
+.main-tab .main-tab-nav .nav-tabs .nav-link span.tab-eng-name{
+    float: right;
+    text-align: right;
+    font-size: 10pt;
+    width: 80px;
+    margin-left: 20px;
+    margin-top: -33px;
+    word-break: keep-all;
+}
+
+.main-tab .main-tab-nav .nav-tabs .nav-link p.tab-price{
+    font-size: 17pt;
+    font-weight: 600;
+    margin-top: 27px;
+    margin-bottom: 0px;
+}
+
+.main-tab .main-tab-nav .nav-tabs .nav-link p.tab-price span{
+    font-size: 10pt;
+}
+
+.main-tab .main-tab-nav .nav-tabs .nav-link span.tab-per{
+    background-color: #333;
+    color: #eee;
+    margin: 0px;
+    font-size: 9pt;
+    font-weight: 500;
+    padding: 0px 2px;
+}
+
+.main-tab .main-tab-nav .nav-tabs .nav-link.active span.tab-per{
+    background-color: #eee;
+    color: #333;
+    margin: 0px;
+    font-size: 9pt;
+    font-weight: 500;
+    padding: 0px 2px;
+}
+
+.main-tab .main-tab-nav .nav-tabs .nav-link span.tab-icon img {
+    float: right;
+    margin-top: -10px;
+}
+
+/* 탭 content */
+
+.main-tab .main-tab-content {
+    background-color: #333;
+    height: 540px;
+    color: #eee;
+}
+
+.main-tab-content .container .tab-content .tab-pane h3{
+    padding-top: 35px;
+    padding-bottom: 15px;
+    text-align: center;
+    font-size: 20pt;
+}
+
+
+@media (max-width: 992px){
+    main .container {
+        max-width: 720px;
+    }
+    
+    main .main-tab .main-tab-nav .nav-tabs .nav-link h5{
+        margin-top: 5px;
+        margin-bottom: -3px;
+        font-size: 15pt;
+        font-weight: 800;
+    }
+    
+    main .main-tab .main-tab-nav .nav-tabs .nav-link span.tab-eng-name{
+        float: none;
+        text-align: left;
+        font-size: 4pt;
+        width: auto;
+        margin-left: 0px;
+        margin-top: -10px;
+    }
+    
+    main .main-tab .main-tab-nav .nav-tabs .nav-link p.tab-price{
+        font-size: 13pt;
+        margin-top: 10px;
+        margin-bottom: 0px;
+        
+    }
+    main .main-tab .main-tab-nav .nav-tabs .nav-link span.tab-per{
+        font-size: 6pt;
+    }
+    main .main-tab .main-tab-nav .nav-tabs .nav-link.active span.tab-per{
+        font-size: 6pt;
+    }
+    
+    main .main-tab .main-tab-nav .nav-tabs .nav-link span.tab-icon img {
+        display: none;
+    }
+}
+
+@media (max-width: 576px){
+    main .main-tab .main-tab-nav .nav-tabs .nav-link h5{
+        margin-top: 5px;
+        margin-bottom: -3px;
+        font-size: 12pt;
+        font-weight: 800;
+    }
+    
+    main .main-tab .main-tab-nav .nav-tabs .nav-link span.tab-eng-name{
+        display: none;
+    }
+    
+    main .main-tab .main-tab-nav .nav-tabs .nav-link p.tab-price{
+        font-size: 10pt;
+        font-weight: 600;
+        margin-top: 10px;
+        margin-bottom: 0px;
+        
+    }
+    
+    main .main-tab .main-tab-nav .nav-tabs .nav-link span.tab-per{
+        font-size: 6pt;
+        margin-top: 40px;
+    }
+    
+    main .main-tab .main-tab-nav .nav-tabs .nav-link.active span.tab-per{
+        background-color: #eee;
+        color: #333;
+        margin-top: 40px;
+        font-size:6pt;
+        font-weight: 500;
+        padding: 0px 2px;
+    }
+    
+    main .main-tab .main-tab-nav .nav-tabs .nav-link span.tab-icon img {
+        display: none;
+    }
+    
+}
+
+/* 차트 */
+
+.main-chart{
+    background-color: #fff;
+    height: 400px;
+    min-width: 310px
+}
+
+/* 로그인 폼 */
+.main-login{
+    height: 780px;
+}
+.login-wrap{
+    margin:0 auto;
+    width:400px;
+    height:390px;
+    position:relative;
+}
+.login-html{
+    margin-top: 35%;
+    width:100%;
+    height:100%;
+    position:absolute;
+    padding:50px 70px 50px 70px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+/* 탭 이동시 모션 */
+.login-html .sign-in-consumer-htm,
+.login-html .sign-in-seller-htm{
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    position:absolute;
+    transform:rotateY(180deg);
+    backface-visibility:hidden;
+    transition:all .4s linear;
+}
+.login-html .sign-in-consumer,
+.login-html .sign-in-seller,
+.login-form .group .check{
+    display:none;
+}
+.login-html .tab,
+.login-form .group .label,
+.login-form .group .button{
+    text-transform:uppercase;
+}
+
+/* 탭 */
+
+.login-html .tab{
+    font-size:15px;
+    font-weight: 100;
+    text-align: center;
+    width: 49.3%;
+    padding: 10px;
+    margin:0 0 10px 0;
+    display:inline-block;
+    color: #bbb;
+    border-top: 2px solid #ddd;
+    
+}
+
+.login-html .tab:hover{
+    cursor: pointer;
+    color: #888;
+    border-color: #3d90e2;
+}
+
+/* 선택된 탭 */
+.login-html .sign-in-consumer:checked + .tab,
+.login-html .sign-in-seller:checked + .tab{
+    color:#333;
+    padding: 10px 0px;
+    border-top: 0;
+    border-right: 0;
+    border-bottom: 2px solid #3d90e2;
+}
+
+/* login input */
+
+.login-form{
+    position:relative;
+    height: 10px;
+    perspective:1000px;
+    transform-style:preserve-3d;
+    font-size: 11pt;
+    margin-top: -15px;
+}
+
+.login-form .group input[type=text]{
+    margin-top: 44px;
+} 
+
+.login-form .group input[type=password]{
+    margin-top: 10px;
+    margin-bottom: 13px;
+}
+
+.login-form .group input[type=submit]{
+    margin-top: 20px;
+}
+
+.login-form .group .label,
+.login-form .group .input,
+.login-form .group .button{
+    width:100%;
+    color:#333;
+    display:block;
+}
+.login-form .group .input,
+.login-form .group .button{
+    border:none;
+    padding:6px 10px;
+    border-radius:2px;
+    border: 1px solid #bbb;
+}
+.login-form .group input[data-type="password"]{
+    text-security:circle;
+    -webkit-text-security:circle;
+}
+.login-form .group .label{
+    color:#333;
+    font-size:12px;
+}
+.login-form .group .button{
+    background:#3d90e2;
+    color: #fff;
+    border: none;
+}
+
+/* 체크박스 아이콘 */
+.login-form .group label .icon{
+    width:15px;
+    height:15px;
+    margin-right: 3px;
+    border-radius:2px;
+    position:relative;
+    display:inline-block;
+    background:#ddd;
+}
+.login-form .group label .icon:before,
+.login-form .group label .icon:after{
+    content:'';
+    width:10px;
+    height:2px;
+    background:#fff;
+    position:absolute;
+    transition:all .2s ease-in-out 0s;
+}
+.login-form .group label .icon:before{
+    left:3px;
+    width:5px;
+    bottom:6px;
+    transform:scale(0) rotate(0);
+}
+.login-form .group label .icon:after{
+    top:6px;
+    right:0;
+    transform:scale(0) rotate(0);
+}
+.login-form .group .check:checked + label{
+    color:#333;
+}
+.login-form .group .check:checked + label .icon{
+    background:#3d90e2;
+}
+.login-form .group .check:checked + label .icon:before{
+    transform:scale(1) rotate(45deg);
+}
+.login-form .group .check:checked + label .icon:after{
+    transform:scale(1) rotate(-45deg);
+}
+.login-html .sign-in-consumer:checked + .tab + .sign-in-seller + .tab + .login-form .sign-in-consumer-htm{
+    transform:rotate(0);
+}
+.login-html .sign-in-seller:checked + .tab + .login-form .sign-in-seller-htm{
+    transform:rotate(0);
+}
+.foot-lnk{
+    text-align: left;
+    font-size: 10pt;
+    margin-top: 5px;
+}
