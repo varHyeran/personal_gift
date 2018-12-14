@@ -9,41 +9,42 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script>
 		$(document).ready(function(){
+		    /*아이디 유효성검사 */
+		    /*아이디 중복검사*/
 		    $('#adminId').focus();
-  		    $('#adminId').blur() {
-  		    	/*아이디 유효성검사*/
+		    $('#adminId').blur(function() {
+		    	console.log('아이디 중복검사');
+		    	var isIdCheck = 0;
+		    	var adminId = $('#adminId').val();
+		    	var idHelper = $('#idHelper');
   		    	/*특수문자를 포함*/
   		    	var specialPattern = /^.*(?=.*[`~!@#$%^&*|\\\'\";:\/?]).*$/;
   		    	/*대문자, 소문자로 시작하는 7-16자 이내의 아이디*/
   		    	var checkId = /^[A-Za-z]{1}[A-Za-z0-9]{6,15}$/;
- 		    	
- 		    	if(specialPattern.test($('#adminId').val())){
- 		    		$('#idHelper').text('아이디에 특수문자는 들어갈 수 없습니다');
-	    			$('#adminId').focus();
-		    	}else if(!checkId.test($('#adminId').val())){
-		    		$('#idHelper').text('대문자, 소문자로 시작하고 7-16자 이내로 만들어주세요');
-					$('#adminId').focus();
-				} else {
-					$('#idHelper').text('');
-		    	}
-		    });
-		    /*아이디 중복검사*/
-		    $('#idCheckBtn').click(function() {
-		    	console.log('되랏ㅅㅅㅅㅅ');
-		    	var isIdCheck = 0;
 		    	$.ajax({
 		    		async : true,
 		    		url : '/adminIdCheck',
-		    		method : 'POST',
-		    		data : $('#adminId').val(),
-		    		dataType : 'JSON',
+		    		type : 'POST',
+		    		data : adminId,
+		    		dataType : 'json',
+		    		contentType: "application/json; charset=UTF-8",
 		    		success : function(data){
 		    			console.log('data 받아오기 성공');
 						console.log(data + '<---countId');
 						if(data != isIdCheck) {		// 아이디 중복
-							idHelper.text('중복된 아이디입니다. 새로운 아이디를 만들어주세요');						
-						} else if(data == isIdCheck) {		// 아이디 사용가능
-							idHelper.text('사용 가능한 아이디 입니다');
+							idHelper.text('중복된 아이디입니다. 새로운 아이디를 만들어주세요');
+							$('#adminId').focus();
+						} else if(data == isIdCheck) {		// 아이디 사용가능, 유효성검사
+							/*아이디에 특수문자가 들어가지 못하도록, 대소문자로 시작하여 7-16자 이내로 만들어지도록*/
+							if(specialPattern.test(adminId)) {
+								idHelper.text('아이디에 특수문자는 들어갈 수 없습니다')
+								$('#adminId').focus();
+							} else if(!checkId.test(adminId)) {
+								idHelper.text('대문자, 소문자로 시작하고 7-16자 이내로 만들어주세요');
+								$('#adminId').focus();
+							} else {
+								idHelper.text('사용 가능한 아이디 입니다');
+							}
 						}
 		    		},
 		    		error: function(error) {					
@@ -51,7 +52,7 @@
 					}
 		    	});
 		    });
-		    $('#adminPw').blur() {
+		    $('#adminPw').blur(function() {
 		    	/*비밀번호 유효성검사 : 5-20자 이내의 숫자,문자,특수문자를 포함한 비밀번호*/
 		    	var checkPw = /^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*?[#?!@$%^&*-]).{7,15}$/;
 		    	
@@ -62,7 +63,7 @@
 		    		$('#pwHelper').text('');
 		    	}
 		    })
-		    $('#adminName').blur() {
+		    $('#adminName').blur(function() {
 		    	/*이름 유효성검사 : 한글 혹은 영문 이름(띄어쓰기 가능)*/
   		    	var checkName=/^[가-힣a-zA-Z\s]+$/;
 		    	
@@ -71,12 +72,24 @@
 		    		$('#adminName').focus();
 		    	} else if($('#adminName').val().length < 2 || $('#adminName').val().length > 15){
 		    		$('#nameHelper').text('2-15자 이내로 만들어주세요');
+		    		$('#adminName').focus();
 		    	}else {
 		    		$('#nameHelper').text('');
 		    	}
 		    })
-		    $('#submitBtn').click() {
-                $('#addAdminForm').submit();
+		    $('#submitBtn').click(function() {
+		    	var adminId = $('#adminId').val();
+		    	var adminPw = $('#adminPw').val();
+		    	var adminName = $('#adminName').val();
+		    	var condition = adminId != "" && adminPw != "" && adminName != "";
+		    	
+		    	if(condition) {
+	            	$('#addAdminForm').submit();
+	            	$('#submitHelper').text('');
+		    	} else if(!condition) {
+		    		event.preventDefault();
+		    		$('#submitHelper').text('빈 칸 없이 양식에 맞게 작성해주세요');
+		    	}
             });
 		});
 	</script>
@@ -87,7 +100,7 @@
 		<form action="/topAdmin/addAdminAction" id="addAdminForm" method="post">
 			<div>
 				<label for="adminId">adminId</label>
-				<input type="text" name="adminId" id="adminId">&nbsp;&nbsp;<input id="idCheckBtn" type="button">아이디 중복확인<br>
+				<input type="text" name="adminId" id="adminId">&nbsp;&nbsp;<button id="idCheckBtn" type="button">아이디 중복확인</button><br>
 				<span id="idHelper"></span><br>
 			</div>
 			<div>
@@ -100,7 +113,8 @@
 				<input type="text" name="adminName" id="adminName"><br>
 				<span id="nameHelper"></span><br>
 			</div>
-			<button type="submit" id="submitBtn">등록</button>
+			<button type="button" id="submitBtn">등록</button><br>
+			<span id="submitHelper"></span><br>
 		</form>
 </body>
 </html>
