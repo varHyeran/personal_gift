@@ -1,9 +1,10 @@
 @charset "UTF-8";
 
 /*폰트적용*/
+@import url('https://fonts.googleapis.com/css?family=Noto+Sans+KR:100,300,400,500,700,900|Source+Sans+Pro:200,300,400,600,700,900&subset=korean');
 
-@import url('https://fonts.googleapis.com/css?family=Noto+Sans+KR');
 body {
+    font-family: 'Source Sans Pro', sans-serif;
     font-family: 'Noto Sans KR', sans-serif;
     margin: 0;
     padding-top: 3rem;
@@ -14,7 +15,7 @@ h1,h2,h3,h4,h5,h6{
 }
 
 /*부트스트랩 a태그 밑줄속성 삭제*/
-a.active,a.hover,a:link,a:default,a:focus,a:visited,a:empty{
+a:active,a:hover,a:link,a:default,a:focus,a:visited,a:empty{
     text-decoration: none !important;
     border: 0px !important;
     color: #333;
@@ -33,15 +34,25 @@ nav.bg-dark{
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
+    padding: 5px
 }
 
 .logo-img {
-    width: 150px;
+    width: 160px;
 }
 
 .nav-futures .nav-item {
-    margin-left: 40px;
-    font-weight: 400;
+    margin-left: 30px;
+    font-weight: 00;
+    font-size: 13pt;
+}
+
+.nav-futures .nav-item a.nav-link{
+    color: #ddd;
+}
+
+.nav-futures .nav-item a.nav-link:hover{
+    color: #fff;
 }
 
 .nav-memeber {
@@ -50,8 +61,65 @@ nav.bg-dark{
 
 .nav-memeber li.nav-item {
     float: right;
-    margin-left: 30px;
+    margin-left: 10px;
+    font-size: 10pt;
 }
+
+.nav-memeber li.nav-item i {
+    font-size: 10pt;
+}
+.nav-memeber li.nav-item .dropdown-toggle{
+    margin-left: 20px;  
+    color: #ddd;
+}
+
+.nav-memeber li.nav-item .dropdown-toggle::after{
+    display: none;
+}
+
+.navbar-dark .navbar-nav .active>.dropdown-toggle
+, .navbar-dark .navbar-nav .dropdown-toggle.active
+, .navbar-dark .navbar-nav .dropdown-toggle.show
+, .navbar-dark .navbar-nav .show>.dropdown-toggle{
+    color: #ddd;
+}
+
+.nav-memeber li.nav-member-dropdown ul.dropdown-menu{
+    display: none;
+    position: absolute;
+    min-width: 120px;
+    top: 55px;
+    right: auto;
+    left: auto;
+    padding: 15px 0px 20px 20px;
+    border-radius: 8;
+    font-size: 11pt;
+    line-height: 2.5;
+}
+
+.nav-memeber li.nav-member-dropdown ul.dropdown-menu-money{
+    margin-left: -28px;
+}
+
+.nav-memeber li.nav-member-dropdown ul.dropdown-menu-id{
+    margin-left: 0px;
+}
+
+.nav-memeber li.nav-member-dropdown:hover a.nav-link{
+    transition: all 0.4s ease-out;
+    color: #22bdd2;
+}
+
+.nav-memeber li.nav-member-dropdown:hover i{
+    transition: all 0.4s ease-out;
+    transform: rotate(180deg);
+    color: #22bdd2;
+}
+
+.nav-memeber li.nav-member-dropdown:hover ul.dropdown-menu{
+    display: block;
+}
+
 
 .nav-ul {
     justify-content: space-between;
