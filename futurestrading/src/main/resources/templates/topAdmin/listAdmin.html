@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<!-- bootstrap -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+<title>AdminList</title>
+</head>
+<body>
+	<h1 align="center">ADMIN LIST</h1>	
+		<table class="table" style="width:60%;height:100px;margin:auto;text-align:center;">
+			<tr>
+				<th>adminId</th>
+				<th>adminPw</th>
+				<th>adminName</th>
+				<th>adminRight</th>
+				<th>adminRegisterDate</th>
+			</tr>
+			<tr th:each="list : ${adminList}">
+				<td><a th:text="${list.adminId}" th:href="@{/topAdmin/modifyAdminForm(adminId=${list.adminId})}"></a></td>
+				<td th:text="${list.adminPw}"></td>
+				<td th:text="${list.adminName}"></td>
+				<td th:text="${list.adminRight}"></td>
+				<td th:text="${list.adminRegisterDate}"></td>
+			</tr>
+		</table>
+		<div align="center"><a href="/topAdmin/addAdminForm" class="btn btn-info">관리자 등록</a></div>
+</body>
+</html>

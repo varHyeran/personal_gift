@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.gift.futurestrading.admin.mapper.AdminMapper;
+import com.gift.futurestrading.admin.vo.AdminVo;
 import com.gift.futurestrading.member.vo.ConsumerVo;
 import com.gift.futurestrading.member.vo.SellerVo;
 import com.gift.futurestrading.page.vo.Criteria;
@@ -14,28 +15,70 @@ import com.gift.futurestrading.page.vo.Criteria;
 public class AdminService {
 	@Autowired
 	private AdminMapper adminMapper;
-	/*1. 구매자 리스트(페이징)*/
+	
+	/*관리자삭제처리*/
+	public void removeAdmin(String adminId) {
+		System.out.println("AdminService.removeAdmin() 호출");
+		adminMapper.deleteAdmin(adminId);
+	}
+	/*최고관리자 비밀번호체크*/
+	public String checkTopAdmin(String topAdminPw) {
+		System.out.println("AdminService.checkTopAdmin() 호출");
+		String topAdminPwCheck = adminMapper.selectTopAdminPw(topAdminPw);
+		return topAdminPwCheck;
+	}
+	/*관리자수정처리*/
+	public void modifyAdmin(AdminVo adminRequest) {
+		System.out.println("AdminService.modifyAdmin() 호출");
+		adminMapper.updateAdmin(adminRequest);
+	}
+	/*관리자수정화면*/
+	public AdminVo getAdminOne(String adminId) {
+		System.out.println("AdminService.getAdminOne() 호출");
+		AdminVo getAdminOneVo = adminMapper.selectAdminOne(adminId);
+		return getAdminOneVo;
+	}
+	/*관리자등록*/
+	public void addAdmin(AdminVo adminVoRequest) {
+		System.out.println("AdminService.addAdmin() 호출");
+		AdminVo adminVo = new AdminVo();
+		adminVo.setAdminId(adminVoRequest.getAdminId());
+		adminVo.setAdminPw(adminVoRequest.getAdminPw());
+		adminVo.setAdminName(adminVoRequest.getAdminName());
+		adminMapper.insertAdmin(adminVoRequest);
+	}
+	/*관리자 아이디중복체크*/
+	public int inputIdcheck(String inputAdminId) {
+		System.out.println("AdminService.inputIdcheck() 호출");
+		int countId = adminMapper.selectInputAdminId(inputAdminId);
+		return countId;
+	}
+	/*관리자조회*/
+	public List<AdminVo> getAdmin(){
+		System.out.println("AdminService.getAdmin() 호출");
+		List<AdminVo> adminList = adminMapper.selectAdmin();
+		return adminList;
+	}
+	/*구매자 리스트(페이징)*/
 	public List<ConsumerVo> getConsumerAll(Criteria cri){
 		System.out.println("AdminService.getConsumerAll() 호출");
 		List<ConsumerVo> consumerList = adminMapper.selectConsumerAll(cri);
 		return consumerList;
 	}
-	/*2. 구매자 리스트(전체 행 수 구하기)*/
+	/*구매자 리스트(전체 행 수 구하기)*/
 	public int selectConsumerAllCount() {
 		System.out.println("SampleService.selectConsumerAllCount()");
 		return adminMapper.selectConsumerAllCount();
 	}
-	/*3. 판매자 리스트(페이징)*/
+	/*판매자 리스트(페이징)*/
 	public List<SellerVo> getSellerAll(Criteria cri){
 		System.out.println("AdminService.getSellerAll() 호출");
 		List<SellerVo> sellerList = adminMapper.selectSellerAll(cri);
 		return sellerList;
 	}
-	/*4. 판매자 리스트(전체 행 수 구하기)*/
+	/*판매자 리스트(전체 행 수 구하기)*/
 	public int selectSellerAllCount() {
 		System.out.println("SampleService.selectSellerAllCount()");
 		return adminMapper.selectSellerAllCount();
 	}
-	
-	
 }

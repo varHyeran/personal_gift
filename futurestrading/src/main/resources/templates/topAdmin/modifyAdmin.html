@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+<title>modifyAdmin</title>
+</head>
+<body>
+	<h1>modifyAdmin</h1>
+	<a href="/topAdmin/listAdmin">관리자 리스트</a>
+		<form action="/topAdmin/modifyAdminAction" method="post">
+			<table border="1" th:each="admin : ${adminOne}">
+				<tr>
+					<th>adminId</th>
+					<td><input type="text" name="adminId" th:value="${admin.adminId}" readonly></td>
+				</tr>
+				<tr>
+					<th>adminPw</th>
+					<td><input type="text" name="adminPw" th:value="${admin.adminPw}"></td>
+				</tr>
+				<tr>	
+					<th>adminName</th>
+					<td><input type="text" name="adminName" th:value="${admin.adminName}"></td>
+				</tr>
+				<tr>	
+					<th>adminRight</th>
+					<td><input type="text" name="adminRight" th:value="${admin.adminRight}" readonly></td>
+				</tr>
+				<tr>	
+					<th>adminRegisterDate</th>
+					<td><input type="text" name="adminRegisterDate" th:value="${admin.adminRegisterDate}" readonly></td>
+				</tr>
+			</table>
+			<button type="submit" id="submitBtn">수정</button>
+			<a th:href="@{/topAdmin/checkTopAdminForm(adminId=${adminOne.adminId})}">삭제</a>
+		</form>
+</body>
+</html>

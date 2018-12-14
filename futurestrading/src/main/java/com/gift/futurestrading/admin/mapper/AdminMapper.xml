@@ -1,6 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gift.futurestrading.admin.mapper.AdminMapper">
+	<!-- 관리자삭제 -->
+		<delete id="deleteAdmin">
+			DELETE FROM admin WHERE admin_id_pk = #{adminId} AND #{adminId} != 'top_admin'
+		</delete>
+	<!-- 최고관리자 비밀번호 확인 -->
+		<select id="selectTopAdminPw" parameterType="map" resultType="String">
+	        SELECT
+	        	admin_password
+	        FROM admin WHERE admin_password = #{topAdminPw} GROUP BY admin_id_pk = 'top_admin'
+	    </select>
+	<!-- 관리자수정 -->
+	    <update id="updateAdmin" parameterType="com.gift.futurestrading.admin.vo.AdminVo">
+			UPDATE admin SET admin_password = #{adminPw}, admin_name = #{adminName} WHERE admin_id_pk = #{adminId} 
+	    </update>	
+	<!-- 관리자수정화면 -->
+		<select id="selectAdminOne" resultType="com.gift.futurestrading.admin.vo.AdminVo">
+	        SELECT
+	        	admin_id_pk as adminId, 
+	        	admin_password as adminPw,
+	        	admin_name as adminName,
+	        	admin_right as adminRight,
+	        	admin_register_date as adminRegisterDate
+	        FROM admin WHERE admin_id_pk = #{adminId}
+	    </select>
+	<!-- 관리자등록 -->
+		<insert id="insertAdmin" parameterType="com.gift.futurestrading.admin.vo.AdminVo">
+		    INSERT INTO admin(admin_id_pk, admin_password, admin_name, admin_right, admin_register_date) 
+		    	VALUES(#{adminId}, #{adminPw}, #{adminName}, '관리자', now())
+		</insert>
+	<!-- 관리자 아이디 중복체크 -->	
+		<select id="selectInputAdminId" resultType="int">
+			Select Count(*) From view_total_id WHERE total_id = #{inputAdminId}
+		</select>
+	<!-- 관리자조회 -->
+	    <select id="selectAdmin" resultType="com.gift.futurestrading.admin.vo.AdminVo">
+	        SELECT 
+	        	admin_id_pk as adminId, 
+	        	admin_password as adminPw, 
+	        	admin_name as adminName,
+	        	admin_right as adminRight,
+	        	admin_register_date as adminRegisterDate
+	        FROM admin
+	    </select>
 	<!-- 구매자리스트(페이징포함) -->
 	<select id="selectConsumerAll" resultType="com.gift.futurestrading.member.vo.ConsumerVo" parameterType="com.gift.futurestrading.page.vo.Criteria">
 		SELECT 
