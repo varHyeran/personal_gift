@@ -4,8 +4,11 @@ import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.gift.futurestrading.member.mapper.SellerMapper;
+import com.gift.futurestrading.member.vo.SellerFileRequest;
+import com.gift.futurestrading.member.vo.SellerFileVo;
 import com.gift.futurestrading.member.vo.SellerRequestVo;
 @Service
 public class SellerService {
@@ -55,4 +58,63 @@ public class SellerService {
 
 		return insertResult;
 	}
-}
+	/**
+	 * 샘플에 대한 정보를 데이터베이스에 등록
+	 *
+	 * @param seller 입력된 샘플에 대한 정보
+	 */
+
+	/* 12.14 현재 문제점 
+	 * 각 파일의 확장자 데어터 타입등 상세정보가 담길 데이터 베이스를 다시 만들어야한다
+	 * Vo파일 다시 생성하고 코드 주석 추가해야한다.
+	 * 현재 "document_seller의 데이터 베이스같이 licence"
+	 * 
+	 * */
+	
+	public void addseller(SellerFileRequest sellerFileRequest, String realPath) {
+		/*
+		 * sellerFileRequest --> seller, sellerFile로 변환 필요
+		 * 1. multipartfile 파일데이터 -> 저장
+		 * 2. multipartfile 정보-> 새로운정보 추가 ->sellerFile
+		 * 3. 
+		 */
+		//1.
+		//2
+		SellerFileVo sellerFileVo = new SellerFileVo();
+		MultipartFile[] multiPartFile = sellerFileRequest.getMultipartFile();
+		// 1. SellerFileNo : AutoIntrement
+		for(MultipartFile multipart :multiPartFile) {
+			if(!multipart.isEmpty()) {
+			
+				// 3. sellerFilePath
+				sellerFileVo.setSellerPath(realPath);
+				String originalFileName = multipart.getOriginalFilename();
+				int index = originalFileName.indexOf(".");
+				// 4. 이름
+				String fileName = originalFileName.substring(0,index);
+				sellerFileVo.setSellerName(fileName);
+				// 5. 확장자
+				String ext = originalFileName.substring(fileName.length()+1, originalFileName.length());
+				sellerFileVo.setSellerFileExt(ext);
+				// 6. 타입
+/*				sellerFileVo.setsellerFileType(multipart.getContentType());
+				// 7. 크기
+				sellerFileVo.setsellerFileSize(multipart.getSize());
+				// 8. 저장될 파일의 이름
+				String realFileName = UUID.randomUUID().toString();
+				sellerFileVo.setsellerFileRealName(realFileName);
+				
+				//내가 원하는 이름의 빈파일 생성
+				File file = new File(realPath + "/" + realFileName + "." + ext);
+				transaction2 = sellerFileMapper.insertsellerFile(sellerFile); //트랜잭션 2
+				//multipartFile파일을 빈파일로 복사
+				try {
+					multipart.transferTo(file);
+				}
+				catch(IllegalStateException | IOException e) {
+					e.printStackTrace();*/
+				}
+			}
+		}
+	}
+
