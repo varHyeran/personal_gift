@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gift.futurestrading.login.mapper.LoginMapper">
+	<select id="selectLoginMember" parameterType="com.gift.futurestrading.login.vo.LoginVo" resultType="com.gift.futurestrading.login.vo.LoginVo">
+		SELECT 
+			total_id as totalId, 
+			total_password as totalPassword, 
+			total_right as totalRight 
+		FROM view_total_id 
+		WHERE 
+			total_id=#{totalId} 
+		AND 
+			total_password=#{totalPassword};
+	</select>
+</mapper>

@@ -32,12 +32,12 @@
 
                     <div class="login-form">
                         <div class="sign-in-consumer-htm">
-                            <form action="/login/loginConsumer" method="post">
+                            <form th:action="@{/login/login}" method="post">
                                 <div class="group">
-                                    <input id="consumerIdPk" type="text" class="input" name="consumerIdPk" value="consumerid01">
+                                    <input id="totalId" type="text" class="input" name="totalId">
                                 </div>
                                 <div class="group">
-                                    <input id="consumerPassword" type="password" class="input" data-type="password" name="consumerPassword" value="consumerpw">
+                                    <input id="totalPassword" type="password" class="input" data-type="password" name="totalPassword">
                                 </div>
                                 <div class="group">
                                     <input id="consumerCheck" type="checkbox" class="check" checked>
@@ -53,7 +53,7 @@
                         </div>
 
                         <div class="sign-in-seller-htm">
-                            <form action="/login/loginSeller" method="post">
+                            <form action="/login/loginC" method="post">
                                 <div class="group">
                                     <input id="sellerIdPk" type="text" class="input" name="sellerIdPk" value="sellerid01">
                                 </div>
