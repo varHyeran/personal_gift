@@ -87,4 +87,16 @@
 	<select id="selectSellerAllCount" resultType="int">
 		SELECT COUNT(*) FROM seller
 	</select>
+	<!-- 구매자 계좌조회(한명) -->
+	<select id="selectConsumerAccount" resultType="com.gift.futurestrading.member.vo.AccountConsumerVo" parameterType="com.gift.futurestrading.member.vo.ConsumerVo">
+		SELECT 
+			ac.fk_consumer__account_consumer as fkConsumerAccountConsumer,
+			ac.account_consumer_name as accountConsumerName,
+			ac.account_consumer_account_no as accountConsumerAccountNo, 
+			ac.account_consumer_bank_name as accountConsumerBankName,
+			ac.account_consumer_sign_up_date as accountConsumerSignUpDate 
+		FROM account_consumer ac 
+		INNER JOIN consumer c ON c.consumer_id_pk=ac.fk_consumer__account_consumer 
+		WHERE c.consumer_id_pk=#{consumerIdPk} 
+	</select>
 </mapper>
