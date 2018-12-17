@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	data-layout-decorate="~{layout/defaultLayout}">
+<div layout:fragment="content" class="main-box container">
+	<h3 align="center">구매자 회원 계좌정보</h3>
+	<div  align="center">
+		회원 아이디 :<span th:text="${accountConsumer.fkConsumerAccountConsumer}"></span><p></p>
+		회원 이름 : <span th:text="${accountConsumer.accountConsumerName}"></span><p></p>
+		은행명 : <span th:text="${accountConsumer.accountConsumerBankName}"></span><p></p>
+		계좌 번호 :<span th:text="${accountConsumer.accountConsumerAccountNo}"></span><p></p>
+		계좌등록일 : <span th:text="${accountConsumer.accountConsumerSignUpDate}"></span><p></p>
+	</div>
+</div>
+</html>

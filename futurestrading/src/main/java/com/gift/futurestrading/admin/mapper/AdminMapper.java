@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.gift.futurestrading.admin.vo.AdminVo;
+import com.gift.futurestrading.member.vo.AccountConsumerVo;
 import com.gift.futurestrading.member.vo.ConsumerVo;
 import com.gift.futurestrading.member.vo.SellerVo;
 import com.gift.futurestrading.page.vo.Criteria;
@@ -32,4 +33,6 @@ public interface AdminMapper {
 	List<SellerVo> selectSellerAll(Criteria cri);
 	/*판매자 전체 행*/
 	int selectSellerAllCount();
+	/*구매자 계좌조회*/
+	AccountConsumerVo selectConsumerAccount(ConsumerVo consumerVo);
 }

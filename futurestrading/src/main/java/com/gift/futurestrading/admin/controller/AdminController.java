@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.gift.futurestrading.admin.service.AdminService;
 import com.gift.futurestrading.admin.vo.AdminVo;
+import com.gift.futurestrading.member.vo.AccountConsumerVo;
 import com.gift.futurestrading.member.vo.ConsumerVo;
 import com.gift.futurestrading.member.vo.SellerVo;
 import com.gift.futurestrading.page.vo.Criteria;
@@ -116,7 +117,7 @@ public class AdminController {
 		model.addAttribute("consumerList", consumerList);
 		PageMaker pageMaker = new PageMaker();
 		pageMaker.setCri(cri);
-		pageMaker.setTotalCount(adminService.selectConsumerAllCount());
+		pageMaker.setTotalCount(adminService.getConsumerAllCount());
 		model.addAttribute("pageMaker", pageMaker);
 		return "admin/listConsumer";
 	}
@@ -128,8 +129,17 @@ public class AdminController {
 		model.addAttribute("sellerList", sellerList);
 		PageMaker pageMaker = new PageMaker();
 		pageMaker.setCri(cri);
-		pageMaker.setTotalCount(adminService.selectSellerAllCount());
+		pageMaker.setTotalCount(adminService.getSellerAllCount());
 		model.addAttribute("pageMaker", pageMaker);
 		return "admin/listSeller";
+	}
+	/*구매자계좌조회*/
+	@RequestMapping(value="/getConsumer", method = RequestMethod.GET)
+	public String getConsumerAccount(Model model, ConsumerVo consumerVo) {
+		System.out.println("AdminController.getConsumerAccount() 호출");
+		AccountConsumerVo accountConsumer = adminService.getConsumerAccount(consumerVo);
+		System.out.println(accountConsumer+"<--accountConsumer");
+		model.addAttribute("accountConsumer", accountConsumer);
+		return "admin/getConsumer";
 	}
 }

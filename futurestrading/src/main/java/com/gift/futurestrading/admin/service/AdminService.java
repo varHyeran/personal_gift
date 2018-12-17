@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.gift.futurestrading.admin.mapper.AdminMapper;
 import com.gift.futurestrading.admin.vo.AdminVo;
+import com.gift.futurestrading.member.vo.AccountConsumerVo;
 import com.gift.futurestrading.member.vo.ConsumerVo;
 import com.gift.futurestrading.member.vo.SellerVo;
 import com.gift.futurestrading.page.vo.Criteria;
@@ -66,8 +67,8 @@ public class AdminService {
 		return consumerList;
 	}
 	/*구매자 리스트(전체 행 수 구하기)*/
-	public int selectConsumerAllCount() {
-		System.out.println("SampleService.selectConsumerAllCount()");
+	public int getConsumerAllCount() {
+		System.out.println("SampleService.selectConsumerAllCount() 호출");
 		return adminMapper.selectConsumerAllCount();
 	}
 	/*판매자 리스트(페이징)*/
@@ -77,8 +78,14 @@ public class AdminService {
 		return sellerList;
 	}
 	/*판매자 리스트(전체 행 수 구하기)*/
-	public int selectSellerAllCount() {
-		System.out.println("SampleService.selectSellerAllCount()");
+	public int getSellerAllCount() {
+		System.out.println("SampleService.selectSellerAllCount() 호출");
 		return adminMapper.selectSellerAllCount();
+	}
+	/*구매자 계좌조회*/
+	public AccountConsumerVo getConsumerAccount(ConsumerVo consumerVo) {
+		System.out.println("SampleService.getConsumerAccount() 호출");
+		AccountConsumerVo accountConsumer = adminMapper.selectConsumerAccount(consumerVo);
+		return accountConsumer;
 	}
 }
