@@ -1,5 +1,7 @@
 package com.gift.futurestrading.member.controller;
 
+import java.io.IOException;
+import java.util.List;
 import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpSession;
@@ -10,6 +12,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+
 import com.gift.futurestrading.member.service.SellerService;
 import com.gift.futurestrading.member.vo.ConsumerRequestVo;
 import com.gift.futurestrading.member.vo.SellerFileRequest;
@@ -30,16 +35,22 @@ public class SellerController {
 	@RequestMapping("/joinsellerdetail")
 	public String joinSellerDetail() {
 		System.out.println("출력");
-		return "member/seller/joinsellerdetail";
+		return "member/seller/addMemberSellerDetail";
 	}
 	// joinsellerdetail 창에서 값을 받아서 이쪽으로 요청
-	@RequestMapping("/getsellerdetail")
-	public String getSellerDetail(SellerFileRequest sellerFileRequest , HttpSession session) {
-		System.out.println("출력");
-		String realPath =  session.getServletContext().getRealPath("/uploads");
-		sellerService.addseller(sellerFileRequest, realPath);
-		return "member/seller/joinsellerdetail";
+	@RequestMapping("/sellerFileUpload")
+	public String getSellerDetail(SellerFileRequest sellerFile , HttpSession session ) throws IOException {
+		System.out.println("출력111");
+		//D:\gift\maven.1544422656107\futurestrading\src\main\resources\sellerFile
+		String path = session.getServletContext().getRealPath("\\upload\\");
+		String realPath =path;
+		System.out.println(path+"pathpathpathpath");
+		SellerService sellerService = new SellerService();
+		System.out.println(sellerFile.getMultipartFile()+"파일옵로드");
+		sellerService.sellerFileUpload(sellerFile, realPath);
+		return "index";
 	}
+	
 	//add seller 넘겨준 값 데이터 베이스 저장
 	@RequestMapping(value = "/addseller", method = RequestMethod.POST)
 	public String addConsumer(SellerRequestVo sellerRequestVo) {
