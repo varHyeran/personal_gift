@@ -29,24 +29,63 @@
 	                </li>
           	 	</ul>
               	<ul th:if="${sessionId} != null" class="navbar-nav nav-memeber">
-	            	<li class="nav-item nav-member-dropdown">
-	            		<a class="nav-link dropdown-toggle" role="button" href="#" data-toggle="dropdown">지갑관리<i class="material-icons">keyboard_arrow_down</i></a>
-                        <ul class="dropdown-menu dropdown-menu-money" role="menu">
-                            <li><a href="#">자산현황</a></li>
-                            <li><a href="#">입금</a></li>
-                            <li><a href="#">출금</a></li>
-                            <li><a href="#">송금</a></li>
-                            <li><a href="#">거래내역</a></li>
-                        </ul>
-	            	</li>
-	            	<li class="nav-item nav-member-dropdown">
-	            		<a class="nav-link dropdown-toggle" role="button" href="#" data-toggle="dropdown"><span th:text="${sessionId.totalId}"></span><i class="material-icons">keyboard_arrow_down</i></a>
-                        <ul class="dropdown-menu dropdown-menu-id" role="menu">
-                            <li><a href="#">계정관리</a></li>
-                            <li><a href="/logout" th:href="@{/logout}">logout</a></li>
-                        </ul>
-	            	</li>
-         	 	</ul>
+              		<th:block th:switch="${sessionId.totalRight}">
+	              		<th:block th:case="'구매자'">
+	           			<li class="nav-item nav-member-dropdown">
+		           		<a class="nav-link dropdown-toggle" role="button" href="#" data-toggle="dropdown">지갑관리<i class="material-icons"></i></a>
+		                      	<ul class="dropdown-menu dropdown-menu-money" role="menu">
+		                           <li><a href="#">자산현황</a></li>
+		                           <li><a href="#">입금</a></li>
+		                           <li><a href="#">출금</a></li>
+		                           <li><a href="#">송금</a></li>
+		                           <li><a href="#">거래내역</a></li>
+		                      	</ul>
+		           		</li>
+			            <li class="nav-item nav-member-dropdown">
+			            	<a class="nav-link dropdown-toggle" role="button" href="#" data-toggle="dropdown"><span th:text="${sessionId.totalId}"></span><i class="material-icons"></i></a>
+		                       	<ul class="dropdown-menu dropdown-menu-id" role="menu">
+		                            <li><a href="#">계정관리</a></li>
+		                            <li><a href="/logout" th:href="@{/logout}">logout</a></li>
+		                        </ul>
+			            </li>
+			            </th:block>
+			            <th:block th:case="'판매자'">
+				            <li class="nav-item nav-member-dropdown">
+			           		<a class="nav-link dropdown-toggle" role="button" href="#" data-toggle="dropdown">지갑관리<i class="material-icons"></i></a>
+			                      	<ul class="dropdown-menu dropdown-menu-money" role="menu">
+			                           <li><a href="#">자산현황</a></li>
+			                           <li><a href="#">거래내역</a></li>
+			                      	</ul>
+			           		</li>
+				            <li class="nav-item nav-member-dropdown">
+				            	<a class="nav-link dropdown-toggle" role="button" href="#" data-toggle="dropdown"><span th:text="${sessionId.totalId}"></span><i class="material-icons"></i></a>
+			                       	<ul class="dropdown-menu dropdown-menu-id" role="menu">
+			                            <li><a href="#">계정관리</a></li>
+			                            <li><a href="/logout" th:href="@{/logout}">logout</a></li>
+			                        </ul>
+				            </li>
+				         </th:block>
+				         <th:block th:case="'관리자'">
+				            <li class="nav-item nav-member-dropdown">
+			           		<a class="nav-link dropdown-toggle" role="button" href="#" data-toggle="dropdown">전체관리<i class="material-icons"></i></a>
+			                      	<ul class="dropdown-menu dropdown-menu-money" role="menu">
+			                           <li><a href="#">회원관리</a></li>
+			                           <li><a href="#">주문관리</a></li>
+			                           <li><a href="#">체결관리</a></li>
+			                           <li><a href="#">반대매매관리</a></li>
+			                      	</ul>
+			           		</li>
+				            <li class="nav-item nav-member-dropdown">
+				            	<a class="nav-link dropdown-toggle" role="button" href="#" data-toggle="dropdown"><span th:text="${sessionId.totalId}"></span><i class="material-icons"></i></a>
+			                       	<ul class="dropdown-menu dropdown-menu-id" role="menu">
+			                            <li><a href="#">계정관리</a></li>
+			                            <li><a href="/logout" th:href="@{/logout}">logout</a></li>
+			                        </ul>
+				            </li>
+				          </th:block>
+		            </th:block>
+		        </ul>
+		       
              </div>
         </div>
     </nav>
