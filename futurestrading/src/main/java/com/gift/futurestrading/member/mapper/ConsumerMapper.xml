@@ -17,7 +17,7 @@
 				consumer_status,
 				consumer_admit_check_flag) 
 			VALUES(#{consumer_id_pk},
-				#{consumer_password},
+				PASSWORD(#{consumer_password}),
 				#{consumer_name},
 				#{consumer_email},
 				#{consumer_jumin_no},

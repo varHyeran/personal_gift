@@ -10,6 +10,6 @@
 		WHERE 
 			total_id=#{totalId} 
 		AND 
-			total_password=#{totalPassword};
+			total_password=PASSWORD(#{totalPassword});
 	</select>
 </mapper>
