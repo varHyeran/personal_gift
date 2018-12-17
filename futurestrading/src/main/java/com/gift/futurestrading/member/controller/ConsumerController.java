@@ -21,6 +21,32 @@ public class ConsumerController {
 	@Autowired
 	private ConsumerService consumerService;
 	
+	@RequestMapping(value="/singup/choice", method=RequestMethod.GET)
+	public String choiceSignUp() {
+		System.out.println("ConsumerController.choiceSignUp() 호출");
+		return "member/choiceSignUp";
+	}
+	
+	/**
+	 * 해당 url로 요청이 들어왔을 때, 구매자 계정관리뷰로 랜더링 해준다.
+	 * 
+	 * @return 해당 되는 뷰의 경로
+	 * @since JDK1.8
+	 */
+	@RequestMapping(value="/consumer/mypage", method=RequestMethod.GET)
+	public String consumerMypage(HttpSession session, Model model) {
+		System.out.println("ConsumerController.getConsumerMypage() 호출");
+		String returnView = null;
+		if(session.getAttribute("sessionLoginMember")==null) {
+			returnView = "index";
+		}else {
+			returnView = "member/consumer/getMemberConsumerMypage";
+		}
+		System.out.println(session.getAttribute("sessionLoginMember")+"<--getConsumerMypage session");
+		model.addAttribute("sessionId", session.getAttribute("sessionLoginMember"));
+		return returnView;
+	}
+	
 	/**
 	 * 해당 url로 요청이 들어왔을 때, 구매자 회원가입폼 뷰로 렌더링 해준다.
 	 * 
@@ -91,25 +117,5 @@ public class ConsumerController {
 			count = consumerService.idCheck(id);
 			}
 		return count;
-	}
-
-	/**
-	 * 해당 url로 요청이 들어왔을 때, 구매자 계정관리뷰로 랜더링 해준다.
-	 * 
-	 * @return 해당 되는 뷰의 경로
-	 * @since JDK1.8
-	 */
-	@RequestMapping(value="/consumer/mypage", method=RequestMethod.GET)
-	public String getConsumerMypage(HttpSession session, Model model) {
-		System.out.println("ConsumerController.getConsumerMypage() 호출");
-		String returnView = null;
-		if(session.getAttribute("sessionLoginMember")==null) {
-			returnView = "index";
-		}else {
-			returnView = "member/consumer/getMemberConsumerMypage";
-		}
-		System.out.println(session.getAttribute("sessionLoginMember")+"<--getConsumerMypage session");
-		model.addAttribute("sessionId", session.getAttribute("sessionLoginMember"));
-		return returnView;
 	}
 }
