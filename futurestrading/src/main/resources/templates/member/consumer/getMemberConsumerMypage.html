@@ -2,14 +2,24 @@
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	data-layout-decorate="~{layout/defaultLayout}">
-
+<th:block layout:fragment="css">
+	<style>
+		.tab-content{
+			background-color: #fff;
+		}
+	</style>
+</th:block>
 <th:block layout:fragment="script">
 	<script type="text/javascript">
         $(document).ready(function(){
-            $(".nav-tabs a").click(function(e){
+           
+        	/* side menu */
+        	$(".nav-tabs a").click(function(e){
                 $(this).tab('show');
                 e.preventDefault();
             });
+            
+        	/* 회원탈퇴 안내, 과정 */
             $(".member-remove-text-btn").click(function(e){
                 $('.member-remove-bank').toggle();
                 $('.member-remove-text').hide();
@@ -36,8 +46,49 @@
 </th:block>
 
 <div layout:fragment="content">
-
-
+	<div class="container mypage">
+        <div class="row">
+        	<!-- mypage side nav -->
+            <div class="col-md-3 mypage-nav">
+                <ul class="nav nav-tabs flex-column">
+                    <li class="nav-item">
+                      <a class="nav-link active" href="#mypage-content-information">회원정보 수정</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="#mypage-content-password">비밀번호 변경</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="#mypage-content-log-data">접속정보</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="#mypage-content-member-remove">회원탈퇴</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- mypage content -->
+            <div class="col-md-9">
+                <div class="mypage-content tab-content">
+                    <div id="mypage-content-information" class="tab-pane active">
+                        <div th:replace="member/consumer/fragmentMemberConsumerMypageInformation :: mypage-content-information">
+                		</div>
+                    </div>
+                    <div id="mypage-content-password" class="tab-pane">
+                        <div th:replace="member/consumer/fragmentMemberConsumerMypagePassword :: mypage-content-password">
+                		</div>
+                    </div>
+                    
+                    <div id="mypage-content-log-data" class="tab-pane">
+                        <div th:replace="member/consumer/fragmentMemberConsumerMypagelogData :: mypage-content-log-data">
+                		</div>
+                    </div>
+                    <div id="mypage-content-member-remove" class="tab-pane">
+                        <div th:replace="member/consumer/fragmentMemberConsumerMypageRemove :: mypage-content-member-remove">
+                		</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 </html>

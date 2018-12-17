@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+	
+<div th:fragment="mypage-content-member-remove">
+
+	<h2>회원탈퇴안내</h2>
+	
+	<!-- 회원탈퇴 처리 과정 안내 -->
+	<div class="member-remove-guide">
+	    <ul>
+	        <li class="nav-item guide-btn1 active">
+	          <a class="nav-link" href="#">탈퇴 안내</a>
+	        </li>
+	        <li><i class="material-icons">navigate_next</i></li>
+	        <li class="nav-item guide-btn2">
+	          <a class="nav-link" href="#">자산 확인</a>
+	        </li>
+	        <li><i class="material-icons">navigate_next</i></li>
+	        <li class="nav-item guide-btn3">
+	          <a class="nav-link" href="#">탈퇴 신청</a>
+	        </li>
+	        <li><i class="material-icons">navigate_next</i></li>
+	        <li class="nav-item guide-btn4">
+	          <a class="nav-link" href="#">탈퇴 처리</a>
+	        </li>
+	    </ul>
+	</div>
+	
+	<!-- 회원탈퇴 내용 -->
+    <div class="member-remove-text">
+        <h4>회원탈퇴 전, 아래 내용을 확인해 주시기 바랍니다.</h4>
+        <h6>1. 회원탈퇴 불가 사유</h6>
+        <p>아래의 사항 중 하나 이상 해당 할 경우 회원 탈퇴가 불가능합니다. (다음 단계에서 확인 가능)</p>
+        <ul>
+            <li>1. 진행중인 거래가 있을 경우</li>
+            <li>2. 잔여 보유자산이 ≈10,000원 이상인 경우</li>
+            <li>3. 입출금 중인 암호화폐가 있는 경우</li>
+            <li>4. 사용 중인 유료서비스가 있는 경우</li>
+            <li>5. 미사용 유료서비스가 있는 경우</li>
+            <li>6. 휴면자산 반환신청을 하지 않은 경우</li>
+        </ul>
+        <h6>2. 소멸 및 서비스 불가</h6>
+        <p>이미 탈퇴한 계정으로 오입금되는 암호화폐는 블록체인 특성상(익명) 회수가 불가하오니 각별히 주의하시기 바랍니다. 또한 빗썸 계정으로 연결되어 있는 유,무료 서비스는 더 이상 사용이 불가하며 자동 소멸 됨을 알려 드립니다.</p>
+        <h6>3. 소액 자산 처리</h6>
+        <p>출금과 송금을 통해 최종적으로 남겨진 소액자산은 아래와 같으며 탈퇴시 회원님 동의 하에 한국백혈병어린이재단으로 기부할 수 있으며 처리하지 못하는 소액자산은 권리포기 합니다.</p>
+        <ul>
+            <li>1. 자산정리 시 소액자산 = 출금 최소금액 + 출금 수수료 이하의 KRW 또는 암호화폐</li>
+            <li>2. 자산이동 시 소액자산 = 송금 최소금액 이하의 KRW 또는 암호화폐</li>
+        </ul>
+        <a class="btn member-remove-text-btn" href="#member-remove-bank">충분히 숙지하고 다음 단계로 이동합니다.</a>
+    </div>
+    <!-- 자산확인 -->
+    <div class="member-remove-bank" id="member-remove-bank">
+        <h4>'Consumer01'님의 보유자산은 총 3,032원 입니다.</h4>
+        <div class="box">
+            <h6>탈퇴진행을 위해서는 회원님의 잔여자산을 환수 하셔야 합니다.</h6>
+            <ul>
+                <li>① 사용중인 자산이 존재 합니다. 취소처리 또는 입금처리가 완료된 후 진행해 주시기 바랍니다. 자산현황 내 거래내역 입금 출금</li>
+            </ul>
+            <h6>탈퇴 유의사항</h6>
+            <ul>
+                <li>① 회원님의 자산 권리포기 가능금액( KRW환산 10,000원 미만) 이십니다.</li>
+                <li>② 더 이상 출금 및 송금이 불가능한 소액자산 이라고 판단하시면, 다음 단계에서 권리를 포기하고 탈퇴를 진행할 수 있습니다.</li>
+                <li>③ 회원 탈퇴를 진행하시면 본 계정으로 연결되어 있는 유,무료 서비스는 더 이상 사용이 불가합니다. 또한 회원님의 지갑주소로 입금될 수 있는 암호화폐의 소유권도 함께 유실 됩니다.</li>
+                <li>④ 탈퇴를 결정하시기 전 신중한 판단을 부탁 드립니다.</li>
+            </ul>
+        </div>
+        <a class="btn member-remove-bank-btn go" href="#member-remove-ready">상기 잔여자산을 처리 한 후 탈퇴가 가능합니다.</a>
+        <a class="btn goback" href="#">탈퇴를 보류하고 메인으로 이동합니다.</a>
+    </div>
+    
+    <!-- 탈퇴신청 -->
+    <div class="member-remove-ready" id="member-remove-ready">
+        <p>탈퇴 신청</p>
+        <a class="btn member-remove-ready-btn" href="#member-remove-ready">신청</a>
+    </div>
+    
+    <!-- 탈퇴처리 -->
+    <div class="member-remove-complete" id="member-remove-complete">
+        <p>탈퇴 처리</p>
+    </div>
+</div>
+	
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+	
+<div th:fragment="mypage-content-information">
+    <h2>회원정보 수정</h2>
+    <div class="mypage-content-form">
+        <form>
+            <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">ID</span>
+                </div>
+                <p class="form-control" th:text="${sessionId.totalId}"></p>
+            </div>
+            <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">PASSWORD</span>
+                </div>
+                <input type="password" class="form-control">
+            </div>
+            <button class="btn" type="button">확인</button>
+        </form>
+    </div>      	
+</div>
+
+</html>
