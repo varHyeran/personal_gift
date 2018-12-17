@@ -652,18 +652,6 @@ a.nav-link:hover{
     border-radius: 4px;
 }
 
-/* 탭 이동시 모션 */
-.login-html .sign-in-consumer-htm,
-.login-html .sign-in-seller-htm{
-    top:0;
-    left:0;
-    right:0;
-    bottom:0;
-    position:absolute;
-    transform:rotateY(180deg);
-    backface-visibility:hidden;
-    transition:all .4s linear;
-}
 .login-html .sign-in-consumer,
 .login-html .sign-in-seller,
 .login-form .group .check{
@@ -675,36 +663,6 @@ a.nav-link:hover{
     text-transform:uppercase;
 }
 
-/* 탭 */
-
-.login-html .tab{
-    font-size:15px;
-    font-weight: 100;
-    text-align: center;
-    width: 49.3%;
-    padding: 10px;
-    margin:0 0 10px 0;
-    display:inline-block;
-    color: #bbb;
-    border-top: 2px solid #ddd;
-    
-}
-
-.login-html .tab:hover{
-    cursor: pointer;
-    color: #888;
-    border-color: #3d90e2;
-}
-
-/* 선택된 탭 */
-.login-html .sign-in-consumer:checked + .tab,
-.login-html .sign-in-seller:checked + .tab{
-    color:#333;
-    padding: 10px 0px;
-    border-top: 0;
-    border-right: 0;
-    border-bottom: 2px solid #3d90e2;
-}
 
 /* login input */
 
@@ -715,6 +673,14 @@ a.nav-link:hover{
     transform-style:preserve-3d;
     font-size: 11pt;
     margin-top: -15px;
+}
+
+.login-form h1{
+	font-size: 35pt;
+	font-weight: 600;
+	margin: 0;
+	color : #438bc0;
+	text-align: center;
 }
 
 .login-form .group input[type=text]{
@@ -753,9 +719,18 @@ a.nav-link:hover{
     font-size:12px;
 }
 .login-form .group .button{
-    background:#3d90e2;
+    transition: all 0.7s ease-out;
+    background-image: linear-gradient(to top, #438bc0 10%, #438bc0 51%, #438bc0 90%);
+    background-position: 1% 50%;
+    background-size: 300% 300%;
     color: #fff;
     border: none;
+}
+
+.login-form .group .button:hover{
+	cursor: pointer;
+	background-position: right bottom;
+    background-image: linear-gradient(to bottom, #22bdd2 0%, #545cae 51%, #438bc0 100%);
 }
 
 /* 체크박스 아이콘 */
