@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	data-layout-decorate="~{layout/defaultLayout}">
+
+<th:block layout:fragment="script">
+	<script type="text/javascript">
+        $(document).ready(function(){
+            $(".nav-tabs a").click(function(e){
+                $(this).tab('show');
+                e.preventDefault();
+            });
+            $(".member-remove-text-btn").click(function(e){
+                $('.member-remove-bank').toggle();
+                $('.member-remove-text').hide();
+                $('.guide-btn1').removeClass('active');
+                $('.guide-btn2').addClass('active');
+                e.preventDefault();
+            });
+            $(".member-remove-bank-btn").click(function(e){
+                $('.member-remove-ready').toggle();
+                $('.member-remove-bank').hide();
+                $('.guide-btn2').removeClass('active');
+                $('.guide-btn3').addClass('active');
+                e.preventDefault();
+            });
+            $(".member-remove-ready-btn").click(function(e){
+                $('.member-remove-complete').toggle();
+                $('.member-remove-ready').hide();
+                $('.guide-btn3').removeClass('active');
+                $('.guide-btn4').addClass('active');
+                e.preventDefault();
+            });
+        });
+    </script>
+</th:block>
+
+<div layout:fragment="content">
+
+
+</div>
+
+</html>

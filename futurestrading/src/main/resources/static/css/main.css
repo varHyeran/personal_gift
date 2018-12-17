@@ -21,13 +21,16 @@ a:active,a:hover,a:link,a:default,a:focus,a:visited,a:empty{
     color: #333;
 }
 
-/* 네비게이션 */
+/* main div 기본간격 조절 a */
+.main-box{
+	padding: 100px 10px;
+}
 
+/* 네비게이션 */
 nav.bg-dark{
     background-color: #333 !important;
 }
-
-.nav-width {
+ .nav-width {
     width: 1200px;
     margin-left: auto;
     margin-right: auto;
@@ -36,96 +39,100 @@ nav.bg-dark{
     justify-content: space-between;
     padding: 5px
 }
-
-.logo-img {
+ .logo-img {
     width: 160px;
 }
-
-.nav-futures .nav-item {
+ .nav-futures .nav-item {
     margin-left: 30px;
     font-weight: 00;
     font-size: 13pt;
 }
-
-.nav-futures .nav-item a.nav-link{
+ .nav-futures .nav-item a.nav-link{
     color: #ddd;
 }
-
-.nav-futures .nav-item a.nav-link:hover{
+ .nav-futures .nav-item a.nav-link:hover{
     color: #fff;
 }
-
-.nav-memeber {
+ .nav-memeber {
     font-size: 10pt;
 }
-
-.nav-memeber li.nav-item {
+ .nav-memeber li.nav-item {
     float: right;
-    margin-left: 10px;
     font-size: 10pt;
 }
-
-.nav-memeber li.nav-item i {
+ .nav-memeber li.nav-item i {
     font-size: 10pt;
 }
 .nav-memeber li.nav-item .dropdown-toggle{
     margin-left: 20px;  
     color: #ddd;
+    padding: 12px;
 }
-
-.nav-memeber li.nav-item .dropdown-toggle::after{
+ .nav-memeber li.nav-item .dropdown-toggle::after{
     display: none;
 }
-
-.navbar-dark .navbar-nav .active>.dropdown-toggle
+ .navbar-dark .navbar-nav .active>.dropdown-toggle
 , .navbar-dark .navbar-nav .dropdown-toggle.active
 , .navbar-dark .navbar-nav .dropdown-toggle.show
 , .navbar-dark .navbar-nav .show>.dropdown-toggle{
     color: #ddd;
 }
-
-.nav-memeber li.nav-member-dropdown ul.dropdown-menu{
-    display: none;
+ .nav-memeber li.nav-member-dropdown ul.dropdown-menu{
     position: absolute;
     min-width: 120px;
     top: 55px;
     right: auto;
     left: auto;
     padding: 15px 0px 20px 20px;
-    border-radius: 8;
+    border-radius: 5;
     font-size: 11pt;
     line-height: 2.5;
+    background-color: #fff;
 }
-
-.nav-memeber li.nav-member-dropdown ul.dropdown-menu-money{
+ .nav-memeber li.nav-member-dropdown ul.dropdown-menu li a {
+    color: #333;
+    font-size: 10pt;
+    font-weight: 300;
+}
+ .nav-memeber li.nav-member-dropdown ul.dropdown-menu li:hover a{
+    color: #000;
+    font-weight: 400;
+}
+ .nav-memeber li.nav-member-dropdown ul.dropdown-menu-money{
     margin-left: -28px;
 }
-
-.nav-memeber li.nav-member-dropdown ul.dropdown-menu-id{
+ .nav-memeber li.nav-member-dropdown ul.dropdown-menu-id{
     margin-left: 0px;
 }
-
-.nav-memeber li.nav-member-dropdown:hover a.nav-link{
+ .nav-memeber li.nav-member-dropdown:hover a.nav-link{
     transition: all 0.4s ease-out;
     color: #22bdd2;
 }
-
-.nav-memeber li.nav-member-dropdown:hover i{
+ .nav-memeber li.nav-member-dropdown:hover i{
     transition: all 0.4s ease-out;
     transform: rotate(180deg);
     color: #22bdd2;
 }
-
-.nav-memeber li.nav-member-dropdown:hover ul.dropdown-menu{
-    display: block;
-}
-
-
-.nav-ul {
+ .nav-ul {
     justify-content: space-between;
 }
-
-@media only screen and (max-width: 767px) {
+ @media (min-width: 767px){
+    .nav-memeber li.nav-member-dropdown ul.dropdown-menu{
+        display: none;
+    }
+    .nav-memeber li.nav-member-dropdown:hover ul.dropdown-menu{
+        display: block;
+    }
+}
+ @media (max-width: 992px){
+    .nav-futures .nav-item {
+        margin-left: 20px;
+    }
+    .nav-memeber li.nav-item .dropdown-toggle{
+        padding: 12px 10px;
+    }
+}
+ @media only screen and (max-width: 767px) {
     .nav-ul {
         margin-top: 20px;
         margin-bottom: 20px;
@@ -137,10 +144,37 @@ nav.bg-dark{
         margin-top: 30px;
     }
     .nav-memeber li.nav-item {
+        margin-left: 0px;
+    }
+    
+    .nav-memeber li.nav-member-dropdown ul.dropdown-menu{
+        position: relative;
+        min-width: auto;
+        top: 0;
+        right: auto;
+        left: auto;
+        padding: 0px 0px 10px 20px;
+        border-radius: 8;
+        font-size: 11pt;
+        line-height: 2.5;
+        background-color: #333;
+        border: none;
+    }
+     .nav-memeber li.nav-member-dropdown ul.dropdown-menu li a {
+        color: #eee;
+        font-size: 10pt;
+        font-weight: 100;
+    }
+     .nav-memeber li.nav-member-dropdown ul.dropdown-menu li:hover a{
+        color: #fff;
+    }
+     .nav-memeber li.nav-member-dropdown ul.dropdown-menu-money{
         margin-left: 30px;
     }
-}
-
+     .nav-memeber li.nav-member-dropdown ul.dropdown-menu-id{
+        margin-left: 30px;
+    }
+ }
 
 
 
@@ -776,4 +810,257 @@ a.nav-link:hover{
     text-align: left;
     font-size: 10pt;
     margin-top: 5px;
+}
+
+/* mypage */
+
+
+
+.mypage{
+    min-height: 800px;
+    padding-bottom: 80px;
+}
+
+.mypage-nav,.mypage-content{
+    margin-top: 100px;    
+}
+
+/* 마이페이지 side nav */
+
+.mypage-nav .flex-column{
+    border: 1px solid #e0e2e4;
+    padding: 20px 0px 20px 0px ;
+    color: #404040;
+}
+
+.mypage-nav .flex-column li a{
+    font-size: 11pt;
+    padding-bottom: 10px;
+}
+
+.mypage-nav .flex-column li .active{
+    background-color: #438bc0;
+    border-radius: 0;
+    color: #fff;
+}
+
+/* 마이페이지 폼*/
+
+.mypage-content h2{
+    font-size: 14pt;
+    font-weight: 300;
+    color: #404040;
+    border-bottom: 1px solid #e0e2e4;
+    padding-bottom: 10px;
+    margin-bottom: 40px;
+}
+.mypage-content .mypage-content-formn{
+    margin: 50px 20px 50px 20px;
+}
+.mypage-content .mypage-content-form form .input-group{
+    width: 100%;
+    padding-bottom: 10px;
+}
+.mypage-content .mypage-content-form form .input-group .input-group-prepend{
+    width: 30%;
+}
+.mypage-content .mypage-content-form form .input-group .input-group-prepend .input-group-text{
+    width: 100%;
+    background-color: #f0f0f0;
+    font-size: 11pt;
+    font-weight: 300;
+    border: 1px solid #e0e2e4;
+    border-radius: 0;
+}
+
+.mypage-content .mypage-content-form form .input-group .form-control {
+    border-radius: 0;
+    border: 1px solid #e0e2e4;
+}
+
+.mypage-content .mypage-content-form form button{
+    border-radius: 0;
+    padding: 5px 40px;
+    margin-top: 20px;
+    float: right;
+    background-color: #f0f0f0;
+    border: 1px solid #e0e2e4;
+}
+
+.mypage-content .mypage-content-form form button:hover{
+    background-color: #e0e2e4;
+}
+
+/* log data */
+
+table.log-data-table{
+    font-size: 10pt;
+    font-weight: 100;
+    width: 100%;
+    padding: 0;
+    word-break: keep-all;
+}
+
+table.log-data-table th
+,table.log-data-table td{
+    border: 1px solid #e0e2e4; 
+    padding: 10px;
+    color: #404040;
+}
+
+/* member remove */
+.member-remove-guide{
+    width: 100%;
+    margin-left: -35px;
+}
+.member-remove-guide ul li{
+    display: inline-block;
+}
+.member-remove-guide ul li.nav-item{
+    border: 1px solid #e0e2e4; 
+    padding: 5px 20px;
+    font-size: 11pt;
+    border-radius: 60px;
+    color: #404040;
+}
+
+.member-remove-guide ul li.active{
+    border: 2px solid #438bc0;
+}
+.member-remove-guide ul li.active a{
+    color: #438bc0;
+    font-weight: 400;
+}
+
+.member-remove-guide ul li i{
+    border: none;
+    font-size: 10pt;
+}
+
+/* 회원탈퇴 내용 */
+
+.member-remove-text{
+    font-size: 9pt;
+    margin-left: 15px;
+}
+
+.member-remove-text h4{
+    font-size: 17pt;
+    font-weight: 400;
+    padding-top: 15px;
+    padding-bottom: 20px;
+}
+.member-remove-text h6{
+    font-size: 13pt;
+    font-weight: 500;
+    padding-top: 15px;
+}
+.member-remove-text p{
+    padding: 5px 0px;
+}
+.member-remove-text ul{
+    list-style: none;
+    padding: 0px;
+}
+.member-remove-text ul li{
+    padding-bottom: 10px;
+    padding-left: 15px;
+}
+.member-remove-text a.btn{
+    font-size: 12pt;
+    border-radius: 0;
+    display: block;
+    padding: 10px 80px;
+    margin-top: 30px;
+    background: transparent;
+    text-transform: uppercase;
+    color: #fff;
+    border-radius: 4px;
+    transition: all 0.7s ease-out;
+    background-image: linear-gradient(to left, #545cae 0%, #438bc0 51%, #22bdd2 100%);
+    background-position: 1% 50%;
+    background-size: 300% 300%;
+    text-decoration: none;
+    border: none;
+}
+.member-remove-text a.btn:hover{
+    background-position: right center;
+    background-image: linear-gradient(to left, #22bdd2 0%, #545cae 51%, #438bc0 100%);
+}
+.member-remove-text a.btn:active{
+    background-color: #545cae;
+}
+
+/*회원탈퇴 잔액 안내*/
+.member-remove-bank{
+    display: none;
+    font-size: 11pt;
+    line-height: 2;
+    color: #404040;
+    text-align: center;
+}
+.member-remove-bank h4{
+    font-size: 17pt;
+    font-weight: 400;
+    text-align: left;
+    padding-top: 15px;
+    padding-bottom: 20px;
+}
+.member-remove-bank .box{
+    background-color: #f0f0f0;
+    padding: 25px;
+    word-break: break-all;
+    text-align: left;
+}
+.member-remove-bank .box h6{
+    font-weight: 500;
+    padding: 0;
+}
+.member-remove-bank .box ul{
+    font-size: 10pt;
+    list-style: none;
+    padding: 0 10px;
+}
+.member-remove-bank a.btn{
+    font-size: 12pt;
+    border-radius: 0;
+    display: inline-block;
+    padding: 10px 40px;
+    margin-top: 30px;
+    margin-left: 5px;
+    margin-right: 10px;
+    background: transparent;
+    text-transform: uppercase;
+    color: #fff;
+    border-radius: 2px;
+    transition: all 0.7s ease-out;
+    background-position: 1% 50%;
+    background-size: 300% 300%;
+    text-decoration: none;
+    border: none;
+}
+
+.member-remove-bank a.go{
+    background-image: linear-gradient(to left, #22bdd2 0%, #22bdd2 51%, #22bdd2 100%);
+}
+.member-remove-bank a.goback{
+    background-image: linear-gradient(to left, #545cae 0%, #545cae 51%, #545cae 100%);
+}
+
+.member-remove-bank a.btn:hover{
+    background-position: right center;
+    background-image: linear-gradient(to left, #22bdd2 0%, #545cae 51%, #438bc0 100%);
+}
+.member-remove-bank a.btn:active{
+    background-color: #545cae;
+}
+
+/* 회원탈퇴 신청*/
+.member-remove-ready{
+    display: none;
+}
+
+/* 회원탈퇴 처리*/
+.member-remove-complete{
+    display: none;
 }

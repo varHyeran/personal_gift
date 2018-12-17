@@ -1,239 +1,252 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>giftFutures</title>
-    
-    <link rel="icon" href="/imgs/icon/giftFutures_favicon-04.png">
-    
-    <!-- Bootstrap css -->
- 	<link rel="stylesheet" href="/webjars/bootstrap/4.1.3/css/bootstrap.min.css">	
- 	<!-- jquery -->
-	<script src="/webjars/jquery/3.3.1/jquery.min.js"></script>	
-	<!-- Bootstrap js -->
-	<script src="/webjars/bootstrap/4.1.3/js/bootstrap.min.js"></script> 
-    
-    <!-- google icon -->
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    
-    <!-- Highcharts -->
-    <script type="text/javascript" src="/webjars/highcharts/6.2.0/highstock.js"></script>
-    <script type="text/javascript" src="/webjars/highcharts/6.2.0/modules/exporting.js"></script>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	data-layout-decorate="~{layout/defaultLayout}">
+
+<th:block layout:fragment="script">
+	<!-- Highcharts -->
+	<script type="text/javascript" src="/webjars/highcharts/6.2.0/highstock.js" th:src="@{/webjars/highcharts/6.2.0/highstock.js}"></script>
+	<script type="text/javascript" src="/webjars/highcharts/6.2.0/modules/exporting.js" th:src="@{/webjars/highcharts/6.2.0/modules/exporting.js}"></script>
 	<!-- Highcharts style -->
-    <script type="text/javascript" src="/webjars/highcharts/6.2.0/themes/dark-unica.js"></script>
-	<!-- Highcharts date연결 -->
-    <script type="text/javascript">
-	    $(document).ready(function() {
-	    	$.getJSON('/data_json/sample.json', function (data) {
-	    	// create the chart
-	    	    console.log(data);
-	    	    Highcharts.stockChart('container-chart1', {
-	    	        rangeSelector: {
-	    	            selected: 1
-	    	        },
-	
-	    	        title: {
-	    	            text: ''
-	    	        },
-	
-	    	        series: [{
-	    	            type: 'candlestick',
-	    	            name: 'AAPL Stock Price',
-	    	            data: data,
-	    	            dataGrouping: {
-	    	                units: [
-	    	                    [
-	    	                        'week', // unit name
-	    	                        [1] // allowed multiples
-	    	                    ], [
-	    	                        'month',
-	    	                        [1, 2, 3, 4, 6]
-	    	                    ]
-	    	                ]
-	    	            }
-	    	        }]
-	    	    });
-	    	});
-	    	$.getJSON('/data_json/sample.json', function (data) {
+	<script type="text/javascript" src="/webjars/highcharts/6.2.0/themes/dark-unica.js" th:src="@{/webjars/highcharts/6.2.0/themes/dark-unica.js}"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			<!-- Highcharts date연결 -->
+			$.getJSON('/data_json/sample.json', function (data) {
+			// create the chart
+			    console.log(data);
+			    Highcharts.stockChart('container-chart1', {
+			        rangeSelector: {
+			            selected: 1
+			        },
+		
+			        title: {
+			            text: ''
+			        },
+		
+			        series: [{
+			            type: 'candlestick',
+			            name: 'AAPL Stock Price',
+			            data: data,
+			            dataGrouping: {
+			                units: [
+			                    [
+			                        'week', // unit name
+			                        [1] // allowed multiples
+			                    ], [
+			                        'month',
+			                        [1, 2, 3, 4, 6]
+			                    ]
+			                ]
+			            }
+			        }]
+			    });
+			});
+			$.getJSON('/data_json/sample.json', function (data) {
 		    	// create the chart
-	    	    console.log(data);
-	    	    Highcharts.stockChart('container-chart2', {
-	    	        rangeSelector: {
-	    	            selected: 1
-	    	        },
-	
-	    	        title: {
-	    	            text: ''
-	    	        },
-	
-	    	        series: [{
-	    	            type: 'candlestick',
-	    	            name: 'AAPL Stock Price',
-	    	            data: data,
-	    	            dataGrouping: {
-	    	                units: [
-	    	                    [
-	    	                        'week', // unit name
-	    	                        [1] // allowed multiples
-	    	                    ], [
-	    	                        'month',
-	    	                        [1, 2, 3, 4, 6]
-	    	                    ]
-	    	                ]
-	    	            }
-	    	        }]
-	    	    });
-	    	});
-	    	$.getJSON('/data_json/sample.json', function (data) {
+			    console.log(data);
+			    Highcharts.stockChart('container-chart2', {
+			        rangeSelector: {
+			            selected: 1
+			        },
+		
+			        title: {
+			            text: ''
+			        },
+		
+			        series: [{
+			            type: 'candlestick',
+			            name: 'AAPL Stock Price',
+			            data: data,
+			            dataGrouping: {
+			                units: [
+			                    [
+			                        'week', // unit name
+			                        [1] // allowed multiples
+			                    ], [
+			                        'month',
+			                        [1, 2, 3, 4, 6]
+			                    ]
+			                ]
+			            }
+			        }]
+			    });
+			});
+			$.getJSON('/data_json/sample.json', function (data) {
 		    	// create the chart
-	    	    console.log(data);
-	    	    Highcharts.stockChart('container-chart3', {
-	    	        rangeSelector: {
-	    	            selected: 1
-	    	        },
-	
-	    	        title: {
-	    	            text: ''
-	    	        },
-	
-	    	        series: [{
-	    	            type: 'candlestick',
-	    	            name: 'AAPL Stock Price',
-	    	            data: data,
-	    	            dataGrouping: {
-	    	                units: [
-	    	                    [
-	    	                        'week', // unit name
-	    	                        [1] // allowed multiples
-	    	                    ], [
-	    	                        'month',
-	    	                        [1, 2, 3, 4, 6]
-	    	                    ]
-	    	                ]
-	    	            }
-	    	        }]
-	    	    });
-	    	});
-	    });
-    </script>
+			    console.log(data);
+			    Highcharts.stockChart('container-chart3', {
+			        rangeSelector: {
+			            selected: 1
+			        },
+		
+			        title: {
+			            text: ''
+			        },
+		
+			        series: [{
+			            type: 'candlestick',
+			            name: 'AAPL Stock Price',
+			            data: data,
+			            dataGrouping: {
+			                units: [
+			                    [
+			                        'week', // unit name
+			                        [1] // allowed multiples
+			                    ], [
+			                        'month',
+			                        [1, 2, 3, 4, 6]
+			                    ]
+			                ]
+			            }
+			        }]
+			    });
+			});
+			<!-- main 슬라이드, 탭  -->
+	        // Activate Carousel
+	        // interval 속도
+	        $("#myCarousel").carousel({
+	            interval: 5000
+	        });
+	        // Enable Carousel Indicators
+	        $(".item1").click(function() {
+	            $("#myCarousel").carousel(0);
+	        });
+	        $(".item2").click(function() {
+	            $("#myCarousel").carousel(1);
+	        });
+	        $(".item3").click(function() {
+	            $("#myCarousel").carousel(2);
+	        });
+	        // prev,next
+	        // Enable Carousel Controls
+	        $(".carousel-control-prev").click(function(e) {
+	            $("#myCarousel").carousel("prev");
+	            e.preventDefault();
+	        });
+	        $(".carousel-control-next").click(function(e) {
+	            $("#myCarousel").carousel("next");
+	            e.preventDefault();
+	        });
+	        // 탭
+	        $(".nav-tabs a").click(function(e) {
+	            $(this).tab('show');
+	            e.preventDefault();
+	        });
+		});
+	</script>
+</th:block>
 
-    <!-- my css -->
-    <link href="/css/main.css" rel="stylesheet" type="text/css">
-</head>
-<body>
-	<!-- NAV -->
-	<div th:include="/module/nav.html"></div>
-	<main role="main">
-        <!-- 메인 슬라이드 -->
-        <div id="myCarousel" class="carousel slide">
-            <!-- Indicators -->
-            <ul class="carousel-indicators">
-                <li class="item1 active"></li>
-                <li class="item2"></li>
-                <li class="item3"></li>
-            </ul>
-            <!-- The slideshow -->
-            <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <div class="slide-item-div">
-                        <img class="slide-img" src="/imgs/giftFutures_main-03.jpg">
-                        <div class="slide-text">
-                            <img src="/imgs/giftFuturesLogo-03.png">
-                            <h1>걱정없는 농산물 직거래를 위한<br>새로운 선택</h1>
-                        </div>
-                    </div>
-                </div>
-                <div class="carousel-item">
-                    <div class="slide-item-div">
-                        <img class="slide-img" src="/imgs/william-isted-782697-unsplash.jpg">
-                        <div class="slide-text">
-                            <h1>또르르릉<br>뚜르르릉</h1>
-                        </div>
-                    </div>
-                </div>
-                <div class="carousel-item">
-                    <div class="slide-item-div">
-                        <img class="slide-img" src="/imgs/aa.jpg">
-                    </div>
-                </div>
-            </div>
-            <!-- Left and right controls -->
-            <div class="prev-next">
-                <a class="carousel-control-prev" href="#myCarousel">
-                    <span class="carousel-control-prev-icon"></span>
-                </a>
-                <a class="carousel-control-next" href="#myCarousel">
-                    <span class="carousel-control-next-icon"></span>
-                </a>
-            </div>
-        </div>
+<div layout:fragment="content">
 
-        <!-- 메인 탭 -->
-        <div class="main-tab">
-            <div class="main-tab-nav">
-                <div class="container">
-                <!-- Nav tabs -->
-                <ul class="nav nav-tabs">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="#home">
-                            <h5>청양고추</h5>
-                            <span class="tab-eng-name">Cheongyang Pepper</span>
-                            <p class="tab-price">15,320<span>원</span></p>
-                            <span class="tab-per btn">+ 3.42%</span>
-                            <span class="tab-icon">
-                                <img style="width: 42px;" src="/imgs/icon/giftFutures_concep-06.png">
-                            </span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#menu1">
-                            <h5>배추</h5>
-                            <span class="tab-eng-name">napa cavvage</span>
-                            <p class="tab-price">20,124<span>원</span></p>
-                            <span class="tab-per btn">+ 10.02%</span>
-                            <span class="tab-icon">
-                                <img style="width: 42px;" src="/imgs/icon/giftFutures_concep-07.png">
-                            </span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#menu2">
-                            <h5>마늘</h5>
-                            <span class="tab-eng-name">garlic</span>
-                            <p class="tab-price">105,320<span>원</span></p>
-                            <span class="tab-per btn">- 8.47%</span>
-                            <span class="tab-icon">
-                                <img style="width: 27px;" src="/imgs/icon/giftFutures_concep-08.png">
-                            </span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-            </div>
-            
-            <!-- Tab panes -->
-            <div class="main-tab-content">
-                <div class="container">
-                <div class="tab-content">
-                    <div id="home" class="container tab-pane active">
-                        <h3>Cheongyang Pepper Chart</h3>
-                        <div id="container-chart1" class="main-chart"></div>
-                    </div>
-                    <div id="menu1" class="container tab-pane fade">
-                        <h3>Napa Cavvage Chart</h3>
-                        <div id="container-chart2" class="main-chart"></div>
-                    </div>
-                    <div id="menu2" class="container tab-pane fade">
-                        <h3>Garlic Chart</h3>
-                        <div id="container-chart3" class="main-chart"></div>
-                    </div>
-                </div>
-            </div>
-            </div>
-        </div>    
-    </main>
-    <!-- FOOTER -->
-    <div th:include="/module/footer.html"></div>
-</body>
+	<!-- 메인 슬라이드 -->
+	<div id="myCarousel" class="carousel slide">
+	    <!-- Indicators -->
+	    <ul class="carousel-indicators">
+	        <li class="item1 active"></li>
+	        <li class="item2"></li>
+	        <li class="item3"></li>
+	    </ul>
+	    <!-- The slideshow -->
+	    <div class="carousel-inner">
+	        <div class="carousel-item active">
+	            <div class="slide-item-div">
+	                <img class="slide-img" src="/imgs/giftFutures_main-03.jpg">
+	                <div class="slide-text">
+	                    <img src="/imgs/giftFuturesLogo-03.png">
+	                    <h1>걱정없는 농산물 직거래를 위한<br>새로운 선택</h1>
+	                </div>
+	            </div>
+	        </div>
+	        <div class="carousel-item">
+	            <div class="slide-item-div">
+	                <img class="slide-img" src="/imgs/william-isted-782697-unsplash.jpg">
+	                <div class="slide-text">
+	                    <h1>또르르릉<br>뚜르르릉</h1>
+	                </div>
+	            </div>
+	        </div>
+	        <div class="carousel-item">
+	            <div class="slide-item-div">
+	                <img class="slide-img" src="/imgs/aa.jpg">
+	            </div>
+	        </div>
+	    </div>
+	    <!-- Left and right controls -->
+	    <div class="prev-next">
+	        <a class="carousel-control-prev" href="#myCarousel">
+	            <span class="carousel-control-prev-icon"></span>
+	        </a>
+	        <a class="carousel-control-next" href="#myCarousel">
+	            <span class="carousel-control-next-icon"></span>
+	        </a>
+	    </div>
+	</div>
+	
+	<!-- 메인 탭 -->
+	<div class="main-tab">
+	    <div class="main-tab-nav">
+	        <div class="container">
+	        <!-- Nav tabs -->
+	        <ul class="nav nav-tabs">
+	            <li class="nav-item">
+	                <a class="nav-link active" href="#home">
+	                    <h5>청양고추</h5>
+	                    <span class="tab-eng-name">Cheongyang Pepper</span>
+	                    <p class="tab-price">15,320<span>원</span></p>
+	                    <span class="tab-per btn">+ 3.42%</span>
+	                    <span class="tab-icon">
+	                        <img style="width: 42px;" src="/imgs/icon/giftFutures_concep-06.png">
+	                    </span>
+	                </a>
+	            </li>
+	            <li class="nav-item">
+	                <a class="nav-link" href="#menu1">
+	                    <h5>배추</h5>
+	                    <span class="tab-eng-name">napa cavvage</span>
+	                    <p class="tab-price">20,124<span>원</span></p>
+	                    <span class="tab-per btn">+ 10.02%</span>
+	                    <span class="tab-icon">
+	                        <img style="width: 42px;" src="/imgs/icon/giftFutures_concep-07.png">
+	                    </span>
+	                </a>
+	            </li>
+	            <li class="nav-item">
+	                <a class="nav-link" href="#menu2">
+	                    <h5>마늘</h5>
+	                    <span class="tab-eng-name">garlic</span>
+	                    <p class="tab-price">105,320<span>원</span></p>
+	                    <span class="tab-per btn">- 8.47%</span>
+	                    <span class="tab-icon">
+	                        <img style="width: 27px;" src="/imgs/icon/giftFutures_concep-08.png">
+	                    </span>
+	                </a>
+	            </li>
+	        </ul>
+	    </div>
+	    </div>
+	    
+	    <!-- Tab panes -->
+	    <div class="main-tab-content">
+	        <div class="container">
+	        <div class="tab-content">
+	            <div id="home" class="container tab-pane active">
+	                <h3>Cheongyang Pepper Chart</h3>
+	                <div id="container-chart1" class="main-chart"></div>
+	            </div>
+	            <div id="menu1" class="container tab-pane fade">
+	                <h3>Napa Cavvage Chart</h3>
+	                <div id="container-chart2" class="main-chart"></div>
+	            </div>
+	            <div id="menu2" class="container tab-pane fade">
+	                <h3>Garlic Chart</h3>
+	                <div id="container-chart3" class="main-chart"></div>
+	            </div>
+	        </div>
+	    </div>
+	    </div>
+	</div>   
+	
+</div>
+
 </html>
