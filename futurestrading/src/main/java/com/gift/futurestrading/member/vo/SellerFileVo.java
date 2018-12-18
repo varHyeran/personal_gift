@@ -4,7 +4,6 @@ public class SellerFileVo {
 	private String sellerId;
 	private String sellerName;
 	private String sellerPath;
-	private String sellerFileExt;
 	private String sellerLicence;
 	private String sellerBankCopy;
 	private String sellerCertification;
@@ -33,12 +32,6 @@ public class SellerFileVo {
 	}
 	public void setSellerLicence(String sellerLicence) {
 		this.sellerLicence = sellerLicence;
-	}
-	public String getSellerFileExt() {
-		return sellerFileExt;
-	}
-	public void setSellerFileExt(String sellerFileExt) {
-		this.sellerFileExt = sellerFileExt;
 	}
 	public String getSellerBankCopy() {
 		return sellerBankCopy;

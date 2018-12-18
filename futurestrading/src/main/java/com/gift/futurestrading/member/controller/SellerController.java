@@ -12,11 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
-
 import com.gift.futurestrading.member.service.SellerService;
-import com.gift.futurestrading.member.vo.ConsumerRequestVo;
+
 import com.gift.futurestrading.member.vo.SellerFileRequest;
 import com.gift.futurestrading.member.vo.SellerRequestVo;
 
@@ -45,7 +42,6 @@ public class SellerController {
 		String path = session.getServletContext().getRealPath("\\upload\\");
 		String realPath =path;
 		System.out.println(path+"pathpathpathpath");
-		SellerService sellerService = new SellerService();
 		System.out.println(sellerFile.getMultipartFile()+"파일옵로드");
 		sellerService.sellerFileUpload(sellerFile, realPath);
 		return "index";
@@ -53,8 +49,7 @@ public class SellerController {
 	
 	//add seller 넘겨준 값 데이터 베이스 저장
 	@RequestMapping(value = "/addseller", method = RequestMethod.POST)
-	public String addConsumer(SellerRequestVo sellerRequestVo) {
-		System.out.println("ConsumerController.addConsumer() 호출");
+	public String addSeller(SellerRequestVo sellerRequestVo) {
 		int insertResult = sellerService.insertSeller(sellerRequestVo);
 		System.out.println(insertResult + " <---insertResult");
 		return "index";
@@ -64,7 +59,6 @@ public class SellerController {
 	@ResponseBody
 	public int idCheck(@RequestBody String id) {
 		System.out.println("SellerController");
-		System.out.println("ConsumerController.idCheck() 호출");
 		System.out.println(id + " <---id");
 
 		String pattern = "^[a-zA-Z0-9]*$";

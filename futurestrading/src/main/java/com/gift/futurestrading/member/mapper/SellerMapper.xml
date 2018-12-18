@@ -5,7 +5,31 @@
 		SELECT COUNT(*) FROM view_total_id WHERE total_id = #{id};
 	</select>
 	
-	<insert id="insertSeller" parameterType="map">
+	<insert id="insertSellerFile" parameterType="map">
+		INSERT 
+			INTO document_seller
+				(fk_seller__document_seller,
+				document_seller_name,
+				document_seller_path,
+				document_seller_license,
+				document_seller_bank_copy,
+				document_seller_certificate,
+				document_seller_communication_sales,
+				document_seller_product_grade,
+				document_seller_date
+				) 
+			VALUES(#{fk_seller__document_seller},
+				#{document_seller_name},
+				#{document_seller_path},
+				#{document_seller_license},
+				#{document_seller_bank_copy},
+				#{document_seller_certificate},
+				#{document_seller_communication_sales},
+				#{document_seller_product_grade},
+				now());
+	</insert>
+	
+		<insert id="insertSeller" parameterType="map">
 		INSERT 
 			INTO seller
 				(seller_id_pk,
@@ -31,3 +55,4 @@
 				'인증안됨');
 	</insert>
 </mapper>
+

@@ -67,85 +67,107 @@ public class SellerService {
 	}
 
 	/**
-	 * 샘플에 대한 정보를 데이터베이스에 등록
+	 * joinSellerDetail 대한 정보를 데이터베이스에 등록
 	 *
 	 * @param seller 입력된 샘플에 대한 정보
 	 * @throws IOException 
 	 */
 
-	/*
-	 * 12.14 현재 문제점 각 파일의 확장자 데어터 타입등 상세정보가 담길 데이터 베이스를 다시 만들어야한다 Vo파일 다시 생성하고 코드 주석
-	 * 추가해야한다. 현재 "document_seller의 데이터 베이스같이 licence"
-	 * 
-	 */
 	public void sellerFileUpload(SellerFileRequest sellerFileRequest, String realPath) throws IOException {
-		/*
-		 * sellerFileRequest --> seller, sellerFile로 변환 필요 1. multipartfile 파일데이터 -> 저장
-		 * 2. multipartfile 정보-> 새로운정보 추가 ->sellerFile 3.
-		 */
-		// 1.
-		// 2
-		System.out.println(
-				sellerFileRequest.getSellerId() + "sellerFileRequest.getSellerId();sellerFileRequest.getSellerId();");
-		System.out.println(sellerFileRequest.getSellerName());
 
 		MultipartFile[] multiPartFile = sellerFileRequest.getMultipartFile();
+		SellerFileVo sellerFileVo = new SellerFileVo();
+		
+		// 5개의 각기 다른 사진을 업로드 하기 때문에 for문 반복때 순서대로 번호 부여
+		int multipartInTheCounter = 0 ;
 		for (MultipartFile multipart : multiPartFile) {
 			if (!multipart.isEmpty()) {
-				// 3. sellerFilePath
-				// sellerFileVo.setSellerPath(realPath);
+				multipartInTheCounter += 1;;
 				Calendar cal = Calendar.getInstance();
 				String uploaderName = sellerFileRequest.getSellerName();
 				String originalFileName = multipart.getOriginalFilename();
 				int index = originalFileName.indexOf(".");
-				// 4. 이름
+				// 이름
 				String fileName = originalFileName.substring(0, index);
-				// sellerFileVo.setSellerName(fileName);
-				// 5. 확장자
+				// 확장자
 				String ext = originalFileName.substring(fileName.length() + 1, originalFileName.length());
-				// sellerFileVo.setSellerFileExt(ext);
-				// 6. 타입
-				// sellerFileVo.setsellerFileType(multipart.getContentType());
-				// 7. 크기
-				// sellerFileVo.setsellerFileSize(multipart.getSize());
-				// 8. 저장될 파일의 이름
+
+				// 날짜
 				String month = Integer.toString(cal.get(Calendar.MONTH) + 1);
 				String year = Integer.toString(cal.get(Calendar.YEAR));
-				String realFileName = month + year + uploaderName;
-				// sellerFileVo.setsellerFileRealName(realFileName);
-				System.out.println(realPath + "realPathrealPathrealPath");
-				String nameCompare = "_" + month + year;
 				// 내가 원하는 이름의 빈파일 생성
-				File file = new File(realPath + "/" + nameCompare+realFileName + "." + ext);
-				// multipartFile파일을 빈파일로 복사
-				System.out.println(file + "fileNamefilefilefile");
-				//폴더 이름 추출(순서)
-				int filePosition1 = file.getPath().indexOf("_");
-				int filePosition2 = file.getPath().lastIndexOf("\\");
-				System.out.println(filePosition1);
-				System.out.println(filePosition2);
-				String monthlyFolder = null;
+				String fileFolderPath = realPath + "/"+"_" +  month + year;
+				File fileDir = new File(fileFolderPath);
 				
-				try {
-					//폴더 이름 추출
-					monthlyFolder = file.getPath().substring(filePosition1, filePosition2);
-					System.out.println(monthlyFolder + "aaaaaaaaaaaaaaaaaaaaaaaa1");
-				} catch (Exception e) {
-					//폴더가 없을시
-					if (!(monthlyFolder == nameCompare)) {
-						//폴더생성 + errors 원하는 이름의 폴더
-						file.mkdirs();
-						multipart.transferTo(file);
-						System.out.println(monthlyFolder + "aaaaaaaaaaaaaaaaaaaaaaaa2");
-					} else {
-						multipart.transferTo(file);
-						System.out.println(monthlyFolder + "aaaaaaaaaaaaaaaaaaaaaaaa3");
-					}
+				// 월별 폴더가 없을시  생성
+				if(!fileDir.exists()) {
+					fileDir.mkdirs();
+					System.out.println("Folder Not exists");
 				}
-				/*1217 문제점 폴더 생성후 폴더 내부에 파일이 들어가게 해야한다.;
-				 * */
+				// 경로 + 날짜 + 업로더 이름 + 순서 + 확장자
+				String databaseName = month+year+uploaderName+multipartInTheCounter+"."+ext;
+				String realName = fileFolderPath+"/"+databaseName;
+				File file = new File(realName);
+				
+				System.out.println("file insert!");
+				try {
+					multipart.transferTo(file); 
+					System.out.println("file insert! ::Try");
+					switch(multipartInTheCounter) {
+					case 1 : 
+						sellerFileVo.setSellerId(sellerFileRequest.getSellerId());
+						sellerFileVo.setSellerName(sellerFileRequest.getSellerName());
+						sellerFileVo.setSellerPath(fileFolderPath);
+			            sellerFileVo.setSellerLicence(databaseName);
+			            break;
+			        case 2 : 
+			            sellerFileVo.setSellerBankCopy(databaseName);
+			            break;
+			        case 3 : 
+			            sellerFileVo.setSellerCertification(databaseName);
+			            break; 
+			        case 4 : 
+			            sellerFileVo.setSellerCommunicationSales(databaseName);
+			            break; 
+			        case 5 : 
+			            sellerFileVo.setSellerProductGrade(databaseName);
+			            break;
+					}
 
+				} catch (Exception e) {
+					System.out.println("Insert File Error");
+
+				}
+			
 			}
+		}
+		try {
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			System.out.println("map value Insert");
+			map.put("fk_seller__document_seller", sellerFileVo.getSellerId());
+			map.put("document_seller_name", sellerFileVo.getSellerName());
+			map.put("document_seller_path", sellerFileVo.getSellerPath());
+			map.put("document_seller_license", sellerFileVo.getSellerLicence());
+			map.put("document_seller_bank_copy", sellerFileVo.getSellerBankCopy());
+			map.put("document_seller_certificate", sellerFileVo.getSellerCertification());
+			map.put("document_seller_communication_sales", sellerFileVo.getSellerCommunicationSales());
+			map.put("document_seller_product_grade", sellerFileVo.getSellerProductGrade());
+			System.out.println("::map value::");
+			System.out.println(map.get("fk_seller__document_seller"));
+			System.out.println(map.get("document_seller_name"));
+			System.out.println(map.get("document_seller_path"));
+			System.out.println(map.get("document_seller_license"));
+			System.out.println(map.get("document_seller_bank_copy"));
+			System.out.println(map.get("document_seller_certificate"));
+			System.out.println(map.get("document_seller_communication_sales"));
+			System.out.println(map.get("document_seller_product_grade"));
+			System.out.println("map value Insert");
+			
+			/* 맵퍼 계층의 insertSellerFile 메서드 호출 */
+			sellerMapper.insertSellerFile(map);
+			
+		}catch (Exception e) {
+			// TODO: handle exception
 		}
 	}
 }
