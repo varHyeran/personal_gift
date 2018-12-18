@@ -1071,3 +1071,65 @@ table.log-data-table th
 .member-remove-complete{
     display: none;
 }
+
+/* 회원가입 전 권한 선택 페이지 */
+
+.sign-up-choice{
+    height: 780px;
+    background-color: #f7f7f8;
+}
+.sing-check-box{
+    text-align: center;
+    margin: 200px auto;
+    border-radius: 4px;
+    width: 100%;
+    height: 290px;
+}
+ p.sing-welcom {
+    font-size: 20pt;
+    font-weight: 400;
+    color: #444;
+}
+
+p.sing-welcom-bottom{
+    font-size: 12pt;
+    font-weight: 300;
+    color: #555;
+    line-height: 0;
+    margin-bottom: 50px;
+}
+p.sing-welcom img{
+    width: 190px
+}
+.sing-btn-box{
+    width: 100%;
+    padding: 40px 0;
+    background-color: #fff;
+    border: 1px solid #eee;
+}
+.sing-btn-box .btn {
+    display: inline-block;
+    font-size: 18pt;
+    line-height: 1.3;
+    letter-spacing: 1px;
+    min-width: 200px;
+    max-width: 400px;
+    padding: 30px 100px;
+    margin: 30px auto;
+    background: transparent;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: #fff;
+    border-radius: 4px;
+    transition: all 0.7s ease-out;
+    background-image: linear-gradient(to top, #545cae 10%, #438bc0 51%, #438bc0 90%);
+    background-position: 1% 50%;
+    background-size: 300% 300%;
+    text-decoration: none;
+    border: none;
+}
+.sing-btn-box .btn:hover {
+    color: #fff;
+    background-position: right bottom;
+    background-image: linear-gradient(to bottom, #22bdd2 0%, #545cae 51%, #438bc0 100%);
+    }
