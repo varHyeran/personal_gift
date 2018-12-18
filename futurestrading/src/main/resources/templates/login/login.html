@@ -2,11 +2,90 @@
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	data-layout-decorate="~{layout/defaultLayout}">
+<th:block layout:fragment="script">
+<script type="text/javascript">
+$(document).ready(function() {
+	/* 구매자 */
+	$("#loginBtn1").click(function() {
+		var action = $("#loginForm1").attr('action');
+		var form_data = {
+			totalId1: $("#totalId1").val(),
+			totalPassword1: $("#totalPassword1").val(),
+			is_ajax: 1
+		};
+		$.ajax({
+			type: "POST",
+			url: action,
+			data: form_data,
+			success: function(response) {
+				if(response == 'success') {
+					$("#message1").html("<p style='color:green;font-weight:bold'>로그인 성공!</p>");
+					$("#loginForm1").slideUp('slow');
+				}
+				else {
+					$("#message1").html("<p style='color:red'>아이디 또는 비밀번호가 잘못되었습니다.</p>");	
+				}
+			}
+		});
+		return false;
+	});
+	/* 판매자 */
+	$("#loginBtn2").click(function() {
+		var action = $("#loginForm2").attr('action');
+		var form_data = {
+			totalId2: $("#totalId2").val(),
+			totalPassword2: $("#totalPassword2").val(),
+			is_ajax: 1
+		};
+		$.ajax({
+			type: "POST",
+			url: action,
+			data: form_data,
+			success: function(response) {
+				if(response == 'success') {
+					$("#message2").html("<p style='color:green;font-weight:bold'>로그인 성공!</p>");
+					$("#loginForm2").slideUp('slow');
+				}
+				else {
+					$("#message2").html("<p style='color:red'>아이디 또는 비밀번호가 잘못되었습니다.</p>");	
+				}
+			}
+		});
+		return false;
+	});
+	/* 관리자 */
+	$("#loginBtn3").click(function() {
+		var action = $("#loginForm3").attr('action');
+		var form_data = {
+			totalId3: $("#totalId3").val(),
+			totalPassword3: $("#totalPassword3").val(),
+			is_ajax: 1
+		};
+		$.ajax({
+			type: "POST",
+			url: action,
+			data: form_data,
+			success: function(response) {
+				if(response == 'success') {
+					$("#message3").html("<p style='color:green;font-weight:bold'>로그인 성공!</p>");
+					$("#loginForm3").slideUp('slow');
+				}
+				else {
+					$("#message3").html("<p style='color:red'>아이디 또는 비밀번호가 잘못되었습니다.</p>");	
+				}
+			}
+		});
+		return false;
+	});
+});
+
+</script>
+</th:block>
 <div layout:fragment="content">
      <div class="main-login">
             <div class="login-wrap">
                 <div class="login-html">
-                
+                	
                 	<!-- 로그인 탭 -->
                     <input id="tab-1" type="radio" name="tab" class="sign-in-consumer" checked>
                     <label for="tab-1" class="tab">구매자</label>
@@ -16,46 +95,48 @@
                     
                     <input id="tab-3" type="radio" name="tab" class="sign-in-admin">
                     <label for="tab-3" class="tab">관리자</label>
-					
+
                     <div class="login-form">
                     
-                   		<!-- 구매자 로그인 -->
+                    	<!-- 구매자 -->
                         <div class="sign-in-consumer-htm">
-                            <form th:action="@{/login/login}" method="post">
+                            <form th:action="@{/login/login}" method="post" id="loginForm1">
                                 <div class="group">
-                                    <input id="totalId" type="text" class="input" name="totalId" value="test01">
+                                    <input id="totalId1" type="text" class="input" name="totalId" value="test01">
                                 </div>
                                 <div class="group">
-                                    <input id="totalPassword" type="password" class="input" data-type="password" name="totalPassword" value="testtest01#">
+                                    <input id="totalPassword1" type="password" class="input" data-type="password" name="totalPassword" value="testtest01#">
                                 </div>
                                 <div class="group">
                                     <input id="consumerCheck" type="checkbox" class="check" checked>
                                     <label for="consumerCheck"><span class="icon"></span> 아이디 저장</label>
                                 </div>
+                                <div id="message1"></div>
                                 <div class="group">
-                                    <input type="submit" class="button" value="LOGIN">
+                                    <input id="loginBtn1" type="submit" class="button" value="LOGIN">
                                 </div>
                             </form>
                             <div class="foot-lnk">
                                 <a href="">비밀번호를 잊으셨나요?</a>
                             </div>
                         </div>
-						
-						<!-- 판매자 로그인 -->
+
+						<!-- 판매자 -->
                         <div class="sign-in-seller-htm">
-                            <form action="/login/login" method="post">
+                            <form th:action="@{/login/login}" method="post" id="loginForm2">
                                 <div class="group">
-                                    <input id="totalId" type="text" class="input" name="totalId" value="">
+                                    <input id="totalId2" type="text" class="input" name="totalId" value="">
                                 </div>
                                 <div class="group">
-                                    <input id="totalPassword" type="password" class="input" data-type="password" name="totalPassword" value="">
+                                    <input id="totalPassword2" type="password" class="input" data-type="password" name="totalPassword" value="">
                                 </div>
                                 <div class="group">
                                     <input id="sellerCheck" type="checkbox" class="check" checked>
                                     <label for="sellerCheck"><span class="icon"></span>아이디 저장</label>
                                 </div>
+                                <div id="message2"></div>
                                 <div class="group">
-                                    <input type="submit" class="button" value="LOGIN">
+                                    <input id="loginBtn2" type="submit" class="button" value="LOGIN">
                                 </div>
                             </form>
                             <div class="hr"></div>
@@ -63,22 +144,23 @@
                                 <a href="#forgot">비밀번호를 잊으셨나요?</a>
                             </div>
                         </div>
-                       
-                        <!-- 관리자 로그인 -->
+                        
+                        <!-- 관리자 -->
                         <div class="sign-in-admin-htm">
-                            <form action="/login/login" method="post">
+                            <form th:action="@{/login/login}" method="post" id="loginForm3">
                                 <div class="group">
-                                    <input id="totalId" type="text" class="input" name="totalId" value="">
+                                    <input id="totalId3" type="text" class="input" name="totalId" value="">
                                 </div>
                                 <div class="group">
-                                    <input id="totalPassword" type="password" class="input" data-type="password" name="totalPassword" value="">
+                                    <input id="totalPassword3" type="password" class="input" data-type="password" name="totalPassword" value="">
                                 </div>
                                 <div class="group">
                                     <input id="adminCheck" type="checkbox" class="check" checked>
                                     <label for="adminCheck"><span class="icon"></span>아이디 저장</label>
                                 </div>
+                                <div id="message3"></div>
                                 <div class="group">
-                                    <input type="submit" class="button" value="LOGIN">
+                                    <input id="loginBtn3" type="submit" class="button" value="LOGIN">
                                 </div>
                             </form>
                             <div class="hr"></div>
