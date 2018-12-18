@@ -1,38 +1,123 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-<meta charset="UTF-8">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-<title>modifyAdmin</title>
-</head>
-<body>
-	<h1>modifyAdmin</h1>
-	<a href="/topAdmin/listAdmin">관리자 리스트</a>
-		<form action="/topAdmin/modifyAdminAction" method="post">
-			<table border="1" th:each="admin : ${adminOne}">
-				<tr>
-					<th>adminId</th>
-					<td><input type="text" name="adminId" th:value="${admin.adminId}" readonly></td>
-				</tr>
-				<tr>
-					<th>adminPw</th>
-					<td><input type="text" name="adminPw" th:value="${admin.adminPw}"></td>
-				</tr>
-				<tr>	
-					<th>adminName</th>
-					<td><input type="text" name="adminName" th:value="${admin.adminName}"></td>
-				</tr>
-				<tr>	
-					<th>adminRight</th>
-					<td><input type="text" name="adminRight" th:value="${admin.adminRight}" readonly></td>
-				</tr>
-				<tr>	
-					<th>adminRegisterDate</th>
-					<td><input type="text" name="adminRegisterDate" th:value="${admin.adminRegisterDate}" readonly></td>
-				</tr>
-			</table>
-			<button type="submit" id="submitBtn">수정</button>
-			<a th:href="@{/topAdmin/checkTopAdminForm(adminId=${adminOne.adminId})}">삭제</a>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	data-layout-decorate="~{layout/defaultLayout}">
+<th:block layout:fragment="script">
+	<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function(){
+	    	/*특수문자를 포함*/
+	    	var specialPattern = /^.*(?=.*[`~!@#$%^&*|\\\'\";:\/?]).*$/;
+	    	/*비밀번호 유효성검사 : 5-20자 이내의 숫자,문자,특수문자를 포함한 비밀번호*/
+	    	var checkPw = /^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*?[#?!@$%^&*-]).{7,15}$/;
+	    	/*이름 유효성검사 : 한글 혹은 영문 이름(띄어쓰기 가능)*/
+		    var checkName=/^[가-힣a-zA-Z\s]+$/;
+	    	
+		    /*비밀번호 유효성검사*/
+		    $('#adminPw').focus();
+		    $('#adminPw').blur(function() {
+		    	if(!checkPw.test($('#adminPw').val())){
+		    		$('#pwHelper').text('숫자, 문자, 특수문자를 포함하여 7-15자 이내로 만들어주세요');
+		    		$('#adminPw').focus();
+		    	} else {
+		    		$('#pwHelper').text('');
+		    	}
+		    });
+			/*이름 유효성 검사*/
+		    $('#adminName').blur(function() {    	
+		    	if(!checkName.test($('#adminName').val())){
+		    		$('#nameHelper').text('한글 혹은 영어로 정확히 입력해주세요');
+		    		$('#adminName').focus();
+		    	} else if($('#adminName').val().length < 2 || $('#adminName').val().length > 15){
+		    		$('#nameHelper').text('2-15자 이내로 만들어주세요');
+		    		$('#adminName').focus();
+		    	}else {
+		    		$('#nameHelper').text('');
+		    	}
+		    });
+		    /*폼 제출 유효성 검사*/
+		    $('#submitBtn').click(function() {
+		    	var adminId = $('#adminId').val();
+		    	var adminPw = $('#adminPw').val();
+		    	var adminName = $('#adminName').val();
+		    	/*모든 입력칸이 빈칸일 때*/
+		    	var condition = adminPw != "" && adminName != "";
+				/*숫자, 문자, 특수문자를 포함하여 7-15자 이내인 비밀번호*/
+		    	var pwCheck = checkPw.test($('#adminPw').val());
+				/*비밀번호 확인*/
+		    	var pwDoubleCheck = ($('#adminPw').val() == $('#adminPwCheck').val())
+		    	/*한글 혹은 영어인 이름*/
+		    	var nameCheck = checkName.test($('#adminName').val());
+				/*길이가 2-15자 이내가 아닌 이름*/
+		    	var nameLengthCheck = ($('#adminName').val().length < 2 || $('#adminName').val().length > 15);
+	
+		    	if(condition) {
+		    		if(pwCheck && nameCheck && !nameLengthCheck){
+		    			$('#modifyAdminForm').submit();
+		            	$('#submitHelper').text('');
+		    		}
+		    	} else if(!condition) {
+		    		event.preventDefault();
+		    		$('#submitHelper').text('빈 칸 없이 양식에 맞게 작성해주세요');
+		    	}
+	        });
+		});
+	</script>
+</th:block>
+
+<th:block layout:fragment="css">
+	<style type="text/css">
+		#modifyAdminForm{
+			width: 500px;
+			margin: auto;
+		}
+		h1{
+			text-align: center;
+		}
+		.buttons{
+			text-align: center;
+		}
+	</style>
+</th:block>
+	<div layout:fragment="content" class="main-box container">
+		<h1>관리자 정보수정</h1>	
+		<form action="/topAdmin/modifyAdminAction" method="post" id="modifyAdminForm">
+			<div align="right">
+				<a href="/topAdmin/listAdmin" class="text-body">
+					<button type="button" class="btn">리스트</button>
+				</a>
+			</div>
+			<div th:each="admin : ${adminOne}">
+				<div class="form-group">
+					<label>아이디</label>
+					<input type="text" name="adminId" th:value="${admin.adminId}" class="form-control" readonly>
+				</div>
+				<div class="form-group">
+					<label for="adminPw">비밀번호</label>
+					<input type="password" name="adminPw" th:value="${admin.adminPw}" id="adminPw" class="form-control">
+					<span id="pwHelper" class="text-danger"></span>
+				</div>
+				<div class="form-group">
+					<label for="adminName">이름</label>
+					<input type="text" name="adminName" th:value="${admin.adminName}" id="adminName" class="form-control">
+					<span id="nameHelper" class="text-danger"></span>
+				</div>
+				<div class="form-group">
+					<label>권한</label>
+					<input type="text" name="adminRight" th:value="${admin.adminRight}" class="form-control" readonly>
+				</div>
+				<div class="form-group">
+					<label>등록날짜</label>
+					<input type="text" name="adminRegisterDate" th:value="${admin.adminRegisterDate}" class="form-control" readonly>
+				</div>
+			</div>
+			<div class="buttons">
+				<button type="button" id="submitBtn" class="btn">수정</button>
+					<a th:href="@{/topAdmin/checkTopAdminForm(adminId=${adminOne.adminId})}">
+						<button type="button" class="btn">삭제</button>
+					</a><p>
+				<span id="submitHelper" class="text-danger"></span>
+			</div>
 		</form>
-</body>
+	</div>
 </html>

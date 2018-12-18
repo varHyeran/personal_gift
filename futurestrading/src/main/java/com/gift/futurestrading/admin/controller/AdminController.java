@@ -28,6 +28,24 @@ public class AdminController {
 	@Autowired
 	private AdminService adminService;
 	
+	/*최고관리자 비밀번호 확인(제이쿼리)*/
+	@RequestMapping(value="/checkTopAdminPw", method=RequestMethod.POST)
+	@ResponseBody
+	public String checkTopAdminPw(@RequestBody String topAdminPw) {
+		System.out.println("AdminController.checkTopAdminPw() 최고관리자 비밀번호확인");
+		System.out.println(topAdminPw + "<----------topAdminPw");
+		String pw = null;
+		String topAdminPwCheck = adminService.checkTopAdmin(topAdminPw);
+			/*입력한 비밀번호와 최고관리자의 비밀번호를 비교 후 결과를 리턴*/
+			if(topAdminPw.equals(topAdminPwCheck)) {
+				System.out.println("최고관리자 비밀번호 일치");
+				pw = "일치";
+			} else {
+				System.out.println("최고관리자 비밀번호 불일치");
+				pw = "불일치";
+			}
+		return pw;
+	}
 	/*최고관리자 비밀번호 확인, 관리자 삭제액션*/
 	@RequestMapping(value="/topAdmin/checkTopAdmin", method=RequestMethod.POST)
 	public String checkTopAdmin(@RequestParam(value="topAdminPw") String topAdminPw, @RequestParam(value="adminId") String adminId) {

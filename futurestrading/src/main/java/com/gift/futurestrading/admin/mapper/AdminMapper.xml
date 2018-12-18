@@ -38,7 +38,6 @@
 	    <select id="selectAdmin" resultType="com.gift.futurestrading.admin.vo.AdminVo">
 	        SELECT 
 	        	admin_id_pk as adminId, 
-	        	admin_password as adminPw, 
 	        	admin_name as adminName,
 	        	admin_right as adminRight,
 	        	admin_register_date as adminRegisterDate
