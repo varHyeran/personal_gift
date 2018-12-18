@@ -1,8 +1,6 @@
 // 애플리케이션 클래스
 package com.gift.futurestrading.member.controller;
 
-import java.util.regex.Pattern;
-
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +28,7 @@ public class ConsumerController {
 	/**
 	 * 해당 url로 요청이 들어왔을 때, 구매자 계정관리뷰로 랜더링 해준다.
 	 * 
-	 * @return 해당 되는 뷰의 경로
+	 * @return index OR member/consumer/getMemberConsumerMypage
 	 * @since JDK1.8
 	 */
 	@RequestMapping(value="/consumer/mypage", method=RequestMethod.GET)
@@ -53,7 +51,7 @@ public class ConsumerController {
 	 * @return 해당 되는 뷰의 경로
 	 * @since JDK1.8
 	 */
-	@RequestMapping(value="/joinconsumer", method=RequestMethod.GET)
+	@RequestMapping(value="/signup/addconsumer", method=RequestMethod.GET)
 	public String addConsumerForm() {
 		System.out.println("ConsumerController.joinconsumer() 호출");
 		return "member/consumer/addMemberConsumer";
@@ -63,10 +61,10 @@ public class ConsumerController {
 	 * addMemberConsumer.html(구매자 회원가입)에서 데이터를 VO에 받아 service 계층의 메서드를 호출할 때 param으로 넘겨준다.
 	 * 
 	 * @param consumerRequestVo
-	 * @return
+	 * @return index
 	 * @since JDK1.8
 	 */
-	@RequestMapping(value="/addconsumer", method=RequestMethod.POST)
+	@RequestMapping(value="/signup/addconsumer", method=RequestMethod.POST)
 	public String addConsumer(ConsumerRequestVo consumerRequestVo) {
 		System.out.println("ConsumerController.addConsumer() 호출");
 		int insertResult = consumerService.insertConsumer(consumerRequestVo);
@@ -79,7 +77,7 @@ public class ConsumerController {
 	 * ResponseBody 어노테이션: 메소드에서 리턴되는 값이 뷰를 통해서 출력되지 않고 HTTP Response Body 에 직접 쓰여지게 된다.
 	 * 
 	 * @param id
-	 * @return
+	 * @return count
 	 * @since JDK1.8
 	 */
 	@RequestMapping(value="/idcheck", method=RequestMethod.POST)	
@@ -87,35 +85,12 @@ public class ConsumerController {
 	public int idCheck(@RequestBody String id) {
 		System.out.println("ConsumerController.idCheck() 호출");
 		System.out.println(id+" <---id");
+
+		int count = 0;
 		
-		String pattern = "^[a-zA-Z0-9]*$"; 
-		String pattern2 = "^[0-9]*$"; 
-		
-		int count = 1;
-			//문자 숫자
-		 boolean result = Pattern.matches(pattern, id);
-		 	//문자만
-		 boolean result2  = Pattern.matches(pattern2, id);
-		 	//숫자만
-		/*
-		 * count o 사용가능
-		  count 1 중복됨
-		  count 2  숫자만
-		  count 3 특수문자가 있음
-		 */
-		 
-		 // 특수문자 있는지 확인
-		 if(!result) {
-			 System.out.println("특수문자가 포함되어 있음");
-			 count = 3; 
-			// 숫자만 있는지 확인
-		 }else if(result2) {
-			 	count = 2 ;				
-		}else{
-			System.out.println("완벽함");
-			/* id로 중복성 체크 메소드 호출*/
-			count = consumerService.idCheck(id);
-			}
+		/* id로 중복성 체크 메소드 호출*/
+		count = consumerService.idCheck(id);
+
 		return count;
 	}
 }
