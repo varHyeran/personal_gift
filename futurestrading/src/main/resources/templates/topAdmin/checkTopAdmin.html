@@ -54,14 +54,17 @@
 			width: 300px;
 			margin: auto;
 		}
-		h1{
+		.main-box h1{
 			text-align: center;
+			margin-bottom: 50px;
 		}
 		.buttons{
 			text-align: center;
 		}
 	</style>
-	<div class="main-box container">
+</th:block>
+
+	<div layout:fragment="content" class="main-box container">
 		<h1>최고관리자 비밀번호 확인</h1>
 		<form action="/topAdmin/checkTopAdmin" id="topAdminPwForm" method="post">
 			<div th:each=adminId:${getAdminId}>

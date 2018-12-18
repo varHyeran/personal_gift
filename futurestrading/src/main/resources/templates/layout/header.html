@@ -82,6 +82,22 @@
 			                        </ul>
 				            </li>
 				          </th:block>
+				          <th:block th:case="'최고관리자'">
+				            <li class="nav-item nav-member-dropdown">
+			           		<a class="nav-link dropdown-toggle" role="button" href="#" data-toggle="dropdown">전체관리<i class="material-icons">keyboard_arrow_down</i></a>
+			                      	<ul class="dropdown-menu dropdown-menu-money" role="menu">
+			                           <li><a th:href="@{/topAdmin/listAdmin}">관리자관리</a></li>
+			                           <li><a href="#">수익관리</a></li>
+			                      	</ul>
+			           		</li>
+				            <li class="nav-item nav-member-dropdown">
+				            	<a class="nav-link dropdown-toggle" role="button" href="#" data-toggle="dropdown"><span th:text="${sessionId.totalId}"></span><i class="material-icons">keyboard_arrow_down</i></a>
+			                       	<ul class="dropdown-menu dropdown-menu-id" role="menu">
+			                            <li><a href="#">계정관리</a></li>
+			                            <li><a href="/logout" th:href="@{/logout}">logout</a></li>
+			                        </ul>
+				            </li>
+				          </th:block>
 		            </th:block>
 		        </ul>
 		       
