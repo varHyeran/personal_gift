@@ -115,6 +115,7 @@ public class SellerService {
 					System.out.println("file insert! ::Try");
 					switch(multipartInTheCounter) {
 					case 1 : 
+						//초기에 한번만 담기위해 case1에 넣었음
 						sellerFileVo.setSellerId(sellerFileRequest.getSellerId());
 						sellerFileVo.setSellerName(sellerFileRequest.getSellerName());
 						sellerFileVo.setSellerPath(fileFolderPath);
@@ -142,6 +143,7 @@ public class SellerService {
 			}
 		}
 		try {
+			//map에 담고 insertSellerFile mapper의 매개변수로 입력 
 			HashMap<String, Object> map = new HashMap<String, Object>();
 			System.out.println("map value Insert");
 			map.put("fk_seller__document_seller", sellerFileVo.getSellerId());
@@ -152,15 +154,6 @@ public class SellerService {
 			map.put("document_seller_certificate", sellerFileVo.getSellerCertification());
 			map.put("document_seller_communication_sales", sellerFileVo.getSellerCommunicationSales());
 			map.put("document_seller_product_grade", sellerFileVo.getSellerProductGrade());
-			System.out.println("::map value::");
-			System.out.println(map.get("fk_seller__document_seller"));
-			System.out.println(map.get("document_seller_name"));
-			System.out.println(map.get("document_seller_path"));
-			System.out.println(map.get("document_seller_license"));
-			System.out.println(map.get("document_seller_bank_copy"));
-			System.out.println(map.get("document_seller_certificate"));
-			System.out.println(map.get("document_seller_communication_sales"));
-			System.out.println(map.get("document_seller_product_grade"));
 			System.out.println("map value Insert");
 			
 			/* 맵퍼 계층의 insertSellerFile 메서드 호출 */
