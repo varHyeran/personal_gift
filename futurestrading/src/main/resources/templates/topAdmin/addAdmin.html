@@ -14,6 +14,11 @@
 	    	var checkPw = /^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*?[#?!@$%^&*-]).{7,15}$/;
 	    	/*이름 유효성검사 : 한글 혹은 영문 이름(띄어쓰기 가능)*/
 		    var checkName=/^[가-힣a-zA-Z\s]+$/;
+	    	/*아이디 중복검사를 위한 함수*/
+		    idSet = false;
+	    	function idAdminCheck(){
+	    		return  idSet;
+	    	}
 	
 		    /*아이디 중복검사*/
 		    $('#adminId').focus();
@@ -39,17 +44,21 @@
 						console.log(data + '<---countId');
 						if(data != isIdCheck) {		// 아이디 중복
 							idHelper.text('중복된 아이디입니다. 새로운 아이디를 만들어주세요');
+							idSet = false;
 							$('#adminId').focus();
 						} else if(data == isIdCheck) {		// 아이디 사용가능, 유효성검사
 							/*아이디에 특수문자가 들어가지 못하도록, 대소문자로 시작하여 7-16자 이내로 만들어지도록*/
 							if(specialPattern.test(adminId)) {
 								idHelper.text('아이디에 특수문자는 들어갈 수 없습니다')
+								idSet = false;
 								$('#adminId').focus();
 							} else if(!checkId.test(adminId)) {
 								idHelper.text('대문자, 소문자로 시작하고 7-16자 이내로 만들어주세요');
+								idSet = false;
 								$('#adminId').focus();
 							} else {
 								idHelper.text('사용 가능한 아이디 입니다');
+								idSet = true;
 							}
 						}
 		    		},
@@ -93,7 +102,7 @@
 		    	var adminId = $('#adminId').val();
 		    	var adminPw = $('#adminPw').val();
 		    	var adminName = $('#adminName').val();
-		    	/*모든 입력칸이 빈칸일 때*/
+		    	/*모든 입력칸이 빈칸이 아닐 때*/
 		    	var condition = adminId != "" && adminPw != "" && adminName != "";
 				/*아이디에 특수문자가 있음*/
 		    	var idPatternCheck = specialPattern.test(adminId);
@@ -108,18 +117,25 @@
 				/*길이가 2-15자 이내가 아닌 이름*/
 		    	var nameLengthCheck = ($('#adminName').val().length < 2 || $('#adminName').val().length > 15);
 	
-		    	if(condition) {
-		    		if(!idPatternCheck && idCheck && pwCheck && pwDoubleCheck && nameCheck && !nameLengthCheck){
-		    			$('#addAdminForm').submit();
-		            	$('#submitHelper').text('');
-		    		} else if(!pwDoubleCheck) {
+		    	if(condition) {		// 빈칸이 없을 때
+		    		if(!idPatternCheck && idCheck && pwCheck && pwDoubleCheck && nameCheck && !nameLengthCheck){	// 아이디, 비밀번호, 이름 유효성검사가 통과됐을 때
+		    			if(idAdminCheck() != true){		// idAdminCheck가 false일 때(아이디 중복)
+			    			event.preventDefault();
+			    			$('#idHelper').text('중복된 아이디입니다. 새로운 아이디를 만들어주세요');
+			    		} else if(idAdminCheck() == true){		// idAdminCheck가 true일 때(아이디 사용가능)
+			    			$('#addAdminForm').submit();
+			            	$('#submitHelper').text('');
+			    		}
+		    		} else if(!pwDoubleCheck) {		// 비밀번호와 확인이 일치하지 않을 때
 		    			event.preventDefault();
 		    			$('#adminPw').focus();
 		    			$('#pwHelper').text('비밀번호가 서로 다릅니다');
 		    		}
-		    	} else if(!condition) {
+		    	} else if(!condition) {		// 빈칸이 있을 때
 		    		event.preventDefault();
 		    		$('#submitHelper').text('빈 칸 없이 양식에 맞게 작성해주세요');
+		    	} else {
+		    		$('#submitHelper').text('');
 		    	}
 	        });
 		});
