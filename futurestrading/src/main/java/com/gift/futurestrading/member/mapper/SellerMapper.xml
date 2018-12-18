@@ -44,7 +44,7 @@
 				seller_right
 				) 
 			VALUES(#{seller_id_pk},
-				#{seller_password},
+				PASSWORD(#{seller_password}),
 				#{seller_name},
 				#{seller_email},
 				#{seller_jumin_no},
