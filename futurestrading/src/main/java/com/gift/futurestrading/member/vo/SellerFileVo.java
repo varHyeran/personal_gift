@@ -1,6 +1,7 @@
 package com.gift.futurestrading.member.vo;
 
 public class SellerFileVo {
+	private String sellerNoPk;
 	private String sellerId;
 	private String sellerName;
 	private String sellerPath;
@@ -9,6 +10,14 @@ public class SellerFileVo {
 	private String sellerCertification;
 	private String sellerCommunicationSales;
 	private String sellerProductGrade;
+
+	
+	public String getSellerNoPk() {
+		return sellerNoPk;
+	}
+	public void setSellerNoPk(String sellerNoPk) {
+		this.sellerNoPk = sellerNoPk;
+	}
 	public String getSellerId() {
 		return sellerId;
 	}

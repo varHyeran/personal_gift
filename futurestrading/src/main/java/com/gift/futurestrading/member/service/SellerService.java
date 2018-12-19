@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.gift.futurestrading.member.mapper.SellerMapper;
-import com.gift.futurestrading.member.vo.SellerFileRequest;
+import com.gift.futurestrading.member.vo.SellerFileRequestVo;
 import com.gift.futurestrading.member.vo.SellerFileVo;
 import com.gift.futurestrading.member.vo.SellerRequestVo;
 
@@ -43,7 +43,6 @@ public class SellerService {
 		String postCode = sellerRequestVo.getPostcode();
 		String rodeAddress = sellerRequestVo.getRoadAddress();
 		String detailAddress = sellerRequestVo.getDetailAddress();
-
 		/* getting해온 데이터들(주소) 하나의 변수에 저장 */
 		String allAddress = postCode + " " + rodeAddress + " " + detailAddress;
 		System.out.println(allAddress + " <---allAddress");
@@ -73,13 +72,23 @@ public class SellerService {
 	 * @throws IOException 
 	 */
 
-	public void sellerFileUpload(SellerFileRequest sellerFileRequest, String realPath) throws IOException {
+	public void sellerFileUpload(SellerFileRequestVo sellerFileRequest, String realPath) throws IOException {
 
 		MultipartFile[] multiPartFile = sellerFileRequest.getMultipartFile();
 		SellerFileVo sellerFileVo = new SellerFileVo();
 		
 		// 5개의 각기 다른 사진을 업로드 하기 때문에 for문 반복때 순서대로 번호 부여
 		int multipartInTheCounter = 0 ;
+		/* sellerMapper.selectOneAutoMax()
+		 *  select max(CAST(substring(document_seller_no_pk,17) AS DECIMAL)) from document_seller 쿼리 실행 후 
+		 *  sellerMaxId에 대입한후  1증가 시킴
+		 *
+		 */
+		int sellerMaxId = sellerMapper.selectOneAutoMax();
+			sellerMaxId += 1;
+				
+		
+		String documentSellerLetter = "document_seller_"+sellerMaxId;
 		for (MultipartFile multipart : multiPartFile) {
 			if (!multipart.isEmpty()) {
 				multipartInTheCounter += 1;;
@@ -116,6 +125,7 @@ public class SellerService {
 					switch(multipartInTheCounter) {
 					case 1 : 
 						//초기에 한번만 담기위해 case1에 넣었음
+						sellerFileVo.setSellerNoPk(documentSellerLetter);
 						sellerFileVo.setSellerId(sellerFileRequest.getSellerId());
 						sellerFileVo.setSellerName(sellerFileRequest.getSellerName());
 						sellerFileVo.setSellerPath(fileFolderPath);
@@ -146,6 +156,7 @@ public class SellerService {
 			//map에 담고 insertSellerFile mapper의 매개변수로 입력 
 			HashMap<String, Object> map = new HashMap<String, Object>();
 			System.out.println("map value Insert");
+			map.put("document_seller_no_pk", sellerFileVo.getSellerNoPk());
 			map.put("fk_seller__document_seller", sellerFileVo.getSellerId());
 			map.put("document_seller_name", sellerFileVo.getSellerName());
 			map.put("document_seller_path", sellerFileVo.getSellerPath());
@@ -160,6 +171,7 @@ public class SellerService {
 			sellerMapper.insertSellerFile(map);
 			
 		}catch (Exception e) {
+			System.out.println(e);
 			// TODO: handle exception
 		}
 	}

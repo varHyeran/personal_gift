@@ -8,7 +8,8 @@
 	<insert id="insertSellerFile" parameterType="map">
 		INSERT 
 			INTO document_seller
-				(fk_seller__document_seller,
+				(document_seller_no_pk,
+				fk_seller__document_seller,
 				document_seller_name,
 				document_seller_path,
 				document_seller_license,
@@ -18,7 +19,8 @@
 				document_seller_product_grade,
 				document_seller_date
 				) 
-			VALUES(#{fk_seller__document_seller},
+			VALUES(#{document_seller_no_pk},
+				#{fk_seller__document_seller},
 				#{document_seller_name},
 				#{document_seller_path},
 				#{document_seller_license},
@@ -54,5 +56,8 @@
 				#{seller_phone},
 				'인증안됨');
 	</insert>
+	<select id="selectOneAutoMax" parameterType="String" resultType="int">
+		select max(CAST(substring(document_seller_no_pk,17) AS DECIMAL)) from document_seller
+	</select>
 </mapper>
 
