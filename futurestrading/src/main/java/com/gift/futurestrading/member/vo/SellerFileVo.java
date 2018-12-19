@@ -5,6 +5,7 @@ public class SellerFileVo {
 	private String sellerId;
 	private String sellerName;
 	private String sellerPath;
+	private String sellerPathFolder;
 	private String sellerLicence;
 	private String sellerBankCopy;
 	private String sellerCertification;
@@ -35,6 +36,14 @@ public class SellerFileVo {
 	}
 	public void setSellerPath(String sellerPath) {
 		this.sellerPath = sellerPath;
+	}
+	
+	
+	public String getSellerPathFolder() {
+		return sellerPathFolder;
+	}
+	public void setSellerPathFolder(String sellerPathFolder) {
+		this.sellerPathFolder = sellerPathFolder;
 	}
 	public String getSellerLicence() {
 		return sellerLicence;

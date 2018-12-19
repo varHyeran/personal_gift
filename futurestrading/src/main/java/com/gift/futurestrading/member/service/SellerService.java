@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.gift.futurestrading.member.mapper.SellerMapper;
+import com.gift.futurestrading.member.vo.AccountCheckResultVo;
 import com.gift.futurestrading.member.vo.SellerFileRequestVo;
 import com.gift.futurestrading.member.vo.SellerFileVo;
 import com.gift.futurestrading.member.vo.SellerRequestVo;
@@ -19,7 +20,7 @@ import com.gift.futurestrading.member.vo.SellerRequestVo;
 public class SellerService {
 	@Autowired
 	private SellerMapper sellerMapper;
-
+	
 	public int idCheck(String id) {
 		int selectResult = 0;
 
@@ -29,6 +30,24 @@ public class SellerService {
 
 		return selectResult;
 	}
+	
+	public int accountCheck(HashMap<String , Object> ajaxValue) {
+		int selectResult = 0;
+		/* 맵퍼 계층의 selectIdCheck 메서드 호출 */
+		AccountCheckResultVo accountCheckResult = new AccountCheckResultVo();
+		sellerMapper.selectAccountCheck(ajaxValue);
+		System.out.println(selectResult + " <---selectResult");
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("contract_bank_name", ajaxValue.get("accountBank"));
+		map.put("contract_bank_user_name", ajaxValue.get("sellerName"));
+		map.put("contract_bank_user_birth", ajaxValue.get("sellerBirth"));
+		map.put("contract_bank_user_account_no", ajaxValue.get("accountNo"));
+		accountCheckResult = sellerMapper.selectAccountCheck(map);
+		String bankUserAccountStatus = accountCheckResult.getContractBankUserAccountStatus();
+		System.out.println(bankUserAccountStatus +"bankUserAccountStatusbankUserAccountStatus");
+		return selectResult;
+	}
+
 
 	/**
 	 * 컨트롤러로부터 넘겨받은 데이터를 가공하여 SQL 메서드를 호출할 때 param으로 넘김
@@ -86,8 +105,7 @@ public class SellerService {
 		 */
 		int sellerMaxId = sellerMapper.selectOneAutoMax();
 			sellerMaxId += 1;
-				
-		
+
 		String documentSellerLetter = "document_seller_"+sellerMaxId;
 		for (MultipartFile multipart : multiPartFile) {
 			if (!multipart.isEmpty()) {
@@ -100,12 +118,13 @@ public class SellerService {
 				String fileName = originalFileName.substring(0, index);
 				// 확장자
 				String ext = originalFileName.substring(fileName.length() + 1, originalFileName.length());
-
+				System.out.println(sellerFileRequest.getSellerId());
 				// 날짜
 				String month = Integer.toString(cal.get(Calendar.MONTH) + 1);
 				String year = Integer.toString(cal.get(Calendar.YEAR));
 				// 내가 원하는 이름의 빈파일 생성
-				String fileFolderPath = realPath + "/"+"_" +  month + year;
+				String fileFolderName = "_" +  month + year;
+				String fileFolderPath = realPath + "/"+fileFolderName;
 				File fileDir = new File(fileFolderPath);
 				
 				// 월별 폴더가 없을시  생성
@@ -129,7 +148,8 @@ public class SellerService {
 						sellerFileVo.setSellerId(sellerFileRequest.getSellerId());
 						sellerFileVo.setSellerName(sellerFileRequest.getSellerName());
 						sellerFileVo.setSellerPath(fileFolderPath);
-			            sellerFileVo.setSellerLicence(databaseName);
+						sellerFileVo.setSellerPathFolder(fileFolderName);
+			            sellerFileVo.setSellerLicence(databaseName); 
 			            break;
 			        case 2 : 
 			            sellerFileVo.setSellerBankCopy(databaseName);
@@ -158,8 +178,10 @@ public class SellerService {
 			System.out.println("map value Insert");
 			map.put("document_seller_no_pk", sellerFileVo.getSellerNoPk());
 			map.put("fk_seller__document_seller", sellerFileVo.getSellerId());
+			System.out.println(map.get("fk_seller__document_seller"));
 			map.put("document_seller_name", sellerFileVo.getSellerName());
 			map.put("document_seller_path", sellerFileVo.getSellerPath());
+			map.put("document_seller_path_folder", sellerFileVo.getSellerPathFolder());
 			map.put("document_seller_license", sellerFileVo.getSellerLicence());
 			map.put("document_seller_bank_copy", sellerFileVo.getSellerBankCopy());
 			map.put("document_seller_certificate", sellerFileVo.getSellerCertification());

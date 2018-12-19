@@ -3,10 +3,10 @@ package com.gift.futurestrading.member.vo;
 import org.springframework.web.multipart.MultipartFile;
 
 public class SellerFileRequestVo {
-		private String sellerNoPk;
 		private String sellerId;
 		private String sellerName;
 		private MultipartFile[] multipartFile;
+
 		public String getSellerId() {
 			return sellerId;
 		}

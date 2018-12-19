@@ -1,19 +1,20 @@
 package com.gift.futurestrading.member.controller;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.regex.Pattern;
-
 import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.gift.futurestrading.member.service.SellerService;
+import com.gift.futurestrading.member.vo.SellerAccountCheckVo;
 import com.gift.futurestrading.member.vo.SellerFileRequestVo;
 import com.gift.futurestrading.member.vo.SellerRequestVo;
 
@@ -43,11 +44,12 @@ public class SellerController {
 		//D:\gift\maven.1544422656107\futurestrading\src\main\resources\sellerFile
 		String path = session.getServletContext().getRealPath("\\upload\\");
 		String realPath =path;
+		System.out.println(sellerFileRequestVo.getSellerId()+"pathpathpathpath");
 		System.out.println(path+"pathpathpathpath");
 		System.out.println(sellerFileRequestVo.getMultipartFile()+"파일옵로드");
 		sellerService.sellerFileUpload(sellerFileRequestVo, realPath);
-		return "index";
-	}
+		return "index"; 
+	} 
 	
 	//add seller 넘겨준 값 데이터 베이스 저장
 	@RequestMapping(value = "/addseller", method = RequestMethod.POST)
@@ -58,7 +60,7 @@ public class SellerController {
 	}
 	//ajax 관련
 	@RequestMapping(value = "/checkId", method = { RequestMethod.POST })
-	@ResponseBody
+	@ResponseBody 
 	public int idCheck(@RequestBody String id) {
 		System.out.println("SellerController");
 		System.out.println(id + " <---id");
@@ -66,7 +68,7 @@ public class SellerController {
 		String pattern = "^[a-zA-Z0-9]*$";
 		String pattern2 = "^[0-9]*$";
 
-		int count = 1;
+		int count = 1; 
 		// 문자 숫자
 		boolean result = Pattern.matches(pattern, id);
 		// 문자만
@@ -85,9 +87,25 @@ public class SellerController {
 			count = 2;
 		} else {
 			System.out.println("완벽함");
-			/* id로 중복성 체크 메소드 호출 */
+			/* id로 중복성 체크 메소드 호출 */ 
 			count = sellerService.idCheck(id);
-		}
-		return count;
-	}
+		} 
+		return count;  
+	}    
+	 
+	@RequestMapping(value = "/ajaxAccountCheck",method = {RequestMethod.GET, RequestMethod.POST})
+	@ResponseBody
+	public int sellerAccountCheck(@RequestBody HashMap<String , Object> ajaxValue) {
+		System.out.println("SellerController / sellerAccountCheck");
+		System.out.println(ajaxValue.get("sellerId") + " <---userId");     
+		System.out.println(ajaxValue.get("sellerName") + " <---sellerName");
+		System.out.println(ajaxValue.get("userAccountBank") + " <---userId");     
+		System.out.println(ajaxValue.get("userAccountNo") + " <---sellerName");  
+		 
+		
+
+		int count = 1;
+		count = sellerService.accountCheck(ajaxValue);
+		return count; 
+	}  
 }

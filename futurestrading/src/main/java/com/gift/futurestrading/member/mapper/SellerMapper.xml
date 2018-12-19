@@ -4,7 +4,14 @@
 	<select id="selectIdCheck" parameterType="String" resultType="int">
 		SELECT COUNT(*) FROM view_total_id WHERE total_id = #{id};
 	</select>
-	
+	<select id="selectAccountCheck" parameterType="map" resultType="com.gift.futurestrading.member.vo.AccountCheckResultVo">
+		SELECT contract_bank_user_account_no ,contract_bank_user_account_status  
+		FROM contract_bank_user 
+		WHERE contract_bank_name=#{contract_bank_name} and 
+		contract_bank_user_name=#{contract_bank_user_name} and
+		contract_bank_user_birth=#{contract_bank_user_birth} and 
+		contract_bank_user_account_no=#{contract_bank_user_account_no}
+	</select>
 	<insert id="insertSellerFile" parameterType="map">
 		INSERT 
 			INTO document_seller
@@ -12,6 +19,7 @@
 				fk_seller__document_seller,
 				document_seller_name,
 				document_seller_path,
+				document_seller_path_folder,
 				document_seller_license,
 				document_seller_bank_copy,
 				document_seller_certificate,
@@ -23,6 +31,7 @@
 				#{fk_seller__document_seller},
 				#{document_seller_name},
 				#{document_seller_path},
+				#{document_seller_path_folder},
 				#{document_seller_license},
 				#{document_seller_bank_copy},
 				#{document_seller_certificate},
