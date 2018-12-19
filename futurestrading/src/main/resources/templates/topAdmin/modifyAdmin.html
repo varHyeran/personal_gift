@@ -12,53 +12,120 @@
 	    	var checkPw = /^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*?[#?!@$%^&*-]).{7,15}$/;
 	    	/*이름 유효성검사 : 한글 혹은 영문 이름(띄어쓰기 가능)*/
 		    var checkName=/^[가-힣a-zA-Z\s]+$/;
-	    	
-		    /*비밀번호 유효성검사*/
-		    $('#adminPw').focus();
-		    $('#adminPw').blur(function() {
-		    	if(!checkPw.test($('#adminPw').val())){
-		    		$('#pwHelper').text('숫자, 문자, 특수문자를 포함하여 7-15자 이내로 만들어주세요');
-		    		$('#adminPw').focus();
+	    	/*유효성 검사 관련 변수들*/
+	    	changePwBtn = false;	// 비밀번호 변경 버튼 안눌렀을 때(기본값)
+    		nowPwCheck = false;		// 현재 비밀번호 일치하지 않을 때(기본값)
+    		newPwCheck = false;		// 새 비밀번호 유효성 실패했을 때(기본값)
+    		newPwCheck2 = false;	// 새 비밀번호 확인이 불일치 할 때(기본값)
+    		nameCheckEnd = false;	// 이름 유효성 실패했을 때(기본값)
+	    	/*비밀번호 변경 버튼을 누르면 비밀번호 변경 input이 나타남*/
+		    $('#changePwBtn').click(function () {
+		    	$('#changePw').show();
+		    	changePwBtn = true;
+		    	/*현재 비밀번호 확인*/
+		    	$('#adminPw').focus();
+		    	$('#adminPw').blur(function(){
+		    		var adminId = $('#adminId').val();
+		    		var adminPw = $('#adminPw').val();
+		    		console.log(adminId + '<-----관리자아이디');
+		    		console.log(adminPw + '<-----관리자패스워드');
+			    	$.ajax({
+			    		async : false,
+			    		url : '/adminPwCheck',
+			    		type : 'POST',
+			    		data : JSON.stringify({'adminId': adminId, 'adminPw': adminPw}),
+			    		contentType: "application/json; charset=UTF-8",
+			    		success : function(data){
+			    			console.log('data 받아오기 성공');
+							console.log(data + '<---불일치 여부');
+							if(data == '불일치'){
+								$('#pwHelper').text('비밀번호가 일치하지 않습니다');
+								$('#adminPw').focus();
+								nowPwCheck = false;
+							} else {
+								$('#pwHelper').text('');
+								nowPwCheck = true;
+							}
+			    		},
+			    		error: function(error) {					
+							console.log("error: "+error);
+						}
+			    	});
+		    	});
+		    });
+		    /*새 비밀번호 유효성검사*/
+		    $('#newAdminPw').focus();
+		    $('#newAdminPw').blur(function() {
+		    	if(!checkPw.test($('#newAdminPw').val())){
+		    		$('#newPwHelper').text('숫자, 문자, 특수문자를 포함하여 7-15자 이내로 만들어주세요');
+		    		$('#newAdminPw').focus();
+		    		newPwCheck = false;
 		    	} else {
-		    		$('#pwHelper').text('');
+		    		$('#newPwHelper').text('');
+		    		newPwCheck = true;
 		    	}
 		    });
+		    /*새 비밀번호 확인*/
+		    $('#newAdminPw2').blur(function() {
+		    	if(($('#newAdminPw').val() != $('#newAdminPw2').val())){
+		    		$('#newPwHelper2').text('비밀번호가  다릅니다');
+		    		$('#newAdminPw').focus();
+		    		newPwCheck2 = false;
+		    	} else {
+		    		$('#newPwHelper2').text('');
+		    		newPwCheck2 = true;
+		    	}
+		    })
 			/*이름 유효성 검사*/
 		    $('#adminName').blur(function() {    	
 		    	if(!checkName.test($('#adminName').val())){
 		    		$('#nameHelper').text('한글 혹은 영어로 정확히 입력해주세요');
 		    		$('#adminName').focus();
+		    		nameCheckEnd = false;
 		    	} else if($('#adminName').val().length < 2 || $('#adminName').val().length > 15){
 		    		$('#nameHelper').text('2-15자 이내로 만들어주세요');
 		    		$('#adminName').focus();
+		    		nameCheckEnd = false;
 		    	}else {
 		    		$('#nameHelper').text('');
+		    		nameCheckEnd = true;
 		    	}
 		    });
 		    /*폼 제출 유효성 검사*/
 		    $('#submitBtn').click(function() {
-		    	var adminId = $('#adminId').val();
 		    	var adminPw = $('#adminPw').val();
+		    	var newAdminPw = $('#newAdminPw').val();
+		    	var newAdminPw2 = $('#newAdminPw2').val();
 		    	var adminName = $('#adminName').val();
-		    	/*모든 입력칸이 빈칸일 때*/
-		    	var condition = adminPw != "" && adminName != "";
+		    	/*이름이 빈칸일 때*/
+		    	var blankName = adminName = "";
+		    	/*비밀번호 변경 관련 빈칸일 때*/
+		    	var blankPws =  adminPw == "" && newAdminPw == "" && newAdminPw2 == "";
 				/*숫자, 문자, 특수문자를 포함하여 7-15자 이내인 비밀번호*/
-		    	var pwCheck = checkPw.test($('#adminPw').val());
+		    	var pwCheck = checkPw.test($('#newAdminPw').val());
 				/*비밀번호 확인*/
-		    	var pwDoubleCheck = ($('#adminPw').val() == $('#adminPwCheck').val())
+		    	var pwDoubleCheck = ($('#newAdminPw').val() == $('#newAdminPw2').val())
 		    	/*한글 혹은 영어인 이름*/
 		    	var nameCheck = checkName.test($('#adminName').val());
 				/*길이가 2-15자 이내가 아닌 이름*/
 		    	var nameLengthCheck = ($('#adminName').val().length < 2 || $('#adminName').val().length > 15);
 	
-		    	if(condition) {
-		    		if(pwCheck && nameCheck && !nameLengthCheck){
-		    			$('#modifyAdminForm').submit();
-		            	$('#submitHelper').text('');
-		    		}
-		    	} else if(!condition) {
-		    		event.preventDefault();
+				/*비밀번호 변경 버튼을 누르지 않고 이름이 빈칸이 아닐 경우*/
+		    	if(changePwBtn != true && !blankName) {
+		    		$('#submitHelper').text('');
+		    		$('#modifyAdminForm').submit();
+		    	/*비밀번호 변경 버튼을 누르고 이름이 빈칸이거나 비밀번호 입력칸들이 빈칸일 경우*/
+		    	} else if(changePwBtn == true && (blankName || blankPws)) {
 		    		$('#submitHelper').text('빈 칸 없이 양식에 맞게 작성해주세요');
+		    	/*비밀번호 변경 버튼을 누르고 이름이 빈칸이거나 비밀번호 입력칸들이 빈칸이 아니지만 비밀번호 조건이 실패했을 경우*/
+		    	} else if(changePwBtn == true && !blankName && !blankPws && (nowPwCheck == false || newPwCheck == false || newPwCheck2 == false)){
+		    		$('#submitHelper').text('비밀번호 양식에 맞춰 작성해주세요');
+		    		/*비밀번호 변경 버튼을 누르고 이름이 빈칸이거나 비밀번호 입력칸들이 빈칸이 아니지만 비밀번호 조건이 성공했지만 비밀번호,비밀번호 확인이 불일치 했을 때*/
+		    	} else if(changePwBtn == true && !blankName && !blankPws && nowPwCheck == true && newPwCheck == true && newPwCheck2 == true && ($('#newAdminPw').val() != $('#newAdminPw2').val())) {
+		    		$('#submitHelper').text('비밀번호가 서로 다릅니다');
+		    	} else {
+		    		$('#submitHelper').text('');
+		    		$('#modifyAdminForm').submit();
 		    	}
 	        });
 		});
@@ -79,26 +146,25 @@
 			text-align: center;
 			margin-top: 50px;
 		}
+		.changeBtn{
+			text-align: right;
+		}
+		#changePw{
+			display:none;
+		}
 	</style>
 </th:block>
 
 	<div layout:fragment="content" class="main-box container">
 		<h1>관리자 정보수정</h1>	
 		<form action="/topAdmin/modifyAdminAction" method="post" id="modifyAdminForm">
-			<div align="right">
-				<a href="/topAdmin/listAdmin" class="text-body">
-					<button type="button" class="btn">리스트</button>
-				</a>
+			<div class="changeBtn">
+				<button type="button" id="changePwBtn" class="btn">비밀번호 변경</button>
 			</div>
 			<div th:each="admin : ${adminOne}">
 				<div class="form-group">
 					<label>아이디</label>
-					<input type="text" name="adminId" th:value="${admin.adminId}" class="form-control" readonly>
-				</div>
-				<div class="form-group">
-					<label for="adminPw">비밀번호</label>
-					<input type="password" name="adminPw" th:value="${admin.adminPw}" id="adminPw" class="form-control">
-					<span id="pwHelper" class="text-danger"></span>
+					<input type="text" name="adminId" th:value="${admin.adminId}" id="adminId" class="form-control" readonly>
 				</div>
 				<div class="form-group">
 					<label for="adminName">이름</label>
@@ -114,10 +180,30 @@
 					<input type="text" name="adminRegisterDate" th:value="${admin.adminRegisterDate}" class="form-control" readonly>
 				</div>
 			</div>
+		 	<div id="changePw">
+				<div class="form-group">
+					<label for="adminPw">현재 비밀번호</label>
+					<input type="password" name="adminPw" id="adminPw" class="form-control">
+					<span id="pwHelper" class="text-danger"></span>
+				</div>
+				<div class="form-group">
+					<label for="newAdminPw">새 비밀번호</label>
+					<input type="password" name="newAdminPw" id="newAdminPw" class="form-control">
+					<span id="newPwHelper" class="text-danger"></span>
+				</div>
+				<div class="form-group">
+					<label for="newAdminPw2">새 비밀번호 확인</label>
+					<input type="password" name="newAdminPw2" id="newAdminPw2" class="form-control">
+					<span id="newPwHelper2" class="text-danger"></span>
+				</div>
+			</div>
 			<div class="buttons">
 				<button type="button" id="submitBtn" class="btn">수정</button>
 					<a th:href="@{/topAdmin/checkTopAdminForm(adminId=${adminOne.adminId})}">
 						<button type="button" class="btn">삭제</button>
+					</a>
+					<a href="/topAdmin/listAdmin">
+						<button type="button" class="btn">취소</button>
 					</a><p>
 				<span id="submitHelper" class="text-danger"></span>
 			</div>

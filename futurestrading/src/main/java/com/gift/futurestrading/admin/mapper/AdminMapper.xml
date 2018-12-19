@@ -1,19 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gift.futurestrading.admin.mapper.AdminMapper">
+	<!-- 관리자 비밀번호 확인 -->
+		<select id="selectAdminPw" parameterType="map" resultType="String">
+	        SELECT
+	        	admin_id_pk
+	        FROM admin WHERE admin_id_pk = #{adminId} AND admin_password = PASSWORD(#{adminPw})
+	    </select>
 	<!-- 관리자삭제 -->
 		<delete id="deleteAdmin">
-			DELETE FROM admin WHERE admin_id_pk = #{adminId} AND #{adminId} != 'top_admin'
+			DELETE FROM admin WHERE admin_id_pk = #{adminId} AND #{adminId} != 'topAdmin'
 		</delete>
 	<!-- 최고관리자 비밀번호 확인 -->
-		<select id="selectTopAdminPw" parameterType="map" resultType="String">
+		<select id="selectTopAdminPw" parameterType="String" resultType="String">
 	        SELECT
-	        	admin_password
-	        FROM admin WHERE admin_password = #{topAdminPw} GROUP BY admin_id_pk = 'top_admin'
+	        	admin_id_pk
+	        FROM admin WHERE admin_password = PASSWORD(#{topAdminPw}) AND admin_id_pk = 'topAdmin'
 	    </select>
 	<!-- 관리자수정 -->
 	    <update id="updateAdmin" parameterType="com.gift.futurestrading.admin.vo.AdminVo">
-			UPDATE admin SET admin_password = PASSWORD(#{adminPw}), admin_name = #{adminName} WHERE admin_id_pk = #{adminId} 
+			UPDATE admin SET admin_password = PASSWORD(#{adminPw}), admin_name = #{adminName} WHERE admin_id_pk = #{adminId} And #{adminPw} != ""
 	    </update>	
 	<!-- 관리자수정화면 -->
 		<select id="selectAdminOne" resultType="com.gift.futurestrading.admin.vo.AdminVo">

@@ -1,5 +1,6 @@
 package com.gift.futurestrading.admin.mapper;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
@@ -11,6 +12,8 @@ import com.gift.futurestrading.member.vo.SellerVo;
 import com.gift.futurestrading.page.vo.Criteria;
 @Mapper
 public interface AdminMapper {
+	/*관리자 비밀번호 체크*/
+	String selectAdminPw(HashMap<String, Object> idAndPw);
 	/*관리자 리스트*/
 	List<AdminVo> selectAdmin();
 	/*관리자 등록*/

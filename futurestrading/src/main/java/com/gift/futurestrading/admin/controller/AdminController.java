@@ -1,5 +1,6 @@
 package com.gift.futurestrading.admin.controller;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -29,7 +30,25 @@ public class AdminController {
 	@Autowired
 	private AdminService adminService;
 	
-	/*최고관리자 비밀번호 확인(제이쿼리)*/
+	/*관리자 비밀번호 확인(ajax)*/
+	@RequestMapping(value="/adminPwCheck", method=RequestMethod.POST)
+	@ResponseBody
+	public String checkAdminPw(@RequestBody HashMap<String, Object> idAndPw) {
+		System.out.println("AdminController.checkAdminPw() 관리자 비밀번호확인");
+		System.out.println(idAndPw.get("adminId") + "<-- adminId(ajax)");
+		System.out.println(idAndPw.get("adminPw") + "<-- adminPw(ajax)");
+		String idResult = adminService.adminPwCheck(idAndPw);
+		System.out.println(idResult + "<-----idResult");
+			if(idResult != null) {
+				System.out.println("현재 비밀번호 일치");
+				idResult = "일치";
+			} else {
+				System.out.println("현재 비밀번호 불일치");
+				idResult = "불일치";
+			}
+		return idResult;
+	}
+	/*최고관리자 비밀번호 확인(ajax)*/
 	@RequestMapping(value="/checkTopAdminPw", method=RequestMethod.POST)
 	@ResponseBody
 	public String checkTopAdminPw(@RequestBody String topAdminPw, HttpSession session, Model model) {
@@ -38,8 +57,9 @@ public class AdminController {
 		model.addAttribute("sessionLogin", session.getAttribute("sessionLoginMember"));
 		String pw = null;
 		String topAdminPwCheck = adminService.checkTopAdmin(topAdminPw);
+		System.out.println(topAdminPwCheck + "<------------------topAdminPwCheck1");
 			/*입력한 비밀번호와 최고관리자의 비밀번호를 비교 후 결과를 리턴*/
-			if(topAdminPw.equals(topAdminPwCheck)) {
+			if(topAdminPwCheck != null) {
 				System.out.println("최고관리자 비밀번호 일치");
 				pw = "일치";
 			} else {
@@ -55,11 +75,12 @@ public class AdminController {
 		model.addAttribute("sessionLogin", session.getAttribute("sessionLoginMember"));
 		String topAdminPwCheck = adminService.checkTopAdmin(topAdminPw);
 			/*입력한 비밀번호와 최고관리자의 비밀번호가 일치한다면 관리자를 삭제*/
-			if(topAdminPw.equals(topAdminPwCheck)) {
+		System.out.println(topAdminPwCheck + "<------------------topAdminPwCheck2");
+			if(topAdminPwCheck != null) {
 				System.out.println("최고관리자 비밀번호 일치");
 				adminService.removeAdmin(adminId);
 			} else {
-				System.out.println("최고관리자 비밀번	호 불일치");
+				System.out.println("최고관리자 비밀번호 불일치");
 			}
 		return "redirect:/topAdmin/listAdmin";
 	}
@@ -76,12 +97,12 @@ public class AdminController {
 	
 	/*관리자수정액션*/
 	@RequestMapping(value="/topAdmin/modifyAdminAction", method=RequestMethod.POST)
-	public String modifyAdminAction(@RequestParam(value="adminId") String adminId, @RequestParam(value="adminPw") String adminPw, @RequestParam(value="adminName") String adminName, HttpSession session, Model model) {
+	public String modifyAdminAction(@RequestParam(value="adminId") String adminId, @RequestParam(value="newAdminPw") String newAdminPw, @RequestParam(value="adminName") String adminName, HttpSession session, Model model) {
 		System.out.println("AdminController.modifyAdminAction() 수정액션");
 		model.addAttribute("sessionLogin", session.getAttribute("sessionLoginMember"));
 		AdminVo adminRequest = new AdminVo();
 		adminRequest.setAdminId(adminId);
-		adminRequest.setAdminPw(adminPw);
+		adminRequest.setAdminPw(newAdminPw);
 		adminRequest.setAdminName(adminName);
 		adminService.modifyAdmin(adminRequest);
 		return "redirect:/topAdmin/listAdmin";
@@ -95,7 +116,7 @@ public class AdminController {
 		model.addAttribute("adminOne", getAdminOneVo);
 		return "topAdmin/modifyAdmin";
 	}
-	/*관리자 아이디중복체크*/	
+	/*관리자 아이디중복체크(ajax)*/	
 	@RequestMapping(value="/adminIdCheck", method=RequestMethod.POST)
 	@ResponseBody
 	public int adminIdcheck(@RequestBody String inputAdminId, HttpSession session, Model model) {

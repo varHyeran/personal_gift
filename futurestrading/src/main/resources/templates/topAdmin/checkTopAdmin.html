@@ -29,10 +29,8 @@
 		    			if(data != null){
 		    				console.log('data 받아오기 성공');
 							console.log(data + '<---topAdminPw');
-		    			} else {
-		    				console.log('data 받아오기 실패는 아닌데 아무튼 아님');
 		    			}
-	 			 		if(data != '일치') {		// 비밀번호 불일치
+	 			 		if(data == '불일치') {		// 비밀번호 불일치
 	 						submitHelper.text('비밀번호가 일치하지 않습니다');
 	 						event.preventDefault();
 							$('#topAdminPw').focus();
@@ -69,7 +67,7 @@
 		<form action="/topAdmin/checkTopAdmin" id="topAdminPwForm" method="post">
 			<div th:each=adminId:${getAdminId}>
 				<div>
-					<input type="text" name="topAdminPw" id="topAdminPw" class="form-control"><p>
+					<input type="password" name="topAdminPw" id="topAdminPw" class="form-control"><p>
 					<span id="pwHelper" class="text-danger"></span>
 					<input type="hidden" name="adminId" th:value="${adminId}">
 				</div>

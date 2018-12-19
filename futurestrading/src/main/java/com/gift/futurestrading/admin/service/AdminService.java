@@ -1,5 +1,6 @@
 package com.gift.futurestrading.admin.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,12 @@ public class AdminService {
 	@Autowired
 	private AdminMapper adminMapper;
 	
+	/*관리자 비밀번호체크*/
+	public String adminPwCheck(HashMap<String, Object> idAndPw) {
+		System.out.println("AdminService.adminPwCheck() 호출");
+		String idResult = adminMapper.selectAdminPw(idAndPw);
+		return idResult;
+	}
 	/*관리자삭제처리*/
 	public void removeAdmin(String adminId) {
 		System.out.println("AdminService.removeAdmin() 호출");
