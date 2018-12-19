@@ -22,6 +22,19 @@ import com.gift.futurestrading.member.vo.ConsumerRequestVo;
 public class ConsumerController {
 	@Autowired
 	private ConsumerService consumerService;
+	
+	/**
+	 * url 요청이 들어오면 구매자 주문페이지로 랜더링 해준다.
+	 * 
+	 * @return 
+	 * @since JDK1.8
+	 */
+	@RequestMapping(value="/consumer/order", method=RequestMethod.GET)
+	public String addConsumerOrder() {
+		System.out.println("ConsumerService.addConsumerOrder() 호출");
+		return "member/consumer/addMemeberConsumerOrder";
+	}
+	
 	/**
 	 * 구매자 마이페이지에서 해당멤버의 기존 비밀번호와 변경할 비밀번호를 받아 수정처리 해준다.
 	 * 
@@ -113,7 +126,7 @@ public class ConsumerController {
 	}
 	
 	/**
-	 * 해당 url로 요청이 들어왔을 때, 구매자 회원가입 폼 뷰로 렌더링 해준다.
+	 * 해당 url로 요청이 들어왔을 때, 구매자 회원가입폼 뷰로 렌더링 해준다.
 	 * 
 	 * @return 해당 되는 뷰의 경로
 	 * @since JDK1.8
@@ -125,7 +138,7 @@ public class ConsumerController {
 	}
 	
 	/**
-	 * addMemberConsumer.html(구매자 회원가입)에서 submit된 데이터를 VO에 받아 service 계층의 메서드를 호출할 때 param으로 넘겨준다.
+	 * addMemberConsumer.html(구매자 회원가입)에서 데이터를 VO에 받아 service 계층의 메서드를 호출할 때 param으로 넘겨준다.
 	 * 
 	 * @param consumerRequestVo
 	 * @return index

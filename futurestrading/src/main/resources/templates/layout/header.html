@@ -8,12 +8,10 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse nav-ul" id="collapsibleNavbar">
+                <!-- 권한별 메인메뉴 분기 해야한다. -->
                 <ul class="navbar-nav nav-futures">
                     <li class="nav-item">
-                        <a class="nav-link" href="#">거래소</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">주문매수</a>
+                        <a class="nav-link" th:href="@{/consumer/order}">주문</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">부가서비스</a>

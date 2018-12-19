@@ -1133,3 +1133,300 @@ p.sing-welcom img{
     background-position: right bottom;
     background-image: linear-gradient(to bottom, #22bdd2 0%, #545cae 51%, #438bc0 100%);
     }
+
+
+/* 주문 */
+
+.tab-content h2{
+    font-size: 14pt;
+    font-weight: 300;
+    color: #404040;
+    border-bottom: 1px solid #e0e2e4;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+.mypage{
+    min-height: 800px;
+    padding-bottom: 80px;
+}
+.side-nav,.mypage-content{
+    margin-top: 100px;    
+}
+
+/* 마이페이지 side nav */
+
+.side-nav .flex-column{
+    border: 1px solid #e0e2e4;
+    padding: 0px 0px 20px 0px ;
+    color: #404040;
+    font-size: 10pt;
+}
+
+.side-nav .flex-column li a{
+    padding: 0;
+    padding-left: 12px;
+    padding-right: 12px;
+    padding-top: 10px;
+    padding-bottom: 10px; 
+}
+.side-nav .flex-column li a span{
+    text-align: right;
+    float: right;
+    font-size: 8pt;
+}
+
+.side-nav .flex-column li.nav-tabs-haed{
+    font-weight: 100;
+    font-size: 9pt;
+    border-bottom: 1px solid #ddd;
+    padding-left: 12px;
+    padding-right: 12px;
+    padding-top: 10px;
+    padding-bottom: 10px; 
+}
+
+.side-nav .flex-column li.nav-tabs-haed a{
+    padding-left: 0px;
+}
+
+.side-nav .flex-column li.mr{
+    margin-bottom: 10px;
+}
+
+.side-nav .flex-column li.nav-tabs-haed span{
+    font-size: 9pt;
+}
+
+.side-nav .flex-column li a.active {
+    background-color: #1b7fd9;
+    border-radius: 0;
+    color: #fff;
+}
+
+/* 주문 tab content */
+
+.tab-goods-content{
+    padding: 10px;
+}
+
+.tab-goods-content .goods-title h4{
+    display: inline-block;
+    font-size: 20pt;
+    letter-spacing: 1px;
+    font-weight: 300;
+    color: #4556b8;
+    vertical-align: top;
+}
+.tab-goods-content .goods-title span{
+    font-size: 9pt;
+    font-weight: 100;
+    margin-left: 5px;
+    background-color: #4556b8;
+    color: #fff;
+    padding: 2px 6px;
+    border-radius: 3px;
+    vertical-align: sub;
+}
+
+.tab-goods-content .tab-goods-total-price table{
+    font-size: 9pt;
+    display: inline-block;
+    width: 49%;
+}
+
+.tab-goods-content .tab-goods-total-price table th
+,.tab-goods-content .tab-goods-total-price table td{
+    padding: 5px;
+    width: 100%;
+    word-break: keep-all;
+    color: #333;
+}
+
+.tab-goods-content .tab-goods-total-price table th{
+    color: #999;
+}
+
+.daily-chart{
+    width: 100%;
+    height: 150px;
+    background-color: #ddd;
+}
+
+.table-title{
+    display: block;
+    font-size: 10pt;
+    margin-bottom: 10px;
+    color: #777;
+}
+
+.tab-goods-total-sign{
+     margin-top: 15px;
+}
+
+.total-sign-box{
+    height: 200px;
+    margin-bottom: 50px;
+    border-bottom: 1px solid #ddd;
+}
+
+/* overflow scroll */
+
+.scrollbar {
+overflow-y: scroll;
+}
+
+.scrollbar-primary::-webkit-scrollbar {
+    width: 5px;
+    background-color: #F5F5F5; 
+}
+
+.scrollbar-primary::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+    background-color: #4556b8; 
+}
+
+.tab-goods-total-sign table{
+    font-size: 9pt;
+    width: 100%;
+    text-align: left;
+}
+
+.tab-goods-total-sign table th
+,.tab-goods-total-sign table td{
+    padding: 5px;
+    word-break: keep-all;
+    color: #333;
+    width: 30%;
+    padding: 5px 10px;
+}
+
+.tab-goods-total-sign table th{
+    color: #aaa;
+}
+
+.tab-goods-total-sign table tfoot tr {
+    border-top: 1px solid #ddd;
+    
+}
+
+.tab-goods-total-sign table thead {
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+}
+
+
+
+/* 주문 input */
+
+.gift-order{
+    width: 100%;
+}
+
+.gift-order h5{
+    font-size: 13pt;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+}
+
+.gift-order table{
+    font-size: 10pt;
+}
+
+
+.gift-order table th
+,.gift-order table td {
+    padding: 8px 15px;
+    font-weight: 100;
+    font-size: 10pt;
+}
+
+.gift-order table th{
+    font-size: 8pt;
+    word-break: keep-all;
+    width: 20%;
+}
+
+.gift-order table select{
+    border-radius: 3px;
+    border-color: #ccc;
+    height: 30px;
+    width: 100%;
+    font-size: 9pt;
+    color: #777;
+    padding: 5px;
+}
+
+.gift-order table input{
+    height: 30px;
+    font-size: 9pt;
+}
+
+.btn-box{
+    margin-top: 20px;
+}
+
+.btn-box a.btn{
+    width: 100%;
+    background-color: #4556b8;
+    color: #fff;
+    border: none;
+}
+
+.btn-box a.btn:hover{
+    background-color: #1b7fd9;
+    color: #fff;
+    border: none;
+}
+
+.btn-box p {
+    font-size: 10pt;
+    margin-top: 20px;
+    text-align: center;
+    color: #777;
+}
+
+
+/* 전체 테이블 스타일 통일 */
+
+.gift-table{
+    width: 100%;
+    color: #50394c;
+    font-size: 8.5pt;
+}
+
+.gift-table a.btn{
+    font-size: 9pt;
+    background-color: #4556b8;
+    color: #fff;
+    padding: 3px 16px;
+}
+
+.gift-table a.btn:hover{
+    font-size: 9pt;
+    background-color: #1b7fd9;
+    color: #fff;
+    padding: 3px 16px;
+}
+
+.gift-table thead th{
+    font-weight: 400;
+    color: #bbb;
+    border-bottom: 1px;
+}
+
+.gift-table thead th
+,.gift-table tbody td {
+    padding: 10px 10px;
+    text-align: center;
+    vertical-align: middle;
+
+}
+
+.gift-table tfoot {
+    border-top: 1px solid #d5d5d5;
+}
+
+    
