@@ -1,6 +1,9 @@
 // 애플리케이션 클래스
 package com.gift.futurestrading.member.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,13 +15,77 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.gift.futurestrading.member.service.ConsumerService;
+import com.gift.futurestrading.member.vo.ConsumerMypageVo;
 import com.gift.futurestrading.member.vo.ConsumerRequestVo;
 
 @Controller
 public class ConsumerController {
 	@Autowired
 	private ConsumerService consumerService;
+	/**
+	 * 구매자 마이페이지에서 해당멤버의 기존 비밀번호와 변경할 비밀번호를 받아 수정처리 해준다.
+	 * 
+	 * @return 로그아웃 후 index
+	 * @since JDK1.8
+	 */
+	@RequestMapping(value="/consumer/mypage/password/modify", method=RequestMethod.POST)
+	public String modifyConsumerPassword(String consumerIdPk, String consumerPassword, String consumerChangePassword, HttpSession session) {
+		System.out.println("ConsumerService.modifyConsumerPassword() 호출");
+		Map<String, Object> ConsumerMypageChangePw = new HashMap<>();
+		ConsumerMypageChangePw.put("consumerIdPk", consumerIdPk);
+		ConsumerMypageChangePw.put("consumerPassword", consumerPassword);
+		ConsumerMypageChangePw.put("consumerChangePassword", consumerChangePassword);
+		consumerService.updateConsumerPassword(ConsumerMypageChangePw);
+		session.invalidate();
+		return "index";
+	}
 	
+	/**
+	 * 구매자 마이페이지에서 수정할 정보를 받아 해당 멤버의 개인정보를 수정해준다.
+	 * 
+	 * @return index
+	 * @since JDK1.8
+	 */
+	@RequestMapping(value="/consumer/mypage/information/modify", method=RequestMethod.POST)
+	public String modifyConsumrInformation(ConsumerMypageVo consumerMypageVo, HttpSession session, Model model) {
+		System.out.println("ConsumerService.modifyConsumr() 호출");
+		consumerService.updateConsumerInformation(consumerMypageVo);
+		model.addAttribute("sessionLogin", session.getAttribute("sessionLoginMember"));
+		return "index";
+	}
+	
+	
+	/**
+	 * 구매자 마이페이지에서 pw를 받아 해당 멤버의 개인정보를 넘겨준다.
+	 * 
+	 * @return member/consumer/getMemberConsumerMypage
+	 * @since JDK1.8
+	 */
+	@RequestMapping(value="/consumer/mypage/information", method=RequestMethod.POST)
+	public String getconsumerMypageInformation(String mypagePw, String mypageId, Model model, HttpSession session) {
+		System.out.println("ConsumerController.getconsumerMypageInformation() 호출");
+		System.out.println("mypagePw : " + mypagePw );
+		
+		Map<String, Object> ConsumerMypageIdPw = new HashMap<>();
+		ConsumerMypageIdPw.put("mypagePw", mypagePw);
+		ConsumerMypageIdPw.put("mypageId", mypageId);
+		
+		ConsumerMypageVo consumerMypageVo = consumerService.selectConsumerMypageInformation(ConsumerMypageIdPw);
+		model.addAttribute("consumerMypageInformation",consumerMypageVo);
+		model.addAttribute("sessionLogin", session.getAttribute("sessionLoginMember"));
+		
+		System.out.println("컨트롤러 이메일 : "+consumerMypageVo.getConsumerEmail());
+		
+		return "member/consumer/getMemberConsumerMypage";
+	}
+	
+	
+	/**
+	 * 해당 url로 요청이 들어왔을 때, 회원가입 권한 선택 폼으로 랜더링 해준다.
+	 * 
+	 * @return member/choiceSignUp
+	 * @since JDK1.8
+	 */
 	@RequestMapping(value="/singup/choice", method=RequestMethod.GET)
 	public String choiceSignUp() {
 		System.out.println("ConsumerController.choiceSignUp() 호출");
@@ -40,8 +107,8 @@ public class ConsumerController {
 		}else {
 			returnView = "member/consumer/getMemberConsumerMypage";
 		}
-		System.out.println(session.getAttribute("sessionLoginMember")+"<--getConsumerMypage session");
-		model.addAttribute("sessionId", session.getAttribute("sessionLoginMember"));
+		
+		model.addAttribute("sessionLogin", session.getAttribute("sessionLoginMember"));
 		return returnView;
 	}
 	

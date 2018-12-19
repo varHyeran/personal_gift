@@ -2,7 +2,51 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.gift.futurestrading.member.mapper.ConsumerMapper">
+	<!-- 구매자 비밀번호 수정 처리 -->
+	<update id="updateConsumerMypagePassword" parameterType="map">
+	UPDATE consumer as c 
+	SET
+		c.consumer_password=password(#{consumerChangePassword})
+	WHERE
+		c.consumer_id_pk=#{consumerIdPk}
+	AND
+		c.consumer_password=password(#{consumerPassword})
+	</update>
+	
+	<!-- 구매자 개인정보 수정 처리 -->
+	<update id="updateConsumerMypageInformation" parameterType="com.gift.futurestrading.member.vo.ConsumerMypageVo">
+		UPDATE consumer as c 
+		SET
+			c.consumer_email= #{consumerEmail}
+			, c.consumer_address_post_code=#{consumerAddressPostCode}
+			, c.consumer_address_road=#{consumerAddressRoad}
+			, c.consumer_address_detail=#{consumerAddressDetail}
+			, c.consumer_phone=#{consumerPhone}
+		WHERE
+			c.consumer_id_pk=#{consumerIdPk}
+	</update>
 
+	<!-- 구매자 개인정보 수정폼 -->
+	<select id="selectConsumerMypageInformation" parameterType="map" resultType="com.gift.futurestrading.member.vo.ConsumerMypageVo">
+		SELECT
+			consumer_id_pk as consumerIdPk,
+			consumer_name as consumerName,
+			consumer_email as consumerEmail,
+			consumer_jumin_no as consumerJuminNo,
+			consumer_address_post_code as consumerAddressPostCode,
+			consumer_address_road as consumerAddressRoad,
+			consumer_address_detail as consumerAddressDetail,
+			consumer_phone as consumerPhone,
+			consumer_sign_up_date as consumerSignUpDate,
+			consumer_status as consumerStatus,
+			consumer_admit_check_flag as consumerAdmitCheckFlag
+		FROM
+			consumer
+		WHERE
+			consumer_id_pk=#{mypageId}
+		AND
+			consumer_password=password(#{mypagePw}) 
+	</select>
 	<insert id="insertConsumer" parameterType="map">
 		INSERT 
 			INTO consumer
