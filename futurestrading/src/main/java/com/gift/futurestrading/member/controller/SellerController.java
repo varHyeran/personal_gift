@@ -1,19 +1,19 @@
 package com.gift.futurestrading.member.controller;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import com.gift.futurestrading.member.service.SellerService;
 
+import com.gift.futurestrading.member.service.SellerService;
 import com.gift.futurestrading.member.vo.SellerFileRequestVo;
 import com.gift.futurestrading.member.vo.SellerRequestVo;
 
@@ -30,14 +30,16 @@ public class SellerController {
 	}
 	//sellerDetail 페이지 요청
 	@RequestMapping("/joinsellerdetail")
-	public String joinSellerDetail() {
+	public String joinSellerDetail(HttpSession session, Model model) {
 		System.out.println("출력");
+		model.addAttribute("sessionLogin", session.getAttribute("sessionLoginMember"));
 		return "member/seller/addMemberSellerDetail";
 	}
 	// joinsellerdetail 창에서 값을 받아서 이쪽으로 요청
 	@RequestMapping("/sellerFileUpload")
-	public String getSellerDetail(SellerFileRequestVo sellerFileRequestVo , HttpSession session ) throws IOException {
+	public String getSellerDetail(SellerFileRequestVo sellerFileRequestVo , HttpSession session, Model model) throws IOException {
 		System.out.println("출력111");
+		model.addAttribute("sessionLogin", session.getAttribute("sessionLoginMember"));
 		//D:\gift\maven.1544422656107\futurestrading\src\main\resources\sellerFile
 		String path = session.getServletContext().getRealPath("\\upload\\");
 		String realPath =path;
