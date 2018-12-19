@@ -3,13 +3,13 @@
 <mapper namespace="com.gift.futurestrading.login.mapper.LoginMapper">
 	<select id="selectLoginMember" parameterType="com.gift.futurestrading.login.vo.LoginVo" resultType="com.gift.futurestrading.login.vo.LoginVo">
 		SELECT 
-			total_id as totalId, 
-			total_password as totalPassword, 
-			total_right as totalRight 
+			total_id as sessionId, 
+			total_password as sessionPassword, 
+			total_right as sessionRight 
 		FROM view_total_id 
 		WHERE 
-			total_id=#{totalId} 
+			total_id=#{sessionId} 
 		AND 
-			total_password=PASSWORD(#{totalPassword});
+			total_password=PASSWORD(#{sessionPassword});
 	</select>
 </mapper>

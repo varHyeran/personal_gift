@@ -18,7 +18,7 @@ public class indexController {
 			indexReturn = "index";
 		}
 		System.out.println(session.getAttribute("sessionLoginMember"));
-		model.addAttribute("sessionId", session.getAttribute("sessionLoginMember"));
+		model.addAttribute("sessionLogin", session.getAttribute("sessionLoginMember"));
 		return indexReturn;
 	}
 }

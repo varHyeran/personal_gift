@@ -9,8 +9,8 @@ $(document).ready(function() {
 	$("#loginBtn1").click(function() {
 		var action = $("#loginForm1").attr('action');
 		var form_data = {
-			totalId1: $("#totalId1").val(),
-			totalPassword1: $("#totalPassword1").val(),
+			sessionId1: $("#sessionId1").val(),
+			sessionPassword1: $("#sessionPassword1").val(),
 			is_ajax: 1
 		};
 		$.ajax({
@@ -33,8 +33,8 @@ $(document).ready(function() {
 	$("#loginBtn2").click(function() {
 		var action = $("#loginForm2").attr('action');
 		var form_data = {
-			totalId2: $("#totalId2").val(),
-			totalPassword2: $("#totalPassword2").val(),
+			sessionId2: $("#sessionId2").val(),
+			sessionPassword2: $("#sessionPassword2").val(),
 			is_ajax: 1
 		};
 		$.ajax({
@@ -57,8 +57,8 @@ $(document).ready(function() {
 	$("#loginBtn3").click(function() {
 		var action = $("#loginForm3").attr('action');
 		var form_data = {
-			totalId3: $("#totalId3").val(),
-			totalPassword3: $("#totalPassword3").val(),
+			sessionId3: $("#sessionId3").val(),
+			sessionPassword3: $("#sessionPassword3").val(),
 			is_ajax: 1
 		};
 		$.ajax({
@@ -103,10 +103,10 @@ $(document).ready(function() {
                         <div class="sign-in-consumer-htm">
                             <form th:action="@{/login/login}" method="post" id="loginForm1">
                                 <div class="group">
-                                    <input id="totalId1" type="text" class="input" name="totalId" value="test01">
+                                    <input id="sessionId1" type="text" class="input" name="sessionId" value="test01">
                                 </div>
                                 <div class="group">
-                                    <input id="totalPassword1" type="password" class="input" data-type="password" name="totalPassword" value="testtest01#">
+                                    <input id="sessionPassword1" type="password" class="input" data-type="password" name="sessionPassword" value="testtest01#">
                                 </div>
                                 <div class="group">
                                     <input id="consumerCheck" type="checkbox" class="check" checked>
@@ -126,10 +126,10 @@ $(document).ready(function() {
                         <div class="sign-in-seller-htm">
                             <form th:action="@{/login/login}" method="post" id="loginForm2">
                                 <div class="group">
-                                    <input id="totalId2" type="text" class="input" name="totalId" value="">
+                                    <input id="sessionId2" type="text" class="input" name="sessionId" value="">
                                 </div>
                                 <div class="group">
-                                    <input id="totalPassword2" type="password" class="input" data-type="password" name="totalPassword" value="">
+                                    <input id="sessionPassword2" type="password" class="input" data-type="password" name="sessionPassword" value="">
                                 </div>
                                 <div class="group">
                                     <input id="sellerCheck" type="checkbox" class="check" checked>
@@ -150,10 +150,10 @@ $(document).ready(function() {
                         <div class="sign-in-admin-htm">
                             <form th:action="@{/login/login}" method="post" id="loginForm3">
                                 <div class="group">
-                                    <input id="totalId3" type="text" class="input" name="totalId" value="">
+                                    <input id="sessionId3" type="text" class="input" name="sessionId" value="">
                                 </div>
                                 <div class="group">
-                                    <input id="totalPassword3" type="password" class="input" data-type="password" name="totalPassword" value="">
+                                    <input id="sessionPassword3" type="password" class="input" data-type="password" name="sessionPassword" value="">
                                 </div>
                                 <div class="group">
                                     <input id="adminCheck" type="checkbox" class="check" checked>

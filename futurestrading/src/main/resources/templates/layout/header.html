@@ -19,7 +19,7 @@
                         <a class="nav-link" href="#">부가서비스</a>
                     </li>
                 </ul>
-               	<ul th:if="${sessionId} == null" class="navbar-nav nav-memeber">
+               	<ul th:if="${sessionLogin} == null" class="navbar-nav nav-memeber">
 	            	<li class="nav-item">
 	                    <a class="nav-link" th:href="@{/login/login}" th:text="로그인"></a>
 	                </li>
@@ -27,8 +27,8 @@
 	                    <a class="nav-link" th:href="@{/singup/choice}" th:text="회원가입"></a>
 	                </li>
           	 	</ul>
-              	<ul th:if="${sessionId} != null" class="navbar-nav nav-memeber">
-              		<th:block th:switch="${sessionId.totalRight}">
+              	<ul th:if="${sessionLogin} != null" class="navbar-nav nav-memeber">
+              		<th:block th:switch="${sessionLogin.sessionRight}">
 	              		<th:block th:case="'구매자'">
 	           			<li class="nav-item nav-member-dropdown">
 		           		<a class="nav-link dropdown-toggle" role="button" href="#" data-toggle="dropdown">지갑관리<i class="material-icons">keyboard_arrow_down</i></a>
@@ -41,7 +41,7 @@
 		                      	</ul>
 		           		</li>
 			            <li class="nav-item nav-member-dropdown">
-			            	<a class="nav-link dropdown-toggle" role="button" href="#" data-toggle="dropdown"><span th:text="${sessionId.totalId}"></span><i class="material-icons">keyboard_arrow_down</i></a>
+			            	<a class="nav-link dropdown-toggle" role="button" href="#" data-toggle="dropdown"><span th:text="${sessionLogin.sessionId}"></span><i class="material-icons">keyboard_arrow_down</i></a>
 		                       	<ul class="dropdown-menu dropdown-menu-id" role="menu">
 		                            <li><a href="/consumer/mypage">계정관리</a></li>
 		                            <li><a href="/logout" th:href="@{/logout}">logout</a></li>
@@ -57,7 +57,7 @@
 			                      	</ul>
 			           		</li>
 				            <li class="nav-item nav-member-dropdown">
-				            	<a class="nav-link dropdown-toggle" role="button" href="#" data-toggle="dropdown"><span th:text="${sessionId.totalId}"></span><i class="material-icons">keyboard_arrow_down</i></a>
+				            	<a class="nav-link dropdown-toggle" role="button" href="#" data-toggle="dropdown"><span th:text="${sessionLogin.sessionId}"></span><i class="material-icons">keyboard_arrow_down</i></a>
 			                       	<ul class="dropdown-menu dropdown-menu-id" role="menu">
 			                            <li><a href="#">계정관리</a></li>
 			                            <li><a href="/logout" th:href="@{/logout}">logout</a></li>
@@ -75,7 +75,7 @@
 			                      	</ul>
 			           		</li>
 				            <li class="nav-item nav-member-dropdown">
-				            	<a class="nav-link dropdown-toggle" role="button" href="#" data-toggle="dropdown"><span th:text="${sessionId.totalId}"></span><i class="material-icons">keyboard_arrow_down</i></a>
+				            	<a class="nav-link dropdown-toggle" role="button" href="#" data-toggle="dropdown"><span th:text="${sessionLogin.sessionId}"></span><i class="material-icons">keyboard_arrow_down</i></a>
 			                       	<ul class="dropdown-menu dropdown-menu-id" role="menu">
 			                            <li><a href="#">계정관리</a></li>
 			                            <li><a href="/logout" th:href="@{/logout}">logout</a></li>
@@ -91,7 +91,7 @@
 			                      	</ul>
 			           		</li>
 				            <li class="nav-item nav-member-dropdown">
-				            	<a class="nav-link dropdown-toggle" role="button" href="#" data-toggle="dropdown"><span th:text="${sessionId.totalId}"></span><i class="material-icons">keyboard_arrow_down</i></a>
+				            	<a class="nav-link dropdown-toggle" role="button" href="#" data-toggle="dropdown"><span th:text="${sessionLogin.sessionId}"></span><i class="material-icons">keyboard_arrow_down</i></a>
 			                       	<ul class="dropdown-menu dropdown-menu-id" role="menu">
 			                            <li><a href="#">계정관리</a></li>
 			                            <li><a href="/logout" th:href="@{/logout}">logout</a></li>
