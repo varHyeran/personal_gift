@@ -14,6 +14,10 @@
 			text-align: center;
 			margin-bottom: 50px;
 		}
+		.title{
+			border-bottom: solid 1px gray;
+			padding-bottom: 15px
+		}
 	</style>
 </th:block>
 
@@ -396,7 +400,7 @@
 <div layout:fragment="content">
 	<div class="container main-box">
 		<div class="page-header">
-			<h1>
+			<h1 class="title">
 				회원가입 <small>Sign up</small>
 			</h1>
 		</div>
@@ -404,32 +408,32 @@
 			<form onsubmit="return validateForm();" id="form" action="/signup/addconsumer" method="post" >
 				<div class="form-group">
 					<label for="InputId">아이디</label>
-					<input type="text" class="form-control" id="id" name="consumerIdPk" maxlength="12" placeholder="4자 이상 20자 이하로 입력" oninput="idCheck()">
+					<input type="text" class="form-control" id="id" name="consumerIdPk" maxlength="20" placeholder="5자 이상 20자 이하로 입력해 주세요." oninput="idCheck()">
 					<span id="idHelper" class="text-danger"></span>
 				</div>
 				<div class="form-group">
 					<label for="InputPassword1">비밀번호</label>
-					<input type="password" class="form-control" id="pw" name="consumerPassword" maxlength="12" placeholder="영문,숫자,특수문자를 조합하여 8자 이상 12자 이하로 입력" oninput="passwordCheck()">
+					<input type="password" class="form-control" id="pw" name="consumerPassword" maxlength="12" placeholder="영문,숫자,특수문자를 조합하여 8자 이상 12자 이하로 입력해 주세요." oninput="passwordCheck()">
 					<span id="pwHelper" class="text-danger"></span>
 				</div>
 				<div class="form-group">
 					<label for="InputPassword2">비밀번호 확인</label>
-					<input type="password" class="form-control" id="pw2" maxlength="12" placeholder="비밀번호 확인" oninput="password2Check()">
+					<input type="password" class="form-control" id="pw2" maxlength="12" placeholder="비밀번호 확인을 해주세요." oninput="password2Check()">
 					<span id="pw2Helper" class="text-danger"></span>
 				</div>
 				<div class="form-group">
 					<label for="username">이름</label>
-					<input type="text" class="form-control" id="name" name="consumerName" maxlength="4" placeholder="이름을 입력해 주세요" oninput="nameCheck()">
+					<input type="text" class="form-control" id="name" name="consumerName" maxlength="4" placeholder="이름을 입력해 주세요." oninput="nameCheck()">
 					<span id="nameHelper" class="text-danger"></span>
 				</div>
 				<div class="form-group">
 					<label for="InputEmail">이메일 주소</label>
-					<input type="email" class="form-control" id="email" name="consumerEmail" placeholder="(@)를 포함하여 이메일 주소를 입력해 주세요" oninput="emailCheck()">
+					<input type="email" class="form-control" id="email" name="consumerEmail" placeholder="(@)를 포함하여 이메일 주소를 입력해 주세요." oninput="emailCheck()">
 					<span id="emailHelper" class="text-danger"></span>
 				</div>
 				<div class="form-group">
 					<label for="InputEmail">주민등록번호</label>
-					<input type="text" class="form-control" id="juminNo" name="consumerJuminNo" maxlength="8" placeholder="주민등록번호를 입력해 주세요" oninput="juminNoCheck()">
+					<input type="text" class="form-control" id="juminNo" name="consumerJuminNo" maxlength="8" placeholder="(-)를 포함하여 7자리 주민등록번호를 입력해 주세요." oninput="juminNoCheck()">
 					<input type="button" class="btn btn-default" value="실명확인">
 					<span id="juminNoHelper" class="text-danger"></span>
 				</div>
@@ -439,12 +443,12 @@
 					<input type="text" class="form-control" style="width: 40%; display: inline;" id="postcode" name="postcode" placeholder="우편번호" readonly>
 					<input type="button" class="btn btn-default" onclick="execPostcode();" value="우편번호 찾기"><br>
 					<input type="text" class="form-control" style="top: 5px;" id="roadAddress" name="roadAddress" placeholder="도로명주소" readonly>
-					<input type="text" class="form-control" id="detailAddress" name="detailAddress" placeholder="상세주소를 입력해 주세요">
+					<input type="text" class="form-control" id="detailAddress" name="detailAddress" placeholder="상세주소를 입력해 주세요.">
 					<span id="AddressHelper" class="text-danger"></span>			
 				</div>
 				<div class="form-group">
 					<label for="InputEmail">전화번호</label>
-					<input type="text" class="form-control" id="PhoneNo" name="consumerPhone" maxlength="11" placeholder="(-)없이 전화 번호를 입력해 주세요" oninput="phoneNoCheck()">
+					<input type="text" class="form-control" id="PhoneNo" name="consumerPhone" maxlength="11" placeholder="(-)없이 전화 번호를 입력해 주세요." oninput="phoneNoCheck()">
 					<span id="PhoneNoHelper" class="text-danger"></span>
 				</div>
 				<div class="form-group text-center">

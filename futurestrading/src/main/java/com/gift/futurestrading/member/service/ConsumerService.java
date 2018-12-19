@@ -72,9 +72,7 @@ public class ConsumerService {
 		String rodeAddress = consumerRequestVo.getRoadAddress();
 		String detailAddress = consumerRequestVo.getDetailAddress();
 		
-		/* getting해온 데이터들(주소) 하나의 변수에 저장 */
-		String allAddress = postCode + " " + rodeAddress + " " + detailAddress;
-		System.out.println(allAddress+" <---allAddress");
+
 		
 		/* 해쉬맵에 구매자 정보를 put하여 맵퍼 계층의 메서드를 호출할 때 param으로 넘김 */
 		HashMap<String, Object> map = new HashMap<String, Object>();
@@ -83,7 +81,9 @@ public class ConsumerService {
 		map.put("consumer_name", consumerRequestVo.getConsumerName());
 		map.put("consumer_email", consumerRequestVo.getConsumerEmail());
 		map.put("consumer_jumin_no", consumerRequestVo.getConsumerJuminNo());
-		map.put("consumer_address", allAddress);
+		map.put("consumer_address_post_code", consumerRequestVo.getPostcode());
+		map.put("consumer_address_road", consumerRequestVo.getRoadAddress());
+		map.put("consumer_address_detail", consumerRequestVo.getDetailAddress());
 		map.put("consumer_phone", consumerRequestVo.getConsumerPhone());
 		
 		/* 맵퍼 계층의 insertConsumer 메서드 호출 */

@@ -113,7 +113,7 @@ public class ConsumerController {
 	}
 	
 	/**
-	 * 해당 url로 요청이 들어왔을 때, 구매자 회원가입폼 뷰로 렌더링 해준다.
+	 * 해당 url로 요청이 들어왔을 때, 구매자 회원가입 폼 뷰로 렌더링 해준다.
 	 * 
 	 * @return 해당 되는 뷰의 경로
 	 * @since JDK1.8
@@ -125,7 +125,7 @@ public class ConsumerController {
 	}
 	
 	/**
-	 * addMemberConsumer.html(구매자 회원가입)에서 데이터를 VO에 받아 service 계층의 메서드를 호출할 때 param으로 넘겨준다.
+	 * addMemberConsumer.html(구매자 회원가입)에서 submit된 데이터를 VO에 받아 service 계층의 메서드를 호출할 때 param으로 넘겨준다.
 	 * 
 	 * @param consumerRequestVo
 	 * @return index

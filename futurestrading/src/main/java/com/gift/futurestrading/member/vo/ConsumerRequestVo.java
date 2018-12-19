@@ -1,6 +1,6 @@
 package com.gift.futurestrading.member.vo;
 /**
- * 이 클래스는 구매자 회원가입 폼(addConsumer.html)에서 받아온 데이터들을 저장하는 인스턴스를 생성하는 클래스다.
+ * 구매자 회원가입 폼(addConsumer.html)에서 받아온 데이터들을 저장하는 인스턴스를 생성하는 클래스.
  * 
  * @author	jsyangdev
  * @see		com.gift.futurestrading.member.vo.ConsumerRequestVo
@@ -12,7 +12,7 @@ public class ConsumerRequestVo {
 	private String consumerPassword;	// 비밀번호
 	private String consumerName;		// 이름
 	private String consumerEmail;		// 이메일
-	private String consumerJuminNo;		// 주민번호
+	private String consumerJuminNo;		// 주민등록번호
 	private String postcode;			// 우편번호
 	private String roadAddress;			// 도로명주소
 	private String detailAddress;		// 상세주소
