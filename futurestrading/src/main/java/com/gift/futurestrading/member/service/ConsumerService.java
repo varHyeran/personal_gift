@@ -15,6 +15,25 @@ public class ConsumerService {
 	@Autowired
 	private ConsumerMapper consumerMapper;	
 	
+
+	/**
+	 * 구매자가 입력한 계좌번호가 유효한지 알려주는 메서드
+	 * 
+	 * @param map
+	 * @return selectResult
+	 */
+	public String selectAccountOfConsumer(HashMap<String, Object> map) {
+		System.out.println("ConsumerService.selectAccountOfConsumer() 호출");
+		System.out.println(map.get("consumerName")+" <---consumerName");
+		System.out.println(map.get("bankName")+" <---bankName");
+		System.out.println(map.get("consumerAccount")+" <---consumerAccount");
+		
+		String selectResult = consumerMapper.selectAccountOfConsumer(map);
+		System.out.println(selectResult+" <--selectResult");
+		
+		return selectResult;
+	}
+	
 	/**
 	 * modifyConsumerPassword 컨트롤러로부터 넘겨받은 데이터를 입력값으로 해당 멤버의 비밀번호를 수정
 	 * 

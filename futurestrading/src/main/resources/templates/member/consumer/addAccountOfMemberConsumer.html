@@ -50,8 +50,29 @@
 			// contentType: "application/json; charset=UTF-8",
 			// 성공적으로 값을 서버로 보냈을 경우 처리하는 코드
 			success: function(data) {				
-				console.log('data 받아오기 성공 !');	
-				accountHelper.text(data.contractBankUserAccountStatus+'한 계좌입니다.');
+				console.log('data 받아오기 성공 !');
+				console.log(data + ' <---data');
+				
+ 				if(data != undefined) {
+ 					switch (data) {
+ 						case "거래가능":
+ 							console.log('거래가능');
+ 							accountHelper.text(data + '한 계좌입니다.');
+ 							break;
+ 						case "거래중지":	
+ 							console.log('거래중지');
+ 							accountHelper.text(data + '된 계좌입니다.');
+ 							break;
+ 						case "휴면":	
+ 							console.log('휴면');
+ 							accountHelper.text(data + '상태의 계좌입니다.');
+ 							break;
+ 						case "":
+ 							console.log('없음');
+ 							accountHelper.text('계좌번호가 유효하지 않습니다.');
+ 							break;
+ 					}					
+				} 	
 			},
 			error: function(error) {					
 

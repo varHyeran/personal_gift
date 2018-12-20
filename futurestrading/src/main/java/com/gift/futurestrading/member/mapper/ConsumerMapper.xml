@@ -2,6 +2,19 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.gift.futurestrading.member.mapper.ConsumerMapper">
+
+	<!-- 유효한 계좌인지 조회하는 select -->
+ 	<select id="selectAccountOfConsumer" parameterType="map" resultType="String">
+		SELECT
+			contract_bank_user_account_status AS contractBankUserAccountStatus
+		FROM 
+			contract_bank_user
+		WHERE 
+			contract_bank_name = #{bankName}
+		AND contract_bank_user_name = #{consumerName}
+		AND contract_bank_user_account_no = #{consumerAccount};
+	</select>
+
 	<!-- 구매자 비밀번호 수정 처리 -->
 	<update id="updateConsumerMypagePassword" parameterType="map">
 	UPDATE consumer as c 

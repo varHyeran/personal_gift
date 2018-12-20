@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.gift.futurestrading.member.service.ConsumerService;
@@ -23,6 +24,48 @@ public class ConsumerController {
 	@Autowired
 	private ConsumerService consumerService;
 	
+	/**
+	 * 계좌인증을 위한 메서드(외부 계좌 관리 테이블에 입력한 계좌번호가 유효한지 알아보기위함)
+	 * 
+	 * @param consumerName
+	 * @param bankName
+	 * @param consumerAccount
+	 * @return selectResult
+	 * @since JDK1.8
+	 */
+	@RequestMapping(value="/accountcheck", method=RequestMethod.POST)	
+	@ResponseBody
+	public String accountCheck(@RequestParam("consumerName") String consumerName, @RequestParam("bankName") String bankName, @RequestParam("consumerAccount") String consumerAccount) {
+		System.out.println("ConsumerController.accountCheck() 호출");
+		System.out.println(consumerName+"<---consumerName");
+		System.out.println(bankName+"<---bankName");
+		System.out.println(consumerAccount+"<---consumerAccount");
+		
+		/* 해쉬맵에 파라미터들을 put */
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("consumerName", consumerName);
+		map.put("bankName", bankName);
+		map.put("consumerAccount", consumerAccount);
+		
+		String selectResult = consumerService.selectAccountOfConsumer(map);
+		System.out.println(selectResult+" <---selectResult");
+		
+		return selectResult;
+	}
+	
+	/**
+	 * 해당 url로 요청이 들어왔을 때, 구매자 계좌등록 폼으로 랜더링 해준다.
+	 * 
+	 * @return member/consumer/addAccountOfMemberConsumer
+	 * @since JDK1.8
+	 */
+	@RequestMapping(value="/consumer/mywallet/account", method=RequestMethod.GET)
+	public String addAccountOfConsumer(HttpSession session, Model model) {
+		System.out.println("ConsumerController.addAccountOfConsumer() 호출");
+		model.addAttribute("sessionLogin", session.getAttribute("sessionLoginMember"));
+		return "member/consumer/addAccountOfMemberConsumer";
+	}
+
 	/**
 	 * url 요청이 들어오면 구매자 주문페이지로 랜더링 해준다.
 	 * 

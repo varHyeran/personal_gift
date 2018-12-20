@@ -9,6 +9,9 @@ import com.gift.futurestrading.member.vo.ConsumerMypageVo;
 
 @Mapper
 public interface ConsumerMapper {
+	/* 구매자 계좌인증을 위한 select */
+	String selectAccountOfConsumer(HashMap<String, Object> map);
+	
 	/* 구매자 회원가입을 위한 insert */
 	int insertConsumer(HashMap<String, Object> map);
 	
