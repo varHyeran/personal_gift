@@ -19,7 +19,10 @@
 	    </select>
 	<!-- 관리자수정 -->
 	    <update id="updateAdmin" parameterType="com.gift.futurestrading.admin.vo.AdminVo">
-			UPDATE admin SET admin_password = PASSWORD(#{adminPw}), admin_name = #{adminName} WHERE admin_id_pk = #{adminId} And #{adminPw} != ""
+			UPDATE admin 
+			SET admin_password = IF(#{adminPw} != "", PASSWORD(#{adminPw}), admin_password),
+				admin_name = IF(#{adminPw} != "", #{adminName}, #{adminName}) 
+			WHERE admin_id_pk = #{adminId}
 	    </update>	
 	<!-- 관리자수정화면 -->
 		<select id="selectAdminOne" resultType="com.gift.futurestrading.admin.vo.AdminVo">
