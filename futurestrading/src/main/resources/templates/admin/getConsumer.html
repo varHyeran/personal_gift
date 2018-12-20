@@ -2,14 +2,68 @@
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	data-layout-decorate="~{layout/defaultLayout}">
+<th:block layout:fragment="css">
+	<style>
+		.input-group>.input-group-prepend {
+    		flex: 0 0 20%;
+		}
+		.input-group .input-group-text {
+   			 width: 100%;
+		}
+		.blank{
+			margin-top:100px;
+		}
+		.center{
+			text-align: center;
+		}
+	</style>
+</th:block>
 <div layout:fragment="content" class="main-box container">
-	<h3 align="center">구매자 회원 계좌정보</h3>
-	<div  align="center">
-		회원 아이디 :<span th:text="${accountConsumer.fkConsumerAccountConsumer}"></span><p></p>
-		회원 이름 : <span th:text="${accountConsumer.accountConsumerName}"></span><p></p>
-		은행명 : <span th:text="${accountConsumer.accountConsumerBankName}"></span><p></p>
-		계좌 번호 :<span th:text="${accountConsumer.accountConsumerAccountNo}"></span><p></p>
-		계좌등록일 : <span th:text="${accountConsumer.accountConsumerSignUpDate}"></span><p></p>
+	<h3 align="center">구매자 회원정보</h3>
+    <form class="blank center">
+		<div class="input-group">
+		    <div class="input-group-prepend">
+		      <span class="input-group-text">회원 아이디</span>
+		    </div>
+		    <p class="form-control" th:text="${accountConsumer.fkConsumerAccountConsumer}"></p>
+		</div>
+		<div class="input-group">
+		    <div class="input-group-prepend">
+		      <span class="input-group-text">회원 이름</span>
+		    </div>
+		    <p class="form-control" th:text="${accountConsumer.accountConsumerName}"></p>
+		</div>
+		<div class="input-group">
+		    <div class="input-group-prepend">
+		      <span class="input-group-text">은행명</span>
+		    </div>
+		    <p class="form-control" th:text="${accountConsumer.accountConsumerBankName}"></p>
+		</div>
+		<div class="input-group">
+		    <div class="input-group-prepend">
+		      <span class="input-group-text">계좌 번호</span>
+		    </div>
+		    <p class="form-control" th:text="${accountConsumer.accountConsumerAccountNo}"></p>
+		</div>
+		<div class="input-group">
+		    <div class="input-group-prepend">
+		      <span class="input-group-text">계좌등록일</span>
+		    </div>
+		    <p class="form-control" th:text="${accountConsumer.accountConsumerSignUpDate}"></p>
+		</div>  
+	</form>
+	<p class="blank"></p>
+	<div align="center">
+		<a th:href="@{/listConsumer}"><button class="btn" type="button">목록</button></a>
 	</div>
+	<p class="blank"></p>
 </div>
+
 </html>
+
+
+
+
+
+
+

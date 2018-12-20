@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Mapper;
 import com.gift.futurestrading.admin.vo.AdminVo;
 import com.gift.futurestrading.member.vo.AccountConsumerVo;
 import com.gift.futurestrading.member.vo.ConsumerVo;
+import com.gift.futurestrading.member.vo.SellerFileVo;
 import com.gift.futurestrading.member.vo.SellerVo;
 import com.gift.futurestrading.page.vo.Criteria;
 @Mapper
@@ -38,4 +39,6 @@ public interface AdminMapper {
 	int selectSellerAllCount();
 	/*구매자 계좌조회*/
 	AccountConsumerVo selectConsumerAccount(ConsumerVo consumerVo);
+	/*판매자 서류조회*/
+	SellerFileVo selectSellerDocumentOne(SellerVo sellerVo);
 }

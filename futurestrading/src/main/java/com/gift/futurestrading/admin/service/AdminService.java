@@ -10,6 +10,7 @@ import com.gift.futurestrading.admin.mapper.AdminMapper;
 import com.gift.futurestrading.admin.vo.AdminVo;
 import com.gift.futurestrading.member.vo.AccountConsumerVo;
 import com.gift.futurestrading.member.vo.ConsumerVo;
+import com.gift.futurestrading.member.vo.SellerFileVo;
 import com.gift.futurestrading.member.vo.SellerVo;
 import com.gift.futurestrading.page.vo.Criteria;
 
@@ -94,5 +95,12 @@ public class AdminService {
 		System.out.println("SampleService.getConsumerAccount() 호출");
 		AccountConsumerVo accountConsumer = adminMapper.selectConsumerAccount(consumerVo);
 		return accountConsumer;
+	}
+	/*판매자 서류조회*/
+	public SellerFileVo getSellerDocumentOne(SellerVo sellerVo) {
+		System.out.println("SampleService.getSellerDocumentOne() 호출");
+		SellerFileVo sellerFile = adminMapper.selectSellerDocumentOne(sellerVo);
+		return sellerFile;
+		
 	}
 }

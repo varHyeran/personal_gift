@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	data-layout-decorate="~{layout/defaultLayout}">
+<th:block layout:fragment="css">
+	<style>
+		.input-group>.input-group-prepend {
+    		flex: 0 0 30%;
+		}
+		.input-group .input-group-text {
+   			 width: 100%;
+		}
+		.blank{
+			margin-top:100px;
+		}
+		.center{
+			text-align: center;
+		}
+	</style>
+</th:block>
+<div layout:fragment="content" class="main-box container">
+	<h3 align="center">판매자 서류제출현황</h3>
+    <form class="blank center">
+		<div class="input-group">
+		    <div class="input-group-prepend">
+		      <span class="input-group-text">회원 아이디</span>
+		    </div>
+		    <p class="form-control" th:text="${sellerFile.sellerId}"></p>
+		</div>
+		<div class="input-group">
+		    <div class="input-group-prepend">
+		      <span class="input-group-text">회원 이름</span>
+		    </div>
+		    <p class="form-control" th:text="${sellerFile.sellerName}"></p>
+		</div>
+		<div class="input-group">
+		    <div class="input-group-prepend">
+		      <span class="input-group-text">사업자등록증</span>
+		    </div>
+		    <p class="form-control"><a th:text="${sellerFile.sellerLicence}" th:href="@{/download/file/}+${sellerFile.sellerPathFolder}+@{/}+${sellerFile.sellerLicence}"></a></p>
+		</div>
+		<div class="input-group">
+		    <div class="input-group-prepend">
+		      <span class="input-group-text">대표자통장사본</span>
+		    </div>
+		    <p class="form-control"><a th:text="${sellerFile.sellerBankCopy}" th:href="@{/download/file/}+${sellerFile.sellerPathFolder}+@{/}+${sellerFile.sellerBankCopy}"></a></p>
+		</div>
+		<div class="input-group">
+		    <div class="input-group-prepend">
+		      <span class="input-group-text">개인인감증명서(또는 본인서명사실확인서)</span>
+		    </div>
+		    <p class="form-control"><a th:text="${sellerFile.sellerCertification}" th:href="@{/download/file/}+${sellerFile.sellerPathFolder}+@{/}+${sellerFile.sellerCertification}"></a></p>
+		</div>
+		<div class="input-group">
+		    <div class="input-group-prepend">
+		      <span class="input-group-text">통신판매업신고증</span>
+		    </div>
+		    <p class="form-control"><a th:text="${sellerFile.sellerCommunicationSales}" th:href="@{/download/file/}+${sellerFile.sellerPathFolder}+@{/}+${sellerFile.sellerCommunicationSales}" ></a></p>
+		</div>  
+		<div class="input-group">
+		    <div class="input-group-prepend">
+		      <span class="input-group-text">상품등급확인서</span>
+		    </div>
+		    <p class="form-control"><a th:text="${sellerFile.sellerProductGrade}" th:href="@{/download/file/}+${sellerFile.sellerPathFolder}+@{/}+${sellerFile.sellerProductGrade}"></a></p>
+		</div> 
+	</form>
+	<p class="blank"></p>
+	<div align="center">
+		<a th:href="@{/listSeller}"><button class="btn" type="button">목록</button></a>
+	</div>
+	<p class="blank"></p>
+</div>
+</html>

@@ -63,9 +63,7 @@
 			consumer_phone as consumerPhone,
 			consumer_sign_up_date as consumerSignUpDate,
 			consumer_status as consumerStatus,
-			consumer_admit_check_flag as consumerAdmitCheckFlag,
-			consumer_admit_admin as consumerAdmitAdmin,
-			consumer_admit_date as consumerAdmitDate 
+			consumer_admit_check_flag as consumerAdmitCheckFlag
 		FROM consumer
 		LIMIT #{pageStart}, #{perPageNum}
 	</select>
@@ -106,5 +104,21 @@
 		FROM account_consumer ac 
 		INNER JOIN consumer c ON c.consumer_id_pk=ac.fk_consumer__account_consumer 
 		WHERE c.consumer_id_pk=#{consumerIdPk} 
+	</select>
+	<!-- 판매자 서류업로드조회(한명) -->
+	<select id="selectSellerDocumentOne" resultType="com.gift.futurestrading.member.vo.SellerFileVo" parameterType="com.gift.futurestrading.member.vo.SellerVo">
+		SELECT 
+			ds.fk_seller__document_seller as sellerId,
+			ds.document_seller_name as sellerName,
+			ds.document_seller_path as sellerPath,
+			ds.document_seller_path_folder as sellerPathFolder,
+			ds.document_seller_license as sellerLicence,
+			ds.document_seller_bank_copy as sellerBankCopy,
+			ds.document_seller_certificate as sellerCertification,
+			ds.document_seller_communication_sales as sellerCommunicationSales,
+			ds.document_seller_product_grade as sellerProductGrade
+		FROM document_seller ds INNER JOIN seller s 
+		ON s.seller_id_pk=ds.fk_seller__document_seller 
+		WHERE s.seller_id_pk=#{sellerIdPk}
 	</select>
 </mapper>
