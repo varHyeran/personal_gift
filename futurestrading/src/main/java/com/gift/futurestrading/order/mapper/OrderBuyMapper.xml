@@ -1,1 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.gift.futurestrading.order.mapper.OrderBuyMapper">
+	<!-- 매수주문을 위한 insert -->
+	<insert id="insertOrderBuy" parameterType="map">
+		INSERT INTO order_buy (
+			order_buy_pk,			
+			fk_consumer__order_buy, 		
+			fk_item_detail__order_buy, 	
+			order_buy_consumer_name, 	
+			order_buy_method, 		
+			order_buy_per_price, 		
+			order_buy_amount, 		
+			order_buy_date, 			
+			order_buy_final_pay_date				
+		) VALUES (
+			#{order_buy_pk},
+			#{fk_consumer__order_buy},
+			(SELECT item_detail_no_pk FROM item_detail WHERE item_detail_no_pk=#{fk_item_detail__order_buy}),
+			(SELECT consumer_name FROM consumer WHERE consumer_name=#{order_buy_consumer_name}),
+			#{order_buy_method},
+			#{order_buy_per_price},
+			#{order_buy_amount},
+			now(),
+			date_add(now(), interval +3 month)
+		);
+	</insert>
+	<!-- 매수주문 등록할 때 pk값 1씩증가해서 들어가도록 하는 select-->
+	<select id="selectOneAutoMax" parameterType="String" resultType="int">
+		select max(CAST(substring(order_buy_pk,11) AS DECIMAL)) from order_buy
+	</select>
+</mapper>
