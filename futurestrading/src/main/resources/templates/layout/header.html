@@ -8,97 +8,148 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse nav-ul" id="collapsibleNavbar">
-                <!-- 권한별 메인메뉴 분기 해야한다. -->
-                <ul class="navbar-nav nav-futures">
-                    <li class="nav-item">
-                        <a class="nav-link" th:href="@{/consumer/order}">주문</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">부가서비스</a>
-                    </li>
-                </ul>
-               	<ul th:if="${sessionLogin} == null" class="navbar-nav nav-memeber">
-	            	<li class="nav-item">
-	                    <a class="nav-link" th:href="@{/login/login}" th:text="로그인"></a>
-	                </li>
-	                <li class="nav-item">
-	                    <a class="nav-link" th:href="@{/singup/choice}" th:text="회원가입"></a>
-	                </li>
-          	 	</ul>
-              	<ul th:if="${sessionLogin} != null" class="navbar-nav nav-memeber">
-              		<th:block th:switch="${sessionLogin.sessionRight}">
-	              		<th:block th:case="'구매자'">
-	           			<li class="nav-item nav-member-dropdown">
-		           		<a class="nav-link dropdown-toggle" role="button" href="#" data-toggle="dropdown">지갑관리<i class="material-icons">keyboard_arrow_down</i></a>
-		                      	<ul class="dropdown-menu dropdown-menu-money" role="menu">
-		                           <li><a href="#">자산현황</a></li>
-		                           <li><a href="#">입금</a></li>
-		                           <li><a href="#">출금</a></li>
-		                           <li><a href="#">송금</a></li>
-		                           <li><a href="#">거래내역</a></li>
-		                      	</ul>
-		           		</li>
-			            <li class="nav-item nav-member-dropdown">
-			            	<a class="nav-link dropdown-toggle" role="button" href="#" data-toggle="dropdown"><span th:text="${sessionLogin.sessionId}"></span><i class="material-icons">keyboard_arrow_down</i></a>
-		                       	<ul class="dropdown-menu dropdown-menu-id" role="menu">
-		                            <li><a href="/consumer/mypage">계정관리</a></li>
-		                            <li><a href="/logout" th:href="@{/logout}">logout</a></li>
-		                        </ul>
-			            </li>
-			            </th:block>
-			            <th:block th:case="'판매자'">
-				            <li class="nav-item nav-member-dropdown">
-			           		<a class="nav-link dropdown-toggle" role="button" href="#" data-toggle="dropdown">지갑관리<i class="material-icons">keyboard_arrow_down</i></a>
+                <!-- 로그인 전 -->
+                <th:block th:if="${sessionLogin} == null" >
+                	<ul class="navbar-nav nav-futures">
+	                    <li class="nav-item">
+	                        <a class="nav-link" th:href="@{/consumer/order}">주문</a>
+	                    </li>
+	                    <li class="nav-item">
+	                        <a class="nav-link" href="#">부가서비스</a>
+	                    </li>
+	                </ul>
+	               	<ul class="navbar-nav nav-memeber">
+		            	<li class="nav-item">
+		                    <a class="nav-link" th:href="@{/login/login}" th:text="로그인"></a>
+		                </li>
+		                <li class="nav-item">
+		                    <a class="nav-link" th:href="@{/singup/choice}" th:text="회원가입"></a>
+		                </li>
+	          	 	</ul>
+                </th:block>
+                <!-- 로그인 후 -->
+                <th:block th:if="${sessionLogin} != null" >
+	                <!-- 권한별 -->
+	                <th:block th:switch="${sessionLogin.sessionRight}">
+	                	<!-- 구매자 -->
+	                	<th:block th:case="'구매자'">
+		                	<!-- 메인메뉴 -->
+		                	<ul class="navbar-nav nav-futures">
+			                    <li class="nav-item">
+			                        <a class="nav-link" th:href="@{/consumer/order}">주문</a>
+			                    </li>
+			                    <li class="nav-item">
+			                        <a class="nav-link" href="#">부가서비스</a>
+			                    </li>
+			                </ul>
+			                <!-- 서브메뉴 -->
+		                	<ul class="navbar-nav nav-memeber">
+			           			<li class="nav-item nav-member-dropdown">
+				           			<a class="nav-link dropdown-toggle" role="button" href="#" data-toggle="dropdown">지갑관리<i class="material-icons">keyboard_arrow_down</i></a>
 			                      	<ul class="dropdown-menu dropdown-menu-money" role="menu">
 			                           <li><a href="#">자산현황</a></li>
+			                           <li><a href="#">입금</a></li>
+			                           <li><a href="#">출금</a></li>
+			                           <li><a href="#">송금</a></li>
 			                           <li><a href="#">거래내역</a></li>
 			                      	</ul>
-			           		</li>
-				            <li class="nav-item nav-member-dropdown">
-				            	<a class="nav-link dropdown-toggle" role="button" href="#" data-toggle="dropdown"><span th:text="${sessionLogin.sessionId}"></span><i class="material-icons">keyboard_arrow_down</i></a>
+				           		</li>
+					            <li class="nav-item nav-member-dropdown">
+					            	<a class="nav-link dropdown-toggle" role="button" href="#" data-toggle="dropdown"><span th:text="${sessionLogin.sessionId}"></span><i class="material-icons">keyboard_arrow_down</i></a>
+			                       	<ul class="dropdown-menu dropdown-menu-id" role="menu">
+			                            <li><a href="/consumer/mypage">계정관리</a></li>
+			                            <li><a href="/logout" th:href="@{/logout}">logout</a></li>
+			                        </ul>
+					            </li>
+					       	</ul> 
+						</th:block>
+						<!-- 판매자 -->
+			            <th:block th:case="'판매자'">
+				            <!-- 메인메뉴 -->
+		                	<ul class="navbar-nav nav-futures">
+			                    <li class="nav-item">
+			                        <a class="nav-link" href="#">주문</a>
+			                    </li>
+			                    <li class="nav-item">
+			                        <a class="nav-link" href="#">부가서비스</a>
+			                    </li>
+			                </ul>
+			                <!-- 서브메뉴 -->
+				            <ul class="navbar-nav nav-memeber">
+					            <li class="nav-item nav-member-dropdown">
+				           			<a class="nav-link dropdown-toggle" role="button" href="#" data-toggle="dropdown">지갑관리<i class="material-icons">keyboard_arrow_down</i></a>
+			                      	<ul class="dropdown-menu dropdown-menu-money" role="menu">
+			                           <li><a href="#">자산현황</a></li>
+			                           <li><a href="#">출금</a></li>
+			                           <li><a href="#">주문내역</a></li>
+			                           <li><a href="#">거래내역</a></li>
+			                      	</ul>
+				           		</li>
+					            <li class="nav-item nav-member-dropdown">
+					            	<a class="nav-link dropdown-toggle" role="button" href="#" data-toggle="dropdown"><span th:text="${sessionLogin.sessionId}"></span><i class="material-icons">keyboard_arrow_down</i></a>
 			                       	<ul class="dropdown-menu dropdown-menu-id" role="menu">
 			                            <li><a href="#">계정관리</a></li>
 			                            <li><a href="/logout" th:href="@{/logout}">logout</a></li>
 			                        </ul>
-				            </li>
+					            </li>
+					         </ul>
 				         </th:block>
+				         <!-- 관리자 -->
 				         <th:block th:case="'관리자'">
-				            <li class="nav-item nav-member-dropdown">
-			           		<a class="nav-link dropdown-toggle" role="button" href="#" data-toggle="dropdown">전체관리<i class="material-icons">keyboard_arrow_down</i></a>
+					        <!-- 메인메뉴 -->
+		                	<ul class="navbar-nav nav-futures">
+			                    <li class="nav-item">
+			                        <a class="nav-link" href="#">관리자 화면입니다</a>
+			                    </li>
+			                </ul>
+			                <!-- 서브메뉴 -->
+					         <ul class="navbar-nav nav-memeber">
+					            <li class="nav-item nav-member-dropdown">
+				           			<a class="nav-link dropdown-toggle" role="button" href="#" data-toggle="dropdown">전체관리<i class="material-icons">keyboard_arrow_down</i></a>
 			                      	<ul class="dropdown-menu dropdown-menu-money" role="menu">
 			                           <li><a href="#">회원관리</a></li>
 			                           <li><a href="#">주문관리</a></li>
 			                           <li><a href="#">체결관리</a></li>
 			                           <li><a href="#">반대매매관리</a></li>
 			                      	</ul>
-			           		</li>
-				            <li class="nav-item nav-member-dropdown">
-				            	<a class="nav-link dropdown-toggle" role="button" href="#" data-toggle="dropdown"><span th:text="${sessionLogin.sessionId}"></span><i class="material-icons">keyboard_arrow_down</i></a>
+				           		</li>
+					            <li class="nav-item nav-member-dropdown">
+					            	<a class="nav-link dropdown-toggle" role="button" href="#" data-toggle="dropdown"><span th:text="${sessionLogin.sessionId}"></span><i class="material-icons">keyboard_arrow_down</i></a>
 			                       	<ul class="dropdown-menu dropdown-menu-id" role="menu">
 			                            <li><a href="#">계정관리</a></li>
 			                            <li><a href="/logout" th:href="@{/logout}">logout</a></li>
 			                        </ul>
-				            </li>
+					            </li>
+					          </ul>
 				          </th:block>
-				          <th:block th:case="'최고관리자'">
-				            <li class="nav-item nav-member-dropdown">
-			           		<a class="nav-link dropdown-toggle" role="button" href="#" data-toggle="dropdown">전체관리<i class="material-icons">keyboard_arrow_down</i></a>
-			                      	<ul class="dropdown-menu dropdown-menu-money" role="menu">
-			                           <li><a th:href="@{/topAdmin/listAdmin}">관리자관리</a></li>
-			                           <li><a href="#">수익관리</a></li>
-			                      	</ul>
-			           		</li>
-				            <li class="nav-item nav-member-dropdown">
-				            	<a class="nav-link dropdown-toggle" role="button" href="#" data-toggle="dropdown"><span th:text="${sessionLogin.sessionId}"></span><i class="material-icons">keyboard_arrow_down</i></a>
-			                       	<ul class="dropdown-menu dropdown-menu-id" role="menu">
-			                            <li><a href="#">계정관리</a></li>
-			                            <li><a href="/logout" th:href="@{/logout}">logout</a></li>
-			                        </ul>
-				            </li>
-				          </th:block>
-		            </th:block>
-		        </ul>
-		       
+				        <!-- 최고관리자 -->
+						<th:block th:case="'최고관리자'">
+							<!-- 메인메뉴 -->
+		                	<ul class="navbar-nav nav-futures">
+			                    <li class="nav-item">
+			                        <a class="nav-link" href="#">최고관리자 화면입니다.</a>
+			                    </li>
+			                </ul>
+			                <!-- 서브메뉴 -->
+							<ul class="navbar-nav nav-memeber">
+								<li class="nav-item nav-member-dropdown">
+									<a class="nav-link dropdown-toggle" role="button" href="#" data-toggle="dropdown">전체관리<i class="material-icons">keyboard_arrow_down</i></a>
+									<ul class="dropdown-menu dropdown-menu-money" role="menu">
+									    <li><a th:href="@{/topAdmin/listAdmin}">관리자관리</a></li>
+									    <li><a href="#">수익관리</a></li>
+									</ul>
+								</li>
+								<li class="nav-item nav-member-dropdown">
+									<a class="nav-link dropdown-toggle" role="button" href="#" data-toggle="dropdown"><span th:text="${sessionLogin.sessionId}"></span><i class="material-icons">keyboard_arrow_down</i></a>
+									<ul class="dropdown-menu dropdown-menu-id" role="menu">
+									    <li><a href="#">계정관리</a></li>
+									    <li><a href="/logout" th:href="@{/logout}">logout</a></li>
+									</ul>
+								</li>
+							</ul>
+						</th:block>
+			        </th:block>
+                </th:block>
              </div>
         </div>
     </nav>
