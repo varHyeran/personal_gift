@@ -13,5 +13,4 @@ public interface SellerMapper {
 	int insertSeller(HashMap<String, Object> map);
 	int insertSellerFile (HashMap<String, Object> map);
 	int selectOneAutoMax(); 
-	
 }

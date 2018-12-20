@@ -66,14 +66,6 @@ public class SellerService {
 	 */
 	public int insertSeller(SellerRequestVo sellerRequestVo) {
 		System.out.println("sellerService.insertseller() 호출");
-		/* postcode, rodeAddress, detailAddress 데이터 getting */
-		String postCode = sellerRequestVo.getPostcode();
-		String rodeAddress = sellerRequestVo.getRoadAddress();
-		String detailAddress = sellerRequestVo.getDetailAddress();
-		/* getting해온 데이터들(주소) 하나의 변수에 저장 */
-		String allAddress = postCode + " " + rodeAddress + " " + detailAddress;
-		System.out.println(allAddress + " <---allAddress");
-
 		/* 해쉬맵에 구매자 정보를 put하여 맵퍼 계층의 메서드를 호출할 때 param으로 넘김 */
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("seller_id_pk", sellerRequestVo.getSellerIdPk());
@@ -81,7 +73,9 @@ public class SellerService {
 		map.put("seller_name", sellerRequestVo.getSellerName());
 		map.put("seller_email", sellerRequestVo.getSellerEmail());
 		map.put("seller_jumin_no", sellerRequestVo.getSellerJuminNo());
-		map.put("seller_address", allAddress);
+		map.put("seller_address_post_code", sellerRequestVo.getPostcode());
+		map.put("seller_address_road", sellerRequestVo.getRoadAddress());
+		map.put("seller_address_detail", sellerRequestVo.getDetailAddress());
 		System.out.println(sellerRequestVo.getCorporateName());
 		map.put("seller_corporate_name", sellerRequestVo.getCorporateName());
 		map.put("seller_phone", sellerRequestVo.getSellerPhone());
@@ -206,3 +200,4 @@ public class SellerService {
 		}
 	}
 }
+

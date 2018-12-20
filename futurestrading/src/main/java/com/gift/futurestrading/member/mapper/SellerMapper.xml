@@ -50,7 +50,9 @@
 				seller_email,
 				seller_jumin_no,
 				seller_sign_up_date,
-				seller_address,
+				seller_address_post_code,
+				seller_address_road,
+				seller_address_detail,
 				seller_corporate_name,
 				seller_phone,
 				seller_right
@@ -61,13 +63,14 @@
 				#{seller_email},
 				#{seller_jumin_no},
 				now(),
-				#{seller_address},
+				#{seller_address_post_code},
+				#{seller_address_road},
+				#{seller_address_detail},
 				#{seller_corporate_name},
 				#{seller_phone},
-				'인증안됨');
+				'판매자_미승인');
 	</insert>
 	<select id="selectOneAutoMax" parameterType="String" resultType="int">
 		select max(CAST(substring(document_seller_no_pk,17) AS DECIMAL)) from document_seller
 	</select>
 </mapper>
-
