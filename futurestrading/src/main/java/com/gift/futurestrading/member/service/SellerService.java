@@ -4,12 +4,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.HashMap;
-import java.util.UUID;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
 import com.gift.futurestrading.member.mapper.SellerMapper;
 import com.gift.futurestrading.member.vo.AccountCheckResultVo;
 import com.gift.futurestrading.member.vo.SellerFileRequestVo;
@@ -32,21 +29,32 @@ public class SellerService {
 	}
 	
 	public int accountCheck(HashMap<String , Object> ajaxValue) {
-		int selectResult = 0;
+		int selectResult = 1;
 		/* 맵퍼 계층의 selectIdCheck 메서드 호출 */
-		AccountCheckResultVo accountCheckResult = new AccountCheckResultVo();
-		sellerMapper.selectAccountCheck(ajaxValue);
 		System.out.println(selectResult + " <---selectResult");
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("contract_bank_name", ajaxValue.get("accountBank"));
 		map.put("contract_bank_user_name", ajaxValue.get("sellerName"));
 		map.put("contract_bank_user_birth", ajaxValue.get("sellerBirth"));
-		map.put("contract_bank_user_account_no", ajaxValue.get("accountNo"));
-		accountCheckResult = sellerMapper.selectAccountCheck(map);
-		String bankUserAccountStatus = accountCheckResult.getContractBankUserAccountStatus();
-		System.out.println(bankUserAccountStatus +"bankUserAccountStatusbankUserAccountStatus");
+		map.put("contract_bank_name", ajaxValue.get("userAccountBank"));
+		map.put("contract_bank_user_account_no", ajaxValue.get("userAccountNo"));
+		System.out.println(map.get("contract_bank_name")+"contract_bank_namecontract_bank_name");
+		System.out.println(map.get("contract_bank_user_name")+"contract_bank_namecontract_bank_name");
+		System.out.println(map.get("contract_bank_user_birth")+"contract_bank_namecontract_bank_name");
+		System.out.println(map.get("contract_bank_user_account_no")+"contract_bank_namecontract_bank_name");
+		try {
+		AccountCheckResultVo accountCheckResult = sellerMapper.selectAccountCheck(map);
+		String bankUserAccountStatus = accountCheckResult.getContract_bank_user_account_status();
+			if(!(bankUserAccountStatus==null)) {
+				if(bankUserAccountStatus.equals("거래가능")) {
+					selectResult = 0;
+				} 
+			}	
+		}catch (Exception e) {
+			selectResult=1;
+		
+		}
 		return selectResult;
-	}
+	} 
 
 
 	/**

@@ -15,7 +15,8 @@
 	<script type="text/javascript">
 	//계좌 체크여부 확인 (유효하지 않을때 = 0 , 유효할 때 = 1 )
 	var accountCheck = 0;
-
+	/* 
+	 */
 	$(function() {
 	    //accountCheck 버튼을 클릭했을 때 
 
@@ -25,6 +26,8 @@
 	    	var sellerBirth = $("#sellerBirth").val(); 
 	    	var userAccountBank = $("#accountBank").val(); 
 	    	var userAccountNo =  $("#accountNo").val(); 
+	    	var accountHelper = $('#accountHelper')
+	    	var buttonChecker = $('#accountCheck')
 	    	console.log(sellerId);
 	    	console.log(sellerName);
 	    	console.log(sellerBirth);
@@ -39,23 +42,31 @@
 	            url : "/ajaxAccountCheck",
 	            contentType: "application/json; charset=UTF-8",
 	            success : function(data) {
-	                if (data.cnt > 0) {
+	                if (data > 0) {
 	                	//$('#checkMessage').html("<p style="COLOR: blue">유효하지 않는 계좌입니다.</p>");
 	                    //계좌 불가의 경우 빨깡으로 , 아니면 파랑으로 처리하는 디자인
-	                    $("#accountNo").addClass("has-error")
+	                    
+	                    $("#accountNo").css("background-color", "#FF4136");
 	                    $("#accountNo").removeClass("has-success")
+	                    accountHelper.text('계좌를 조회할 수 없습니다.');
 	                    $("#accountNo").focus();
 	                    
 	                
 	                } else {
 	                	 //$('#checkMessage').html("<p style="COLOR: blue">사용가능한 계좌입니다</p>");
 	                    //계좌 불가일경우  빨강으로, 아니면 파랑으로 처리하는 디자인
-	                    $("#accountNo").addClass("has-success")
+	                    $("#accountNo").css("background-color", "#B0F6AC");
 	                    $("#accountNo").removeClass("has-error")
+	                    accountHelper.text('사용 가능한 계좌입니다.');
 	                    //계좌가 유효할 경우
 	                    accountCheck = 1;
 	               
 	                }
+	                if($("#buttonChecker") == 1){
+	                    $("#accountCheck").hide();
+	              } else {
+	                    $("#accountCheck").show();
+	              }
 	            },
 	            error : function(error) {
 	                alert("error : " + error);
@@ -102,9 +113,9 @@
 							<option value="기업은행 ">기업은행</option>
 						</select>
 						 <input type="text" class="form-control" id="accountNo" name="accountNo">
-						<span id = "checkMessage"></span> 
+						<span id="accountHelper"></span><br>
+						<div>
 						<input type="button" class="btn btn-success" id="accountCheck" value="계좌확인">		
-						</div>
 						<div class="border border-secondary">
 							<label for="license" class="font-weight-bold">사업자등록증</label>
 							<div class="text-center" id="fileDiv">

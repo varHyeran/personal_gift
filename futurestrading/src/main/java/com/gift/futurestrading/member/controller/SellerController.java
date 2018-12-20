@@ -91,7 +91,7 @@ public class SellerController {
 			count = sellerService.idCheck(id);
 		} 
 		return count;  
-	}    
+	}     
 	 
 	@RequestMapping(value = "/ajaxAccountCheck",method = {RequestMethod.GET, RequestMethod.POST})
 	@ResponseBody

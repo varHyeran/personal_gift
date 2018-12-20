@@ -5,7 +5,8 @@
 		SELECT COUNT(*) FROM view_total_id WHERE total_id = #{id};
 	</select>
 	<select id="selectAccountCheck" parameterType="map" resultType="com.gift.futurestrading.member.vo.AccountCheckResultVo">
-		SELECT contract_bank_user_account_no ,contract_bank_user_account_status  
+		SELECT contract_bank_user_account_no
+				,contract_bank_user_account_status  
 		FROM contract_bank_user 
 		WHERE contract_bank_name=#{contract_bank_name} and 
 		contract_bank_user_name=#{contract_bank_user_name} and

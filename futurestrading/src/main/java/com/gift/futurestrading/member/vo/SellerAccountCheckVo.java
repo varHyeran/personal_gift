@@ -8,7 +8,7 @@ public class SellerAccountCheckVo {
 	private String accountNo ;
 	public String getSellerId() {
 		return sellerId;
-	}
+	} 
 	public void setSellerId(String sellerId) {
 		this.sellerId = sellerId;
 	}
@@ -19,7 +19,7 @@ public class SellerAccountCheckVo {
 		this.sellerName = sellerName;
 	} 
 	public String getSellerBirth() {
-		return sellerBirth;
+		return sellerBirth; 
 	}
 	public void setSellerBirth(String sellerBirth) {
 		this.sellerBirth = sellerBirth; 
