@@ -1429,4 +1429,70 @@ overflow-y: scroll;
     border-top: 1px solid #d5d5d5;
 }
 
+/* 지갑관리  side nav */
+        
+.side-nav .flex-column{
+    border: 1px solid #e0e2e4;
+    padding: 20px 0px 20px 0px ;
+    color: #404040;
+}
+
+.side-nav .flex-column li a{
+    font-size: 11pt;
+    padding-bottom: 10px;
+}
+
+.side-nav .flex-column li .active{
+    background-color: #1b7fd9;
+    border-radius: 0;
+    color: #fff;
+}
+
+/* 서브메뉴 안 */
+
+.sub-sub-content .gift-search{
+    display: flex;
+    font-size: 9pt;
+    vertical-align: top;
+    margin-bottom: 20px;
+}
+
+.sub-sub-content .gift-search button.btn{
+    font-size: 9pt;
+    border-radius: 0;
+    border: 1px solid #ddd;
+    padding: 4px 10px;
+    margin: -1px 3px 3px 3px;
+    background-color: #fff;
+}
+
+.sub-sub-content .gift-search .gift-search-date input{
+    width: 120px;
+    box-shadow: none;
+    border: 1px solid #ddd;
+    font-size: 9pt;
+    color: #50394c;
+    padding: 4px 4px 3px 4px;
+    margin-left: 3px;
+}
+
+.sub-sub-content .gift-search .gift-search-date-btn button.btn{
+    margin: 0px -3px;
+}
+
+.sub-sub-content .gift-search .gift-search-goods select {
+    width: 120px;
+    border: 1px solid #ddd;
+    font-size: 9pt;
+    color: #50394c;
+    padding: 4px 2px;
+    margin-left: 1px;
+}
+
+.gift-search-date
+,.gift-search-date-btn
+,.gift-search-goods{
+    margin-left: 15px;
+}
+
     

@@ -26,6 +26,28 @@ public class ConsumerController {
 	private ConsumerService consumerService;
 	
 	/**
+	 *  해당 url로 요청이 들어왔을 때, 구매자 지갑관리 뷰로 랜더링 해준다.
+	 * 
+	 * @param accountOfConsumerRequest
+	 * @param session
+	 * @param model
+	 * @return index
+	 * @since JDK1.8
+	 */
+	@RequestMapping(value="/consumer/mywllet", method=RequestMethod.GET)
+	public String ConsumerMyWllet(HttpSession session, Model model) {
+		System.out.println("ConsumerController.ConsumerMyWllet() 호출");
+		String returnView = null;
+		if(session.getAttribute("sessionLoginMember")==null) {
+			returnView = "index";
+		}else {
+			returnView = "member/consumer/getMemberConsumerWllet";
+		}
+		model.addAttribute("sessionLogin", session.getAttribute("sessionLoginMember"));
+		return returnView;
+	}
+	
+	/**
 	 * 계좌등록을 위한 service계층의 메서드 호출
 	 * 
 	 * @param accountOfConsumerRequest
