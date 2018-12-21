@@ -11,7 +11,7 @@ public class OrderSellService {
 	@Autowired
 	private OrderSellMapper orderSellMapper;
 	
-	public int insertOrderSelller(OrderSellVo orderSellVo) {
+	public int insertOrderSeller(OrderSellVo orderSellVo) {
 		System.out.println("sellerService.insertseller() 호출");
 		int sellerMaxId = orderSellMapper.selectOneAutoMax();
 		sellerMaxId += 1;
