@@ -6,12 +6,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.gift.futurestrading.order.mapper.OrderBuyMapper;
+import com.gift.futurestrading.order.vo.ItemDetailVo;
 import com.gift.futurestrading.order.vo.OrderBuyVo;
 
 @Service
 public class OrderBuyService {
 	@Autowired
 	private OrderBuyMapper orderBuyMapper;
+	public ItemDetailVo getItemDetailAll() {
+		System.out.println("OrderBuyService.getItemDetailAll() 호출");	
+		ItemDetailVo itemDetailVo = orderBuyMapper.selectItemDetailAll();
+		return itemDetailVo;
+	}
 	/**
 	 * 매수 등록
 	 * 
@@ -29,10 +35,10 @@ public class OrderBuyService {
 		orderBuyMax += 1;
 		String orderBuyPk = "order_buy_"+orderBuyMax;
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("order_consumer_pk",orderBuyPk);
+		map.put("order_buy_pk",orderBuyPk);
 		map.put("fk_consumer__order_buy", orderBuyVo.getFkConsumerOrderBuy());
 		map.put("fk_item_detail__order_buy", orderBuyVo.getFkItemDetailOrderBuy());
-		map.put("order_buy_consumer_name", orderBuyVo.getOrderBuyConsumerName());
+		map.put("order_buy_consumer_name", orderBuyVo.getFkConsumerOrderBuy());
 		map.put("order_buy_method", orderBuyVo.getOrderBuyMethod());
 		map.put("order_buy_per_price", orderBuyVo.getOrderBuyPerPrice());
 		map.put("order_buy_amount", orderBuyVo.getOrderBuyAmount());

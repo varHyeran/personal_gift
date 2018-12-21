@@ -57,6 +57,7 @@
         	        }
         	    });
         	});
+         
         });
     </script>
 </th:block>
@@ -216,22 +217,27 @@
 		                                  
 		                            </div>
 		                        </div>
+		                        
 		                        <div class="col-md-7">
 		                            <!--주문-->
+		                            <form th:action="@{/order/buy}" method="post">
 		                            <div class="gift-order">
 		                                <h5>매수주문</h5>
 		                                <table>
                                             <tr>
                                                 <th>주문형태</th>
                                                 <td>
-                                                    <select class="order-tab-btn" id="tab-select">
-                                                        <option value="#tab01">시장가 주문</option>
-                                                        <option value="#tab02">지정가 주문</option>
+                                                    <select class="order-tab-btn" id="tab-select" name="orderBuyMethod">
+                                                        <option value="#시장가">시장가 주문</option>
+                                                        <option value="#지정가">지정가 주문</option>
                                                     </select>
                                                 </td>
                                             </tr>
+                                            <tr>
+                                            	<td><input type="hidden" class="form-control" value="청양고추" name="fkItemDetailOrderBuy"></td>
+                                            </tr>
                                             <!--시장가-->
-                                            <tbody id="tab01" class="tab-contents">
+                                            <tbody id="시장가" class="tab-contents">
                                                 <tr>
                                                     <th>총주문금액</th>
                                                     <td><input type="text" class="form-control" placeholder="원하시는 매수 금액을 입력하세요."></td>
@@ -242,7 +248,7 @@
                                                 </tr>
                                                 <tr>
                                                     <th>예약기준가격</th>
-                                                    <td><input type="text" class="form-control" placeholder="시장가 매수 예약 가겨을 입력하세요."></td>
+                                                    <td><input type="text" class="form-control" placeholder="시장가 매수 예약 가격을 입력하세요."></td>
                                                 </tr>
                                                 <tr>
                                                     <td colspan="2"><hr></td>
@@ -257,7 +263,7 @@
                                                 </tr>
                                             </tbody>
                                             <!--지정가-->
-                                            <tbody id="tab02" class="tab-contents" style="display: none;">
+                                            <tbody id="지정가" class="tab-contents" style="display: none;">
                                                 <tr>
                                                     <th>총주문금액</th>
                                                     <td><input type="text" class="form-control" placeholder="원하시는 매수 금액을 입력하세요."></td>
@@ -287,13 +293,15 @@
                                                 </tr>
                                             </tbody>
                                         </table>
+                                       
 		                                <div class="btn-box">
-		                                    <a type="submit" class="btn">예약주문 승인</a>
+		                                    <button type="submit" class="btn">예약주문 승인</button>
 		                                    <p>예약기준가격에 요청하신 금액만큼 비트코인 매수 주문이 시장가로 등록됩니다.</p>
 		                                </div>
 		                            </div>
+		                            </form>
 		                        </div>
-		                    </div>
+		                    </div> 
 		                    <!-- 주문 and 체결 리스트-->
 		                    <div class="row">
 		                        <div class="col-md-12">
@@ -326,13 +334,13 @@
 		                    </div>
 		                </div>
 		            </div>
-		            <!-- 배추 -->
-		            <div id="goods2" class="tab-pane">
-		                <h2>배추</h2>
-		            </div>
 		            <!-- 마늘 -->
-		            <div id="goods3" class="tab-pane">
+		            <div id="goods2" class="tab-pane">
 		                <h2>마늘</h2>
+		            </div>
+		            <!-- 배추 -->
+		            <div id="goods3" class="tab-pane">
+		                <h2>배추</h2>
 		            </div>
 		            <!-- 고구마 -->
 		                <div id="goods4" class="tab-pane">

@@ -2,6 +2,20 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.gift.futurestrading.order.mapper.OrderBuyMapper">
+	<!-- 품목정보를 가져오기위한 select -->
+	<select id="selectItemDetailAll" resultType="com.gift.futurestrading.order.vo.ItemDetailVo">
+		SELECT 
+			item_detail_no_pk as itemDetailNoPK,
+			fk_item__item_detail as fkItemItemDetail,
+			item_detail_name as itemDetailName,
+			item_detail_product_grade as itemDetailProductGrade,
+			item_detail_unit as itemDetailUnit,
+			item_detail_term as itemDetailTerm,
+			item_detail_limit as itemDetailLimit,
+			item_detail_admin as itemDetailAdmin,
+			item_detail_date as itemDetailDate
+		FROM item_detail 
+	</select>
 	<!-- 매수주문을 위한 insert -->
 	<insert id="insertOrderBuy" parameterType="map">
 		INSERT INTO order_buy (
@@ -12,14 +26,14 @@
 			order_buy_method, 		
 			order_buy_per_price, 		
 			order_buy_amount, 		
-			order_buy_date, 			
-			order_buy_final_pay_date				
+			order_buy_date,
+			order_buy_final_pay_date			
 		) VALUES (
 			#{order_buy_pk},
 			#{fk_consumer__order_buy},
-			(SELECT item_detail_no_pk FROM item_detail WHERE item_detail_no_pk=#{fk_item_detail__order_buy}),
-			(SELECT consumer_name FROM consumer WHERE consumer_name=#{order_buy_consumer_name}),
-			#{order_buy_method},
+			(SELECT item_detail_no_pk FROM item_detail WHERE item_detail_name=#{fk_item_detail__order_buy}),
+			(SELECT consumer_name FROM consumer WHERE consumer_id_pk=#{order_buy_consumer_name}),
+			substr(#{order_buy_method},2),
 			#{order_buy_per_price},
 			#{order_buy_amount},
 			now(),
