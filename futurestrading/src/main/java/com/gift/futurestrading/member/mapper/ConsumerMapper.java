@@ -10,10 +10,10 @@ import com.gift.futurestrading.member.vo.ConsumerMypageVo;
 @Mapper
 public interface ConsumerMapper {
 	/* 문자  + 숫자 조합의 primary key에서 숫자를 가져오기위한(기본키값 자동증가 구현을 위해) select */
-	int selectPkOfAccountConsumer();
+	Integer selectPkOfAccountConsumer();
 	
 	/* 구매자 계좌등록을 위한 insert */
-	int insertAccountOfConsumer(HashMap<String, Object> map);
+	Integer insertAccountOfConsumer(HashMap<String, Object> map);
 	
 	/* 구매자 계좌인증을 위한 select */
 	String selectAccountOfConsumer(HashMap<String, Object> map);

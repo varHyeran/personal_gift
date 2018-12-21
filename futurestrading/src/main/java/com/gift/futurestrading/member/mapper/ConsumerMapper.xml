@@ -14,6 +14,7 @@
 			INTO account_consumer
 				(account_no_pk,
 				fk_contract_bank_user__account_consumer,
+				fk_consumer__account_consumer,
 				account_consumer_name,
 				account_consumer_account_no,
 				account_consumer_bank_name,
@@ -27,10 +28,11 @@
 					WHERE
 						contract_bank_name=#{accountConsumerBankName}
 				 ),
+				#{fkConsumerAccountConsumer},
 				#{accountConsumerName},
 				#{accountConsumerAccountNo},
 				#{accountConsumerBankName},
-				now());		
+				now());
 	</insert>
 
 	<!-- 유효한 계좌인지 조회하는 select -->

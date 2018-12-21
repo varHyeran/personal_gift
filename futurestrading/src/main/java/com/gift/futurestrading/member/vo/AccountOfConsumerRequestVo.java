@@ -1,10 +1,18 @@
 package com.gift.futurestrading.member.vo;
 
 public class AccountOfConsumerRequestVo {
-	
+
+	private String fkConsumerAccountConsumer;	// 구매자 아이디
 	private String accountConsumerName;			// 구매자 이름
 	private String accountConsumerBankName;		// 은행 이름
 	private String accountConsumerAccountNo;	// 계좌번호
+	public String getFkConsumerAccountConsumer() {
+		return fkConsumerAccountConsumer;
+	}
+	public void setFkConsumerAccountConsumer(String fkConsumerAccountConsumer) {
+		System.out.println(fkConsumerAccountConsumer+" <---AccountOfConsumerRequest.setFkConsumerAccountConsumer() 호출");
+		this.fkConsumerAccountConsumer = fkConsumerAccountConsumer;
+	}
 	public String getAccountConsumerName() {
 		return accountConsumerName;
 	}
@@ -28,8 +36,9 @@ public class AccountOfConsumerRequestVo {
 	}
 	@Override
 	public String toString() {
-		return "AccountOfConsumerRequest [accountConsumerName=" + accountConsumerName + ", accountConsumerBankName="
+		return "AccountOfConsumerRequestVo [fkConsumerAccountConsumer=" + fkConsumerAccountConsumer
+				+ ", accountConsumerName=" + accountConsumerName + ", accountConsumerBankName="
 				+ accountConsumerBankName + ", accountConsumerAccountNo=" + accountConsumerAccountNo + "]";
 	}
-
+	
 }

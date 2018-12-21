@@ -59,8 +59,12 @@ public class ConsumerController {
 	@RequestMapping(value="/consumer/mywallet/addaccount", method=RequestMethod.POST)
 	public String addAccountOfConsumer(AccountOfConsumerRequestVo accountOfConsumerRequest, HttpSession session, Model model) {
 		System.out.println("ConsumerController.addAccountOfConsumer() 호출 --POST");
+		String id = accountOfConsumerRequest.getFkConsumerAccountConsumer();
+		System.out.println(id+" <---id");
+		
 		/* 세션 저장 */
 		model.addAttribute("sessionLogin", session.getAttribute("sessionLoginMember"));
+		
 		/* 계좌등록을 위한 service계층의 메서드 호출 */
 		int result = consumerService.insertAccountOfConsumer(accountOfConsumerRequest);
 		System.out.println(result + " <---result, 값 받아오기 성공!");

@@ -95,6 +95,9 @@
 		</div>
 		<div>
 			<form th:action="@{/consumer/mywallet/addaccount}" method="post">
+				<div>
+					<input type="hidden" name="fkConsumerAccountConsumer" th:value="${sessionLogin.sessionId}">
+				</div>
 				<div class="form-group">
 					<dl><dt>구매자 이름</dt></dl>
 					<input type="text" class="form-control" name="accountConsumerName" id="consumerName">
