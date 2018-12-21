@@ -36,6 +36,8 @@ public class LoginController {
 			LoginVo sessionLoginMember = loginService.getLoginMember(loginVo);
 			System.out.println(sessionLoginMember+"<--sessionLoginMember");
 			session.setAttribute("sessionLoginMember", sessionLoginMember);
+			session.setAttribute("sessionLoginId", sessionLoginMember.getSessionId());
+			session.setAttribute("sessionLoginRight", sessionLoginMember.getSessionRight());
 			loginReturn = "redirect:/";
 		}else {
 			System.out.println("login fail!!");
