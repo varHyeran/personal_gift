@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.gift.futurestrading.member.mapper.ConsumerMapper;
+import com.gift.futurestrading.member.vo.AccountOfConsumerRequestVo;
 import com.gift.futurestrading.member.vo.ConsumerMypageVo;
 import com.gift.futurestrading.member.vo.ConsumerRequestVo;
 
@@ -15,6 +16,44 @@ public class ConsumerService {
 	@Autowired
 	private ConsumerMapper consumerMapper;	
 	
+	/**
+	 * 문자열 + 숫자 조합의 기본키 컬럼값 자동증가 구현 및 구매자 계좌등록 메서드 호출
+	 * 
+	 * @param accountOfConsumerRequest
+	 * @return result
+	 * @since JDK1.8
+	 */
+	public int insertAccountOfConsumer(AccountOfConsumerRequestVo accountOfConsumerRequest) {
+		System.out.println("ConsumerService.insertAccountOfConsumer() 호출");
+		System.out.println(accountOfConsumerRequest.getAccountConsumerAccountNo()+" <---accountNo");
+		
+		int pkNoValue;			// 기본키 중 숫자
+		String pkStringValue;	// 기본키 중 문자열
+		String accountNoPk;		// 문자열  + 숫자
+		HashMap<String, Object> map = new HashMap<String, Object>();	// 맵퍼에 전달해줄 해쉬맵
+		
+		/* 1. account_consumer 테이블의 기본키 컬럼값 자동증가 구현 */
+		pkStringValue = "account_no_";
+		
+		/* Transaction① : 최대값 구하는 메서드 호출 후, 변수에 저장 */
+		pkNoValue = consumerMapper.selectPkOfAccountConsumer();
+		pkNoValue++;	// 최대값 + 1
+		accountNoPk = pkStringValue + pkNoValue;
+		System.out.println(pkNoValue + " <---pkNoValue");
+		System.out.println(accountNoPk + " <---accountNoPk");
+		
+		/* 맵에 파라미터 데이터들 저장 */
+		map.put("accountNoPk", accountNoPk);
+		map.put("accountConsumerBankName", accountOfConsumerRequest.getAccountConsumerBankName());
+		map.put("accountConsumerName", accountOfConsumerRequest.getAccountConsumerName());
+		map.put("accountConsumerAccountNo", accountOfConsumerRequest.getAccountConsumerAccountNo());
+		map.put("accountConsumerBankName", accountOfConsumerRequest.getAccountConsumerBankName());
+		
+		/* 2. Transaction② : 계좌등록을 위해 메서드 호출 */
+		int result = consumerMapper.insertAccountOfConsumer(map);
+		
+		return result;
+	}
 
 	/**
 	 * 구매자가 입력한 계좌번호가 유효한지 알려주는 메서드
@@ -91,8 +130,6 @@ public class ConsumerService {
 		String rodeAddress = consumerRequestVo.getRoadAddress();
 		String detailAddress = consumerRequestVo.getDetailAddress();
 		
-
-		
 		/* 해쉬맵에 구매자 정보를 put하여 맵퍼 계층의 메서드를 호출할 때 param으로 넘김 */
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("consumer_id_pk", consumerRequestVo.getConsumerIdPk());
@@ -129,5 +166,4 @@ public class ConsumerService {
 		return selectResult;
 	}
 
-	
 }
