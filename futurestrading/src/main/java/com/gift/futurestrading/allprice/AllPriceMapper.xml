@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gift.futurestrading.allprice.AllPriceMapper">
+	
+	<!--  -->
+	<select id="selectAllPricePk">
+		select MAX(CAST(substring(all_price_no_pk,11) AS DECIMAL)) AS NO from all_price;
+	</select>
+	<!-- last price 종가 -->
+	<select id="selectSignAddAllPrice" resultType="com.gift.futurestrading.allprice.AllPriceVo">
+			SELECT
+				sign_item_name AS itemName
+				,sign_per_price AS openingPrice
+				,(
+					SELECT sign_per_price AS signPerPrice
+					FROM sign	
+					WHERE
+						<![CDATA[sign_date < now()]]>
+					AND
+						<![CDATA[sign_date > DATE_SUB(now(),INTERVAL 1 HOUR)]]>
+					ORDER BY
+					sign_date DESC LIMIT 1
+				) AS closingPrice
+			   ,MAX(sign_per_price) AS topPrice
+			   ,MIN(sign_per_price) AS bottomPrice
+			   ,now() AS allPriceDate
+			FROM sign	
+			WHERE
+				<![CDATA[sign_date < now()]]>
+			AND
+				<![CDATA[sign_date > DATE_SUB(now(),INTERVAL 1 HOUR)]]>
+			ORDER BY
+			sign_date DESC LIMIT 1
+	</select>
+	
+	<!-- allprice insert -->
+	<insert id="insertAllPrice" parameterType="com.gift.futurestrading.allprice.AllPriceVo">
+		INSERT INTO all_price (
+			all_price_no_pk
+			,item_name
+			,market_price
+			,closing_price
+			,top_price
+			,bottom_price
+			,all_price_date
+			)
+		VALUES(
+			#{allPriceNoPk}
+			,#{itemName}
+			,#{marketPrice}
+			,#{closingPrice}
+			,#{topPrice}
+			,#{bottomPrice}
+			,now()
+			)
+	</insert>
+</mapper>
