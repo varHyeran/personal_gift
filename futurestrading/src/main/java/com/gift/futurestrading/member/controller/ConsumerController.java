@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.gift.futurestrading.member.service.ConsumerService;
+import com.gift.futurestrading.member.vo.AccountOfConsumerRequestVo;
 import com.gift.futurestrading.member.vo.ConsumerMypageVo;
 import com.gift.futurestrading.member.vo.ConsumerRequestVo;
 
@@ -23,6 +24,27 @@ import com.gift.futurestrading.member.vo.ConsumerRequestVo;
 public class ConsumerController {
 	@Autowired
 	private ConsumerService consumerService;
+	
+	/**
+	 * 계좌등록을 위한 service계층의 메서드 호출
+	 * 
+	 * @param accountOfConsumerRequest
+	 * @param session
+	 * @param model
+	 * @return index
+	 * @since JDK1.8
+	 */
+	@RequestMapping(value="/consumer/mywallet/addaccount", method=RequestMethod.POST)
+	public String addAccountOfConsumer(AccountOfConsumerRequestVo accountOfConsumerRequest, HttpSession session, Model model) {
+		System.out.println("ConsumerController.addAccountOfConsumer() 호출 --POST");
+		/* 세션 저장 */
+		model.addAttribute("sessionLogin", session.getAttribute("sessionLoginMember"));
+		/* 계좌등록을 위한 service계층의 메서드 호출 */
+		int result = consumerService.insertAccountOfConsumer(accountOfConsumerRequest);
+		System.out.println(result + " <---result, 값 받아오기 성공!");
+		
+		return "index";	
+	}
 	
 	/**
 	 * 계좌인증을 위한 메서드(외부 계좌 관리 테이블에 입력한 계좌번호가 유효한지 알아보기위함)
@@ -62,20 +84,8 @@ public class ConsumerController {
 	@RequestMapping(value="/consumer/mywallet/account", method=RequestMethod.GET)
 	public String addAccountOfConsumer(HttpSession session, Model model) {
 		System.out.println("ConsumerController.addAccountOfConsumer() 호출");
-		model.addAttribute("sessionLogin", session.getAttribute("sessionLoginMember"));
+		model.addAttribute("sessionLogin", session.getAttribute("sessionLoginMember"));		
 		return "member/consumer/addAccountOfMemberConsumer";
-	}
-
-	/**
-	 * url 요청이 들어오면 구매자 주문페이지로 랜더링 해준다.
-	 * 
-	 * @return 
-	 * @since JDK1.8
-	 */
-	@RequestMapping(value="/consumer/order", method=RequestMethod.GET)
-	public String addConsumerOrder() {
-		System.out.println("ConsumerService.addConsumerOrder() 호출");
-		return "member/consumer/addMemeberConsumerOrder";
 	}
 	
 	/**

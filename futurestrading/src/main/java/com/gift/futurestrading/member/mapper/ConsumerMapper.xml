@@ -2,6 +2,36 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.gift.futurestrading.member.mapper.ConsumerMapper">
+	
+	<!-- 문자  + 숫자 조합의 primary key에서 숫자를 가져오기위한(기본키 자동증가 구현을 위해) select -->
+	<select id="selectPkOfAccountConsumer" resultType="int">
+		select MAX(CAST(substring(account_no_pk,12) AS DECIMAL)) AS NO from account_consumer;
+	</select>
+
+	<!-- 계좌를 등록하는 insert -->
+	<insert id="insertAccountOfConsumer" parameterType="map">
+		INSERT
+			INTO account_consumer
+				(account_no_pk,
+				fk_contract_bank_user__account_consumer,
+				account_consumer_name,
+				account_consumer_account_no,
+				account_consumer_bank_name,
+				account_consumer_sign_up_date)
+			VALUES(#{accountNoPk},
+				(
+					SELECT 
+						contract_bank_user_no_pk 
+					FROM
+						contract_bank_user 
+					WHERE
+						contract_bank_name=#{accountConsumerBankName}
+				 ),
+				#{accountConsumerName},
+				#{accountConsumerAccountNo},
+				#{accountConsumerBankName},
+				now());		
+	</insert>
 
 	<!-- 유효한 계좌인지 조회하는 select -->
  	<select id="selectAccountOfConsumer" parameterType="map" resultType="String">
