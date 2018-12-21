@@ -25,9 +25,10 @@ public class ConsumerService {
 	 */
 	public int insertAccountOfConsumer(AccountOfConsumerRequestVo accountOfConsumerRequest) {
 		System.out.println("ConsumerService.insertAccountOfConsumer() 호출");
+		System.out.println(accountOfConsumerRequest.getFkConsumerAccountConsumer()+" <---fkConsumerAccountConsumer");
 		System.out.println(accountOfConsumerRequest.getAccountConsumerAccountNo()+" <---accountNo");
 		
-		int pkNoValue;			// 기본키 중 숫자
+		Integer pkNoValue;			// 기본키 중 숫자
 		String pkStringValue;	// 기본키 중 문자열
 		String accountNoPk;		// 문자열  + 숫자
 		HashMap<String, Object> map = new HashMap<String, Object>();	// 맵퍼에 전달해줄 해쉬맵
@@ -36,7 +37,7 @@ public class ConsumerService {
 		pkStringValue = "account_no_";
 		
 		/* Transaction① : 최대값 구하는 메서드 호출 후, 변수에 저장 */
-		pkNoValue = consumerMapper.selectPkOfAccountConsumer();
+		pkNoValue = (int)consumerMapper.selectPkOfAccountConsumer();
 		pkNoValue++;	// 최대값 + 1
 		accountNoPk = pkStringValue + pkNoValue;
 		System.out.println(pkNoValue + " <---pkNoValue");
@@ -44,13 +45,14 @@ public class ConsumerService {
 		
 		/* 맵에 파라미터 데이터들 저장 */
 		map.put("accountNoPk", accountNoPk);
+		map.put("fkConsumerAccountConsumer", accountOfConsumerRequest.getFkConsumerAccountConsumer());
 		map.put("accountConsumerBankName", accountOfConsumerRequest.getAccountConsumerBankName());
 		map.put("accountConsumerName", accountOfConsumerRequest.getAccountConsumerName());
 		map.put("accountConsumerAccountNo", accountOfConsumerRequest.getAccountConsumerAccountNo());
 		map.put("accountConsumerBankName", accountOfConsumerRequest.getAccountConsumerBankName());
 		
 		/* 2. Transaction② : 계좌등록을 위해 메서드 호출 */
-		int result = consumerMapper.insertAccountOfConsumer(map);
+		int result = (int)consumerMapper.insertAccountOfConsumer(map);
 		
 		return result;
 	}
