@@ -234,27 +234,32 @@
                                                 </td>
                                             </tr>
                                             <tr>
+                                            	<!-- <th>품목명</th> -->
                                             	<td><input type="hidden" class="form-control" value="청양고추" name="fkItemDetailOrderBuy"></td>
                                             </tr>
                                             <!--시장가-->
                                             <tbody id="시장가" class="tab-contents">
                                                 <tr>
                                                     <th>총주문금액</th>
-                                                    <td><input type="text" class="form-control" placeholder="원하시는 매수 금액을 입력하세요."></td>
+                                                    <td><input type="text" class="form-control" placeholder="원하시는 매수 금액을 입력하세요." name=""></td>
                                                 </tr>
+                                                <tr>
+                                                	<th>종가</th>
+                                            		<td><input type="text" class="form-control" th:value="${closingPrice}" name="closingPrice"></td>
+                                            	</tr>
                                                 <tr>
                                                     <th>현재수량 /최대수량</th>
-                                                    <td><span>23개/50개</span></td>
+                                                    <td><input type="text" class="form-control" placeholder="원하시는 수량을 입력하세요." name="orderBuyAmount"></td>
                                                 </tr>
-                                                <tr>
+                                               <!--  <tr>
                                                     <th>예약기준가격</th>
                                                     <td><input type="text" class="form-control" placeholder="시장가 매수 예약 가격을 입력하세요."></td>
-                                                </tr>
+                                                </tr> -->
                                                 <tr>
                                                     <td colspan="2"><hr></td>
                                                 </tr>
                                                 <tr>
-                                                    <th>예상매수가격</th>
+                                                    <th>개시증거금</th>
                                                     <td>000</td>
                                                 </tr>
                                                 <tr>
@@ -270,15 +275,11 @@
                                                 </tr>
                                                 <tr>
                                                     <th>현재수량 /최대수량</th>
-                                                    <td><span>23개/50개</span></td>
+                                                    <td><input type="text" class="form-control" placeholder="원하시는 수량을 입력하세요."></td>
                                                 </tr>
                                                 <tr>
                                                     <th>예약기준가격</th>
                                                     <td><input type="text" class="form-control" placeholder="예약주문이 실행되는 기준 가격입니다."></td>
-                                                </tr>
-                                                <tr>
-                                                    <th>예약지정가격</th>
-                                                    <td><input type="text" class="form-control" placeholder="예약 기준 가격보다 낮게 입력하세요"></td>
                                                 </tr>
                                                 <tr>
                                                     <td colspan="2"><hr></td>

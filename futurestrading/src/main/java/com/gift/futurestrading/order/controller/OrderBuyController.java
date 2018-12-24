@@ -23,8 +23,12 @@ public class OrderBuyController {
 	 * @since JDK1.8
 	 */
 	@RequestMapping(value="/consumer/order", method=RequestMethod.GET)
-	public String addConsumerOrder() {
+	public String addConsumerOrder(HttpSession session, Model model) {
 		System.out.println("OrderBuyController.addConsumerOrder() 호출");
+		model.addAttribute("sessionLogin", session.getAttribute("sessionLoginMember"));
+		int getClosingPriceResult = orderBuyService.getClosingPrice();
+		model.addAttribute("closingPrice", getClosingPriceResult);
+		System.out.println(getClosingPriceResult+"<--getClosingPriceResult");
 		return "order/consumer/addMemeberConsumerOrder";
 	}
 	@RequestMapping(value="/order/buy")
@@ -33,9 +37,9 @@ public class OrderBuyController {
 		model.addAttribute("sessionLogin", session.getAttribute("sessionLoginMember"));
 		String sessionLoginId = (String) session.getAttribute("sessionLoginId");
 		orderBuyVo.setFkConsumerOrderBuy(sessionLoginId);
-		System.out.println(orderBuyVo.getFkConsumerOrderBuy());
-		System.out.println(orderBuyVo.getFkItemDetailOrderBuy());
-		System.out.println(orderBuyVo.getOrderBuyMethod());
+		System.out.println(orderBuyVo.getFkConsumerOrderBuy()+"<--구매자아이디");
+		System.out.println(orderBuyVo.getFkItemDetailOrderBuy()+"<--품목코드");
+		System.out.println(orderBuyVo.getOrderBuyMethod()+"<--매수방법");
 		orderBuyVo.setOrderBuyPerPrice(50000);
 		orderBuyVo.setOrderBuyAmount(10);
 		orderBuyService.addOrderBuy(orderBuyVo);

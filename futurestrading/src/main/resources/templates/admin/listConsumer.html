@@ -8,39 +8,71 @@
 		font-size : 9pt;
 		padding : 3px;
 		margin : 0px;
+	}
+	.list{
+		width: 1400px;
+		margin: auto;
+		text-align: center;
 	}	
+	.blank{
+		margin-top:100px;
+	}
+	.title-style{
+		font-size: 14pt;
+    	font-weight: 300;
+   	 	color: #404040;
+    	border-bottom: 1px solid #e0e2e4;
+    	padding-bottom: 10px;
+    	margin-bottom: 40px;
+	}
+	table.consumer-data-table{
+		font-size: 10pt;
+   		font-weight: 100;
+    	width: 100%;
+    	padding: 0;
+    	word-break: keep-all;
+	}
+	table.consumer-data-table th,
+	table.consumer-data-table td{
+		border: 1px solid #e0e2e4; 
+    	padding: 10px;
+    	color: #404040;
+	}
 </style>
 </th:block>
 <div layout:fragment="content" class="main-box container">
-	<h3 align="center">구매자 목록</h3>
-	<table class="table">
+	<h2 class="title-style" align="center">구매자 목록</h2>
+	<table class="consumer-data-table list">
 		<tr>
-			<td>구매자 아이디</td>
-			<td>구매자이름</td>
-			<td>구매자이메일</td>
-			<td>구매자주민등록번호</td>
-			<td>구매자전화번호</td>
-			<td>구매자가입날짜</td>
-			<td>구매자상태</td>
-			<td>구매자승인여부</td>
-			<td>승인관리자</td>
-			<td>구매자승인날짜</td>
-			<td>상세</td>
+			<th>아이디</th>
+			<th>이름</th>
+			<th>이메일</th>
+			<th>주민등록번호</th>
+			<th>우편번호</th>
+			<th>주소</th>
+			<th>상세주소</th>
+			<th>전화번호</th>
+			<th>가입날짜</th>
+			<th>상태</th>
+			<th>승인여부</th>
+			<th>상세</th>
 		</tr>
 		<tr th:each="list : ${consumerList}">
 			<td th:text="${list.consumerIdPk}"></td>
 			<td th:text="${list.consumerName}"></td>
 			<td th:text="${list.consumerEmail}"></td>
 			<td th:text="${list.consumerJuminNo}"></td>
+			<td th:text="${list.consumerAddressPostCode}"></td>
+			<td th:text="${list.consumerAddressRoad}"></td>
+			<td th:text="${list.consumerAddressDetail}"></td>
 			<td th:text="${list.consumerPhone}"></td>
 			<td th:text="${list.consumerSignUpDate}"></td>
 			<td th:text="${list.consumerStatus}"></td>
 			<td th:text="${list.consumerAdmitCheckFlag}"></td>
-			<td th:text="${list.consumerAdmitAdmin}"></td>
-			<td th:text="${list.consumerAdmitDate}"></td>
 			<td><a th:text="상세" th:href="@{/getConsumer(consumerIdPk=${list.consumerIdPk})}"></a></td>
 		</tr>
 	</table>
+	<p class="blank"></p>
 	<ul class="pagination justify-content-center">
 		<li th:if="${pageMaker.prev} == true" class="page-item">
 			<a class="page-link" th:href="@{/listConsumer(page=${pageMaker.startPage}-1,perPageNum=${pageMaker.cri.perPageNum})}">&laquo;</a>

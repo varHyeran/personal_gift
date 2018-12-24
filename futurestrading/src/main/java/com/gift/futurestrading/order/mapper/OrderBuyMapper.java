@@ -13,4 +13,6 @@ public interface OrderBuyMapper {
 	int insertOrderBuy(HashMap<String, Object> map);
 	/*pk값 증가시키기 위한 select*/
 	int selectOneAutoMax();
+	/*품목에 따른 시가 조회하는 select*/
+	int selectClosingPrice();
 }

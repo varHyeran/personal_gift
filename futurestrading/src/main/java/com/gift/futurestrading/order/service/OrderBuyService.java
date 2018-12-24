@@ -45,4 +45,10 @@ public class OrderBuyService {
 		int orderBuyResult = orderBuyMapper.insertOrderBuy(map);
 		return orderBuyResult;
 	}
+	
+	public int getClosingPrice() {
+		System.out.println("OrderBuyService.getClosingPrice() 호출");	
+		int getClosingPriceResult = orderBuyMapper.selectClosingPrice();
+		return getClosingPriceResult;
+	}
 }

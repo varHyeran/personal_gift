@@ -44,4 +44,14 @@
 	<select id="selectOneAutoMax" parameterType="String" resultType="int">
 		select max(CAST(substring(order_buy_pk,11) AS DECIMAL)) from order_buy
 	</select>
+	<!-- 품목에 따른 종가 조회하는 select(총주문금액/종가=수량)-->
+	<select id="selectClosingPrice" resultType="int">
+		SELECT 
+			closing_price as closingPrice
+		FROM 
+			all_price 
+		WHERE 
+			item_name='청양고추'
+		ORDER BY all_price_date DESC LIMIT 1;
+	</select>
 </mapper>
