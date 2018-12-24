@@ -1,7 +1,5 @@
 package com.gift.futurestrading.allprice;
 
-import java.util.List;
-
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
@@ -12,4 +10,7 @@ public interface AllPriceMapper {
 	
 	/*sign table에서 allPrice테이블에 추가할 리스트 select*/
 	AllPriceVo selectSignAddAllPrice();
+	
+	/* auto increment를 위한 select */
+	int selectAllPriceNo();
 }

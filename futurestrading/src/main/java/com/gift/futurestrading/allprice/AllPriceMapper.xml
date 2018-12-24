@@ -2,11 +2,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gift.futurestrading.allprice.AllPriceMapper">
 	
-	<!--  -->
-	<select id="selectAllPricePk">
-		select MAX(CAST(substring(all_price_no_pk,11) AS DECIMAL)) AS NO from all_price;
+	<!-- auto increment를 위한 select -->
+	<select id="selectAllPriceNo" resultType="int">
+		SELECT MAX(CAST(SUBSTRING(all_price_no_pk, 11) AS DECIMAL)) FROM all_price
 	</select>
-	<!-- last price 종가 -->
+	
+	<!-- 시스템이 실행되는 시간대에 체결된 시가(시작가격), 종가(마지막 가격), 최고가, 최저가  -->
 	<select id="selectSignAddAllPrice" resultType="com.gift.futurestrading.allprice.AllPriceVo">
 			SELECT
 				sign_item_name AS itemName
@@ -23,7 +24,6 @@
 				) AS closingPrice
 			   ,MAX(sign_per_price) AS topPrice
 			   ,MIN(sign_per_price) AS bottomPrice
-			   ,now() AS allPriceDate
 			FROM sign	
 			WHERE
 				<![CDATA[sign_date < now()]]>
@@ -38,7 +38,7 @@
 		INSERT INTO all_price (
 			all_price_no_pk
 			,item_name
-			,market_price
+			,opening_price
 			,closing_price
 			,top_price
 			,bottom_price
@@ -47,7 +47,7 @@
 		VALUES(
 			#{allPriceNoPk}
 			,#{itemName}
-			,#{marketPrice}
+			,#{openingPrice}
 			,#{closingPrice}
 			,#{topPrice}
 			,#{bottomPrice}
