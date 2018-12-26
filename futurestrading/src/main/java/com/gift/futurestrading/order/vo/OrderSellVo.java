@@ -7,6 +7,14 @@ public class OrderSellVo {
 	private String orderSellMethod;
 	private int orderSellPerPrice;
 	private int orderSellAmount;
+	
+	public int getOrderSellPerPrice() {
+		return orderSellPerPrice;
+	}
+	public void setOrderSellPerPrice(int orderSellPerPrice) {
+		this.orderSellPerPrice = orderSellPerPrice;
+	}
+
 
 	public String getFkSellerOrderSell() {
 		return fkSellerOrderSell;
@@ -32,25 +40,13 @@ public class OrderSellVo {
 	public void setOrderSellMethod(String orderSellMethod) {
 		this.orderSellMethod = orderSellMethod;
 	}
-	public int getOrderSellPerPrice() {
-		return orderSellPerPrice;
-	}
-	public void setOrderSellPerPrice(int orderSellPerPrice) {
-		this.orderSellPerPrice = orderSellPerPrice;
-	}
 	public int getOrderSellAmount() {
 		return orderSellAmount;
 	} 
 	public void setOrderSellAmount(int orderSellAmount) {
 		this.orderSellAmount = orderSellAmount;
 	}
-	@Override
-	public String toString() {
-		return "OrderSellVo [fkSellerOrderSell=" + fkSellerOrderSell + ", fkItemDetailOrderSell="
-				+ fkItemDetailOrderSell + ", orderSellMethod=" + orderSellMethod + ", orderSellPerPrice="
-				+ orderSellPerPrice + ", orderSellAmount=" + orderSellAmount + "]";
-	}
-	
+
 
 	
 }

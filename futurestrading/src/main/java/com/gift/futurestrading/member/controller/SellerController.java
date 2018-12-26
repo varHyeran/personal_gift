@@ -50,7 +50,18 @@ public class SellerController {
 		sellerService.sellerFileUpload(sellerFileRequestVo, realPath);
 		return "index"; 
 	} 
-	
+	@RequestMapping(value="/seller/mypage", method=RequestMethod.GET)
+	public String sellerMypage(HttpSession session, Model model) {
+		String returnView = null;
+		if(session.getAttribute("sessionLoginMember")==null) {
+			returnView = "index";
+		}else {
+			returnView = "member/seller/getMemberSellerMypage";
+		}
+		
+		model.addAttribute("sessionLogin", session.getAttribute("sessionLoginMember"));
+		return returnView;
+	}
 	//add seller 넘겨준 값 데이터 베이스 저장
 	@RequestMapping(value = "/addseller", method = RequestMethod.POST)
 	public String addSeller(SellerRequestVo sellerRequestVo) {

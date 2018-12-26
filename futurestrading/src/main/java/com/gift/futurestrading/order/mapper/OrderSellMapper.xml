@@ -4,12 +4,12 @@
 	<insert id="insertOrderSeller" parameterType="map">
 		INSERT 
 			INTO order_sell
-				(order_sell_pk,
+				(order_sell_pk,    
 				fk_seller__order_sell,
 				fk_item_detail__order_sell,
-				order_sell_seller_name,
-				order_sell_method,
-				order_sell_per_price,
+				order_sell_seller_name, 
+				order_sell_method,   
+				order_sell_per_price, 
 				order_sell_amount,
 				order_sell_date
 				) 
@@ -23,6 +23,6 @@
 				now());
 	</insert>
 		<select id="selectOneAutoMax" parameterType="String" resultType="int">
-		select max(CAST(substring(order_sell_pk,11) AS DECIMAL)) from order_sell
+		select max(CAST(substring(order_sell_pk,12) AS DECIMAL)) from order_sell
 	</select>
 </mapper>

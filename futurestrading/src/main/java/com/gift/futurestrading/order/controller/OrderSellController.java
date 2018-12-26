@@ -18,17 +18,19 @@ public class OrderSellController {
 	@RequestMapping(value="/seller/order", method=RequestMethod.GET)
 	public String addsellerOrder() {
 		System.out.println("SellerService.addSellerOrder() 호출");
-		return "order/seller/addMemeberSellerOrder";
+		return "order/seller/addMemeberSellerOrderPepper";
 	}
 	@RequestMapping("/order/sell")
 	public String OrderSell(HttpSession session, Model model ,OrderSellVo orderSellVo) {
 		System.out.println("OrderSellController / OrderSell");
 		model.addAttribute("sessionLogin", session.getAttribute("sessionLoginMember"));
-		System.out.println(session.getId()); //알수없는값
-		System.out.println(orderSellVo.getFkItemDetailOrderSell()); //null
-		System.out.println(orderSellVo.getOrderSellAmount()); //0
+		System.out.println(model.addAttribute("sessionLogin", session.getAttribute("sessionLoginMember")));
+		System.out.println(session.getAttribute("sessionLoginId"));//id001s
+		orderSellVo.setFkSellerOrderSell((String)session.getAttribute("sessionLoginId"));
+		System.out.println(orderSellVo.getFkItemDetailOrderSell()); //배추
+		System.out.println(orderSellVo.getOrderSellAmount()); //123
 		System.out.println(orderSellVo.getOrderSellPerPrice());//0
-		System.out.println(orderSellVo.getOrderSellMethod().substring(1));
+		orderSellVo.setOrderSellMethod(orderSellVo.getOrderSellMethod().substring(1));
 		//service Test
 		
 /*		orderSellVo.setFkSellerOrderSell("seller");
@@ -37,7 +39,7 @@ public class OrderSellController {
 		orderSellVo.setOrderSellPerPrice(50000);
 		orderSellVo.setOrderSellAmount(20);*/
 		
-		//orderSellService.insertOrderSeller(orderSellVo);
+		orderSellService.insertOrderSeller(orderSellVo);
 		
 		return "index";
 	}
