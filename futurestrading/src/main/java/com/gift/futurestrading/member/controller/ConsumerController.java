@@ -34,14 +34,14 @@ public class ConsumerController {
 	 * @return index
 	 * @since JDK1.8
 	 */
-	@RequestMapping(value="/consumer/mywllet", method=RequestMethod.GET)
+	@RequestMapping(value="/consumer/mywallet", method=RequestMethod.GET)
 	public String ConsumerMyWllet(HttpSession session, Model model) {
 		System.out.println("ConsumerController.ConsumerMyWllet() 호출");
 		String returnView = null;
 		if(session.getAttribute("sessionLoginMember")==null) {
 			returnView = "index";
 		}else {
-			returnView = "member/consumer/getMemberConsumerWllet";
+			returnView = "member/consumer/getMemberConsumerWallet";
 		}
 		model.addAttribute("sessionLogin", session.getAttribute("sessionLoginMember"));
 		return returnView;

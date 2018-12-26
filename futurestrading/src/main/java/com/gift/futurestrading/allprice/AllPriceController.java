@@ -22,7 +22,7 @@ public class AllPriceController {
 	}
 	
 	//@Scheduled(cron = "0 0/60 9-16 * * *" )
-	@Scheduled(fixedDelay = 5000)
+	//@Scheduled(fixedDelay = 5000)
 	@GetMapping("/testall")
 	public void addAllPrice() {
 		System.out.println("AllPriceController.addAllPrice()호출");
