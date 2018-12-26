@@ -18,45 +18,85 @@
                 $(this).tab('show');
                 e.preventDefault();
             });
-         // select
-         $("#tab-select").change(function() {
-             var target = $(this).val();
-             $('.tab-contents').hide();
-             $(target).show();
-         });
-         /* highchart */
-         $.getJSON('/data_json/daily_chart.json', function (data) {
-        	    // Create the chart
-        	    Highcharts.stockChart('dailychart', {
-      	        
-        	        rangeSelector: {
-        	            selected: 1
-        	        },
-
-        	        navigator: {
-        	            enabled: false
-        	        },
-
-        	        series: [{
-        	            name: 'AAPL Stock Price',
-        	            data: data,
-        	            tooltip: {
-        	                valueDecimals: 2
-        	            }
-        	        }],
-        	        rangeSelector:{
-        	        	inputEnabled: false,
-        	        	enabled: false,
-        	            allButtonsEnabled: true,
-        	            buttonTheme: {
-        	                visibility: 'hidden'
-        	            },
-        	            labelStyle: {
-        	                visibility: 'hidden'
-        	            }
-        	        }
-        	    });
+            /* 수량에 따른 총주문금액, 개시증거금, 수수료 계산 */
+            $('.marketAmount').on('keyup', function(e){
+            	$('.marketTotalPrice').empty();
+            	$('.marketInitialMargin').empty();
+            	$('.marketCharge').empty();
+            	/* toLocaleString() : 자릿수에 콤마 */
+            	var marketTotalPrice = ($('.marketClosing').val()*$('.marketAmount').val()).toLocaleString();
+            	$('.marketTotalPrice').append(marketTotalPrice+"원");
+            	var marketInitialMargin = ($('.marketClosing').val()*$('.marketAmount').val()*0.1).toLocaleString();
+            	$('.marketInitialMargin').append(marketInitialMargin+"원");
+            	var marketCharge = ($('.marketClosing').val()*$('.marketAmount').val()*0.01).toLocaleString();
+            	$('.marketCharge').append(marketCharge+"원");
+            });
+          	$('.selectAmount').on('keyup', function(e){	
+         		$('.selectTotalPrice').empty();
+         		$('.selectInitialMargin').empty();
+               	$('.selectCharge').empty();
+               	var selectTotalPrice = ($('.selectPrice').val()*$('.selectAmount').val()).toLocaleString();
+               	$('.selectTotalPrice').append(selectTotalPrice+"원");
+               	var selectInitialMargin = ($('.selectPrice').val()*$('.selectAmount').val()*0.1).toLocaleString();
+               	$('.selectInitialMargin').append(selectInitialMargin+"원");
+               	var selectCharge = ($('.selectPrice').val()*$('.selectAmount').val()*0.01).toLocaleString();
+               	$('.selectCharge').append(selectCharge+"원");
+          		
+          	});
+          	/* 매수방법에 따라 분기(시장가일때는 지정가 input 막고, 지정가일때는 시장가 input 막는다.) */
+          	$('#orderBuyBtn').click(function() {
+        		console.log($('#tab-select').val() + "('#tab-select').val()");
+        		if($('#tab-select').val() == '#시장가'){
+        			$('#selectPrice').attr('disabled', true);
+        			$('#selectAmount').attr('disabled', true);
+        			$('#orderBuyForm').submit();	
+        		} else if($('#tab-select').val() == '#지정가') {
+        			$('#marketPrice').attr('disabled', true);
+        			$('#marketAmount').attr('disabled', true);
+        			$('#orderBuyForm').submit();
+        		}
         	});
+          	
+	        /* 지정가, 시장가 선택 */
+	        $("#tab-select").change(function() {
+	            var target = $(this).val();
+	            $('.tab-contents').hide();
+	            $(target).show();
+	        });
+	        
+	        /* highchart */
+	        $.getJSON('/data_json/daily_chart.json', function (data) {
+	        	   // Create the chart
+	        	   Highcharts.stockChart('dailychart', {
+	      	        
+	        	       rangeSelector: {
+	        	           selected: 1
+	        	       },
+	
+	        	       navigator: {
+	        	           enabled: false
+	        	       },
+
+	        	       series: [{
+	        	           name: 'AAPL Stock Price',
+	        	           data: data,
+	        	           tooltip: {
+	        	               valueDecimals: 2
+	        	           }
+	        	       }],
+	        	       rangeSelector:{
+	        	        inputEnabled: false,
+	        	        enabled: false,
+	        	           allButtonsEnabled: true,
+	        	           buttonTheme: {
+	        	               visibility: 'hidden'
+	        	           },
+	        	           labelStyle: {
+	        	               visibility: 'hidden'
+	        	           }
+	        	       }
+	        	    });
+	        });
          
         });
     </script>
@@ -220,7 +260,7 @@
 		                        
 		                        <div class="col-md-7">
 		                            <!--주문-->
-		                            <form th:action="@{/order/buy}" method="post">
+		                            <form th:action="@{/order/buy}" method="post" id="orderBuyForm">
 		                            <div class="gift-order">
 		                                <h5>매수주문</h5>
 		                                <table>
@@ -241,15 +281,15 @@
                                             <tbody id="시장가" class="tab-contents">
                                                 <tr>
                                                     <th>총주문금액</th>
-                                                    <td><input type="text" class="form-control" placeholder="원하시는 매수 금액을 입력하세요." name=""></td>
+                                                    <td><label class="marketTotalPrice"></label></td>
                                                 </tr>
                                                 <tr>
                                                 	<th>종가</th>
-                                            		<td><input type="text" class="form-control" th:value="${closingPrice}" name="closingPrice"></td>
+                                            		<td><input type="text" class="form-control marketClosing" th:value="${closingPrice}" name="orderBuyPerPrice" id="marketPrice" readonly></td>
                                             	</tr>
                                                 <tr>
-                                                    <th>현재수량 /최대수량</th>
-                                                    <td><input type="text" class="form-control" placeholder="원하시는 수량을 입력하세요." name="orderBuyAmount"></td>
+                                                    <th>수량</th>
+                                                    <td><input type="text" class="form-control marketAmount" name="orderBuyAmount" id="marketAmount" placeholder="수량을 입력해주세요."></td>
                                                 </tr>
                                                <!--  <tr>
                                                     <th>예약기준가격</th>
@@ -260,47 +300,49 @@
                                                 </tr>
                                                 <tr>
                                                     <th>개시증거금</th>
-                                                    <td>000</td>
+                                                    <td><label class="marketInitialMargin"></label></td>
                                                 </tr>
                                                 <tr>
                                                     <th>수수료</th>
-                                                    <td>000</td>
+                                                    <td><label class="marketCharge"></label></td>
                                                 </tr>
                                             </tbody>
+                                           	
                                             <!--지정가-->
                                             <tbody id="지정가" class="tab-contents" style="display: none;">
                                                 <tr>
                                                     <th>총주문금액</th>
-                                                    <td><input type="text" class="form-control" placeholder="원하시는 매수 금액을 입력하세요."></td>
+                                                    <td><label class="selectTotalPrice"></label></td>
                                                 </tr>
                                                 <tr>
-                                                    <th>현재수량 /최대수량</th>
-                                                    <td><input type="text" class="form-control" placeholder="원하시는 수량을 입력하세요."></td>
+                                                    <th>지정가격</th>
+                                                    <td><input type="text" class="form-control selectPrice" placeholder="예약주문이 실행되는 기준 가격입니다." name="orderBuyPerPrice" id="selectPrice"></td>
                                                 </tr>
                                                 <tr>
-                                                    <th>예약기준가격</th>
-                                                    <td><input type="text" class="form-control" placeholder="예약주문이 실행되는 기준 가격입니다."></td>
+                                                    <th>수량</th>
+                                                    <td><input type="text" class="form-control selectAmount" name="orderBuyAmount" id="selectAmount" placeholder="수량을 입력해주세요."></td>
                                                 </tr>
                                                 <tr>
                                                     <td colspan="2"><hr></td>
                                                 </tr>
                                                 <tr>
-                                                    <th>예상매수가격</th>
-                                                    <td>000</td>
+                                                    <th>개시증거금</th>
+                                                    <td><label class="selectInitialMargin"></label></td>
                                                 </tr>
                                                 <tr>
                                                     <th>수수료</th>
-                                                    <td>000</td>
+                                                    <td><label class="selectCharge"></label></td>
                                                 </tr>
                                             </tbody>
                                         </table>
                                        
 		                                <div class="btn-box">
-		                                    <button type="submit" class="btn">예약주문 승인</button>
-		                                    <p>예약기준가격에 요청하신 금액만큼 비트코인 매수 주문이 시장가로 등록됩니다.</p>
+		                                    <button type="button" class="btn" id="orderBuyBtn">예약주문 승인</button>
+		                                    <p>예약기준가격에 요청하신 금액만큼 품목 매수 주문이 시장가로 등록됩니다.</p>
 		                                </div>
 		                            </div>
 		                            </form>
+		                            
 		                        </div>
 		                    </div> 
 		                    <!-- 주문 and 체결 리스트-->

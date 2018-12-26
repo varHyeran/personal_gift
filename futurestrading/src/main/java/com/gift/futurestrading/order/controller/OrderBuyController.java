@@ -16,14 +16,14 @@ public class OrderBuyController {
 	@Autowired
 	private OrderBuyService orderBuyService;
 
-	/** 매수주문
+	/** 매수주문폼
 	 * url 요청이 들어오면 구매자 주문페이지로 랜더링 해준다.
 	 * 
 	 * @return 
 	 * @since JDK1.8
 	 */
 	@RequestMapping(value="/consumer/order", method=RequestMethod.GET)
-	public String addConsumerOrder(HttpSession session, Model model) {
+	public String addConsumerOrder(HttpSession session, Model model, OrderBuyVo orderBuyVo) {
 		System.out.println("OrderBuyController.addConsumerOrder() 호출");
 		model.addAttribute("sessionLogin", session.getAttribute("sessionLoginMember"));
 		int getClosingPriceResult = orderBuyService.getClosingPrice();
@@ -31,17 +31,23 @@ public class OrderBuyController {
 		System.out.println(getClosingPriceResult+"<--getClosingPriceResult");
 		return "order/consumer/addMemeberConsumerOrder";
 	}
-	@RequestMapping(value="/order/buy")
+	/** 매수주문액션
+	 * 주문실행됨
+	 * 
+	 * @return 
+	 * @since JDK1.8
+	 */
+	@RequestMapping(value="/order/buy", method=RequestMethod.POST)
 	public String addOrderBuy(HttpSession session, Model model , OrderBuyVo orderBuyVo) {
 		System.out.println("OrderBuyController.addOrderBuy() 호출");
 		model.addAttribute("sessionLogin", session.getAttribute("sessionLoginMember"));
 		String sessionLoginId = (String) session.getAttribute("sessionLoginId");
 		orderBuyVo.setFkConsumerOrderBuy(sessionLoginId);
-		System.out.println(orderBuyVo.getFkConsumerOrderBuy()+"<--구매자아이디");
-		System.out.println(orderBuyVo.getFkItemDetailOrderBuy()+"<--품목코드");
-		System.out.println(orderBuyVo.getOrderBuyMethod()+"<--매수방법");
-		orderBuyVo.setOrderBuyPerPrice(50000);
-		orderBuyVo.setOrderBuyAmount(10);
+		System.out.println(orderBuyVo.getFkConsumerOrderBuy()+"<--orderBuyVo.getFkConsumerOrderBuy()");
+		System.out.println(orderBuyVo.getFkItemDetailOrderBuy()+"<--orderBuyVo.getFkItemDetailOrderBuy()");
+		System.out.println(orderBuyVo.getOrderBuyMethod()+"<--orderBuyVo.getOrderBuyMethod()");	
+		System.out.println(orderBuyVo.getOrderBuyPerPrice()+"<--orderBuyVo.getOrderBuyPerPrice()");	
+		System.out.println(orderBuyVo.getOrderBuyAmount()+"<--orderBuyVo.getOrderBuyAmount()");
 		orderBuyService.addOrderBuy(orderBuyVo);
 		return "index";
 	}
