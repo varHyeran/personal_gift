@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	data-layout-decorate="~{layout/defaultLayout}">
+<th:block layout:fragment="css">
+	<style type="text/css">
+		.tab-content{
+            background-color: #fff;
+        }
+	</style>
+</th:block>
+<th:block layout:fragment="script">
+	<script type="text/javascript">
+		$(document).ready(function(){
+			/* side menu */
+        	$(".nav-tabs a").click(function(e){
+                $(this).tab('show');
+                e.preventDefault();
+            });
+	    });
+	</script>
+</th:block>
+
+<th:block layout:fragment="content" class="main-box container">
+	<div class="container mypage">
+		<div class="row">
+			<!-- mypage side nav -->
+			<div class="col-md-3 mypage-nav">
+				<ul class="nav nav-tabs flex-column">
+					<li class="nav-item"><a class="nav-link active"
+						th:href="@{/topAdmin/listAdmin}">관리자관리</a>
+					</li>
+					<li class="nav-item"><a class="nav-link"
+						href="#mypage-content-profit-management">수익관리</a>
+					</li>
+				</ul>
+			</div>
+			<!-- mypage content -->
+			<div class="col-md-9">
+				<div class="mypage-content tab-content">
+					<!-- 거래내역 -->
+					<!-- 주문내역(미체결 상태) -->
+					<div class="sub-sub-content">
+						<h2>체결내역</h2>
+						<!-- 검색 창 -->
+						<div class="gift-search">
+							<div class="gift-search-date">
+								<span>기간</span> <input type="date"> <span>~</span> <input
+									type="date">
+								<button type="button" class="btn">검색</button>
+							</div>
+							<div class="gift-search-date-btn">
+								<button type="button" class="btn">7일</button>
+								<button type="button" class="btn">30일</button>
+								<button type="button" class="btn">90일</button>
+								<button type="button" class="btn">180일</button>
+							</div>
+							<div class="gift-search-goods">
+								<select>
+									<option>전체</option>
+									<option>마늘</option>
+									<option>고구마</option>
+									<option>배추</option>
+								</select> <select>
+									<option>전체</option>
+									<option>지정가</option>
+									<option>시장가</option>
+								</select>
+							</div>
+						</div>
+						<table class="table gift-table">
+							<thead>
+								<tr>
+									<th>체결번호</th>
+									<th>매수주문번호</th>
+									<th>판매자아이디</th>
+									<th>판매자이름</th>
+									<th>가격(1계약)</th>
+									<th>수량</th>
+									<th>전체체결가</th>
+									<th>체결증거금</th>
+									<th>주문날짜</th>
+									<th>체결날짜</th>
+									<th>선물거래시작일</th>
+									<th>선물거래만기일</th>
+									<th>최종결제일(예상수취일)</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>체결번호</td>
+									<td>매수주문번호</td>
+									<td>판매자아이디</td>
+									<td>판매자이름</td>
+									<td>가격(1계약)</td>
+									<td>수량</td>
+									<td>전체체결가</td>
+									<td>체결증거금</td>
+									<td>주문날짜</td>
+									<td>체결날짜</td>
+									<td>선물거래시작일</td>
+									<td>선물거래만기일</td>
+									<td>최종결제일(예상수취일)</td>
+								</tr>
+							</tbody>
+							<tfoot>
+								<tr></tr>
+							</tfoot>
+						</table>
+					</div>
+					<!-- 체결내역(일일정산중인상태) -->
+					<!-- 최종입금 대기 거래내역 -->
+					<!-- 이전거래내역 -->
+					<!-- 납품거래내역 -->
+				</div>
+			</div>
+		</div>
+	</div>
+</th:block>
+</html>

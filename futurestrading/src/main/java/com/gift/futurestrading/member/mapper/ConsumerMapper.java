@@ -9,6 +9,9 @@ import com.gift.futurestrading.member.vo.ConsumerMypageVo;
 
 @Mapper
 public interface ConsumerMapper {
+	/* 구매자 체결내역 select*/
+	int selectSignDetail(String getId);
+	
 	/* 문자  + 숫자 조합의 primary key에서 숫자를 가져오기위한(기본키값 자동증가 구현을 위해) select */
 	Integer selectPkOfAccountConsumer();
 	

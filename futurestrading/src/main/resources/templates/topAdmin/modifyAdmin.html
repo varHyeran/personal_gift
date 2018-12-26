@@ -60,7 +60,6 @@
 		    		var adminId = $('#adminId').val();
 		    		var adminPw = $('#adminPw').val();
 		    		console.log(adminId + '<-----관리자아이디');
-		    		console.log(adminPw + '<-----관리자패스워드');
 			    	$.ajax({
 			    		async : false,
 			    		url : '/adminPwCheck',
@@ -109,6 +108,7 @@
 		    	}
 		    })
 			/*이름 유효성 검사*/
+			$('#adminName').focus();
 		    $('#adminName').blur(function() {    	
 		    	if(!checkName.test($('#adminName').val())){
 		    		$('#nameHelper').text('한글 혹은 영어로 정확히 입력해주세요');
@@ -137,24 +137,26 @@
 		    	var pwCheck = checkPw.test($('#newAdminPw').val());
 				/*비밀번호 확인*/
 		    	var pwDoubleCheck = ($('#newAdminPw').val() == $('#newAdminPw2').val())
-		    	/*한글 혹은 영어인 이름*/
-		    	var nameCheck = checkName.test($('#adminName').val());
-				/*길이가 2-15자 이내가 아닌 이름*/
-		    	var nameLengthCheck = ($('#adminName').val().length < 2 || $('#adminName').val().length > 15);
 	
-				/*비밀번호 변경 버튼을 누르지 않고 이름이 빈칸이 아닐 경우*/
-		    	if(changePwBtn != true && !blankName) {
-		    		$('#submitHelper').text('');
-		    		$('#modifyAdminForm').submit();
+				/*비밀번호 변경 버튼을 누르지 않고 이름이 빈칸인 경우*/
+		     	if(changePwBtn != true && blankName) {
+		     		$('#submitHelper').text('빈 칸 없이 양식에 맞게 작성해주세요');
+		     	/*비밀번호 변경 버튼을 누르지 않고 이름이 빈칸이 아니지만 이름 조건이 실패했을 경우*/
+		     	} else if(changePwBtn != true && !blankName && nameCheckEnd != true){
+		     		console.log(nameCheckEnd + "<---nameCheckEnd");
+		     		$('#submitHelper').text('이름을 양식에 맞춰 작성해주세요');
 		    	/*비밀번호 변경 버튼을 누르고 이름이 빈칸이거나 비밀번호 입력칸들이 빈칸일 경우*/
-		    	} else if(changePwBtn == true && (blankName || blankPws)) {
+		     	} else if((changePwBtn == true) && (blankName || blankPws)) {
 		    		$('#submitHelper').text('빈 칸 없이 양식에 맞게 작성해주세요');
 		    	/*비밀번호 변경 버튼을 누르고 이름이 빈칸이거나 비밀번호 입력칸들이 빈칸이 아니지만 비밀번호 조건이 실패했을 경우*/
 		    	} else if(changePwBtn == true && !blankName && !blankPws && (nowPwCheck == false || newPwCheck == false || newPwCheck2 == false)){
 		    		$('#submitHelper').text('비밀번호 양식에 맞춰 작성해주세요');
-		    		/*비밀번호 변경 버튼을 누르고 이름이 빈칸이거나 비밀번호 입력칸들이 빈칸이 아니지만 비밀번호 조건이 성공했지만 비밀번호,비밀번호 확인이 불일치 했을 때*/
+		    	/*비밀번호 변경 버튼을 누르고 이름이 빈칸이거나 비밀번호 입력칸들이 빈칸이 아니지만 비밀번호 조건이 성공했지만 비밀번호,비밀번호 확인이 불일치 했을 경우*/
 		    	} else if(changePwBtn == true && !blankName && !blankPws && nowPwCheck == true && newPwCheck == true && newPwCheck2 == true && ($('#newAdminPw').val() != $('#newAdminPw2').val())) {
 		    		$('#submitHelper').text('비밀번호가 서로 다릅니다');
+		    		/*비밀번호 변경 버튼을 누르고 이름이 빈칸이거나 비밀번호 입력칸들이 빈칸이 아니지만 비밀번호 조건이 성공하고 비밀번호,비밀번호 확인이 일치하지만 이름 조건이 실패했을 경우*/
+		    	} else if(changePwBtn == true && !blankName && !blankPws && nowPwCheck == true && newPwCheck == true && newPwCheck2 == true && ($('#newAdminPw').val() == $('#newAdminPw2').val()) && (nameCheckEnd != true)) {
+		    		$('#submitHelper').text('이름을 양식에 맞춰 작성해주세요'); 
 		    	} else {
 		    		$('#submitHelper').text('');
 		    		$('#modifyAdminForm').submit();
@@ -182,60 +184,58 @@
 	            <div class="col-md-9">
 	            	<div class="mypage-content tab-content">
 	            		<!-- 관리자 수정 -->
-	            		<!-- <div id="mypage-content-admin-management" class="tab-pane active"> -->
-							<h2>관리자 정보수정</h2>	
-							<form action="/topAdmin/modifyAdminAction" method="post" id="modifyAdminForm">
-								<div class="changeBtn">
-									<button type="button" id="changePwBtn" class="btn">비밀번호 변경</button>
+						<h2>관리자 정보수정</h2>	
+						<form action="/topAdmin/modifyAdminAction" method="post" id="modifyAdminForm">
+							<div class="changeBtn">
+								<button type="button" id="changePwBtn" class="btn">비밀번호 변경</button>
+							</div>
+							<div th:each="admin : ${adminOne}">
+								<div class="form-group">
+									<label>아이디</label>
+									<input type="text" name="adminId" th:value="${admin.adminId}" id="adminId" class="form-control" readonly>
 								</div>
-								<div th:each="admin : ${adminOne}">
-									<div class="form-group">
-										<label>아이디</label>
-										<input type="text" name="adminId" th:value="${admin.adminId}" id="adminId" class="form-control" readonly>
-									</div>
-									<div class="form-group">
-										<label for="adminName">이름</label>
-										<input type="text" name="adminName" th:value="${admin.adminName}" id="adminName" class="form-control">
-										<span id="nameHelper" class="text-danger"></span>
-									</div>
-									<div class="form-group">
-										<label>권한</label>
-										<input type="text" name="adminRight" th:value="${admin.adminRight}" class="form-control" readonly>
-									</div>
-									<div class="form-group">
-										<label>등록날짜</label>
-										<input type="text" name="adminRegisterDate" th:value="${admin.adminRegisterDate}" class="form-control" readonly>
-									</div>
+								<div class="form-group">
+									<label for="adminName">이름</label>
+									<input type="text" name="adminName" th:value="${admin.adminName}" id="adminName" class="form-control">
+									<span id="nameHelper" class="text-danger"></span>
 								</div>
-							 	<div id="changePw">
-									<div class="form-group">
-										<label for="adminPw">현재 비밀번호</label>
-										<input type="password" name="adminPw" id="adminPw" class="form-control">
-										<span id="pwHelper" class="text-danger"></span>
-									</div>
-									<div class="form-group">
-										<label for="newAdminPw">새 비밀번호</label>
-										<input type="password" name="newAdminPw" id="newAdminPw" class="form-control">
-										<span id="newPwHelper" class="text-danger"></span>
-									</div>
-									<div class="form-group">
-										<label for="newAdminPw2">새 비밀번호 확인</label>
-										<input type="password" name="newAdminPw2" id="newAdminPw2" class="form-control">
-										<span id="newPwHelper2" class="text-danger"></span>
-									</div>
+								<div class="form-group">
+									<label>권한</label>
+									<input type="text" name="adminRight" th:value="${admin.adminRight}" class="form-control" readonly>
 								</div>
-								<div class="buttons">
-									<button type="button" id="submitBtn" class="btn">수정</button>
-										<a th:href="@{/topAdmin/checkTopAdminForm(adminId=${adminOne.adminId})}">
-											<button type="button" class="btn">삭제</button>
-										</a>
-										<a href="/topAdmin/listAdmin">
-											<button type="button" class="btn">취소</button>
-										</a><p>
-									<span id="submitHelper" class="text-danger"></span>
+								<div class="form-group">
+									<label>등록날짜</label>
+									<input type="text" name="adminRegisterDate" th:value="${admin.adminRegisterDate}" class="form-control" readonly>
 								</div>
-							</form>
-						<!-- </div> -->
+							</div>
+						 	<div id="changePw">
+								<div class="form-group">
+									<label for="adminPw">현재 비밀번호</label>
+									<input type="password" name="adminPw" id="adminPw" class="form-control">
+									<span id="pwHelper" class="text-danger"></span>
+								</div>
+								<div class="form-group">
+									<label for="newAdminPw">새 비밀번호</label>
+									<input type="password" name="newAdminPw" id="newAdminPw" class="form-control">
+									<span id="newPwHelper" class="text-danger"></span>
+								</div>
+								<div class="form-group">
+									<label for="newAdminPw2">새 비밀번호 확인</label>
+									<input type="password" name="newAdminPw2" id="newAdminPw2" class="form-control">
+									<span id="newPwHelper2" class="text-danger"></span>
+								</div>
+							</div>
+							<div class="buttons">
+								<button type="button" id="submitBtn" class="btn">수정</button>
+									<a th:href="@{/topAdmin/checkTopAdminForm(adminId=${adminOne.adminId})}">
+										<button type="button" class="btn">삭제</button>
+									</a>
+									<a href="/topAdmin/listAdmin">
+										<button type="button" class="btn">취소</button>
+									</a><p>
+								<span id="submitHelper" class="text-danger"></span>
+							</div>
+						</form>
 					</div>
 				</div>
 			</div>

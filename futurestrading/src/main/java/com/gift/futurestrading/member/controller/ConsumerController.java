@@ -25,6 +25,16 @@ public class ConsumerController {
 	@Autowired
 	private ConsumerService consumerService;
 	
+	@RequestMapping(value="/consumer/mywallet/signdetail", method=RequestMethod.GET)
+	public String signDetail(HttpSession session, Model model) {
+		System.out.println("ConsumerController.signDetail() 호출");
+		model.addAttribute("sessionLogin", session.getAttribute("sessionLoginMember"));
+		System.out.println(session.getAttribute("sessionLoginId")+ "<---- getId");
+		String getId = (String)session.getAttribute("sessionLoginId");
+		/*consumerService.getSignDetail(getId);*/
+		return "member/consumer/signDetail";
+	}
+	
 	/**
 	 *  해당 url로 요청이 들어왔을 때, 구매자 지갑관리 뷰로 랜더링 해준다.
 	 * 

@@ -16,6 +16,12 @@ public class ConsumerService {
 	@Autowired
 	private ConsumerMapper consumerMapper;	
 	
+	public int getSignDetail(String getId) {
+		System.out.println("ConsumerService.getSignDetail() 호출");
+		consumerMapper.selectSignDetail(getId);
+		return 0;
+	}
+	
 	/**
 	 * 문자열 + 숫자 조합의 기본키 컬럼값 자동증가 구현 및 구매자 계좌등록 메서드 호출
 	 * 

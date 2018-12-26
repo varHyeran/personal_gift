@@ -2,6 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.gift.futurestrading.member.mapper.ConsumerMapper">
+	<!-- 체결내역 select -->
+	<!-- <select id="selectSignDetail">
+		
+	</select> -->
 	
 	<!-- 문자  + 숫자 조합의 primary key에서 숫자를 가져오기위한(기본키 자동증가 구현을 위해) select -->
 	<select id="selectPkOfAccountConsumer" resultType="int">
