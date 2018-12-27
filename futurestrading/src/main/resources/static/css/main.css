@@ -632,18 +632,19 @@ a.nav-link:hover{
     min-width: 310px
 }
 
-/* login form */
+/* 로그인폼 */
 .main-login{
-    height: 780px;
+    height: 800px;
 }
 .login-wrap{
     margin:0 auto;
-    width:400px;
-    height:390px;
+    width:480px;
+    height:350px;
     position:relative;
+    text-align:center;
 }
 .login-html{
-    margin-top: 35%;
+    margin-top: 10px;
     width:100%;
     height:100%;
     position:absolute;
@@ -655,7 +656,8 @@ a.nav-link:hover{
 /* 탭 이동시 모션 */
 .login-html .sign-in-consumer-htm,
 .login-html .sign-in-seller-htm,
-.login-html .sign-in-admin-htm{
+.login-html .sign-in-admin-htm,
+.login-html .sign-in-topAdmin-htm{
     top:0;
     left:0;
     right:0;
@@ -668,6 +670,7 @@ a.nav-link:hover{
 .login-html .sign-in-consumer,
 .login-html .sign-in-seller,
 .login-html .sign-in-admin,
+.login-html .sign-in-topAdmin,
 .login-form .group .check{
     display:none;
 }
@@ -680,15 +683,15 @@ a.nav-link:hover{
 /* 탭 */
 
 .login-html .tab{
-    font-size:15px;
-    font-weight: 50;
+    font-size:12px;
+    font-weight: 30;
     text-align: center;
-    width: 30%;
-    padding: 10px;
-    margin:0 0 10px 0;
+    width: 20%;
+    padding: 5px;
+    margin:0 0 2px 0;
     display:inline-block;
     color: #bbb;
-    border-top: 2px solid #ddd;
+    border-top: 1px solid #ddd;
     
 }
 
@@ -701,9 +704,10 @@ a.nav-link:hover{
 /* 선택된 탭 */
 .login-html .sign-in-consumer:checked + .tab,
 .login-html .sign-in-seller:checked + .tab,
-.login-html .sign-in-admin:checked + .tab{
+.login-html .sign-in-admin:checked + .tab,
+.login-html .sign-in-topAdmin:checked + .tab{
     color:#333;
-    padding: 10px 0px;
+    padding: 5px 0px;
     border-top: 0;
     border-right: 0;
     border-bottom: 2px solid #3d90e2;
@@ -716,17 +720,17 @@ a.nav-link:hover{
     height: 10px;
     perspective:1000px;
     transform-style:preserve-3d;
-    font-size: 11pt;
+    font-size: 10pt;
     margin-top: -15px;
 }
 
 .login-form .group input[type=text]{
-    margin-top: 44px;
+    margin-top: 60px;
 } 
 
 .login-form .group input[type=password]{
-    margin-top: 10px;
-    margin-bottom: 13px;
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 .login-form .group input[type=submit]{
@@ -736,7 +740,7 @@ a.nav-link:hover{
 .login-form .group .label,
 .login-form .group .input,
 .login-form .group .button{
-    width:100%;
+    width:60%;
     color:#333;
     display:block;
 }
@@ -753,7 +757,7 @@ a.nav-link:hover{
 }
 .login-form .group .label{
     color:#333;
-    font-size:12px;
+    font-size:15px;
 }
 .login-form .group .button{
     background:#3d90e2;
@@ -762,7 +766,7 @@ a.nav-link:hover{
 }
 
 /* 체크박스 아이콘 */
-.login-form .group label .icon{
+/* .login-form .group label .icon{
     width:15px;
     height:15px;
     margin-right: 3px;
@@ -790,7 +794,7 @@ a.nav-link:hover{
     top:6px;
     right:0;
     transform:scale(0) rotate(0);
-}
+} */
 .login-form .group .check:checked + label{
     color:#333;
 }
@@ -803,13 +807,16 @@ a.nav-link:hover{
 .login-form .group .check:checked + label .icon:after{
     transform:scale(1) rotate(-45deg);
 }
-.login-html .sign-in-consumer:checked + .tab + .sign-in-seller + .tab + .sign-in-admin + .tab + .login-form .sign-in-consumer-htm {
+.login-html .sign-in-consumer:checked + .tab + .sign-in-seller + .tab + .sign-in-admin + .tab + .sign-in-topAdmin + .tab + .login-form .sign-in-consumer-htm {
     transform:rotate(0);
 }
-.login-html .sign-in-seller:checked + .tab + .sign-in-admin + .tab + .login-form .sign-in-seller-htm{
+.login-html .sign-in-seller:checked + .tab + .sign-in-admin + .tab + .sign-in-topAdmin + .tab + .login-form .sign-in-seller-htm{
     transform:rotate(0);
 }
-.login-html .sign-in-admin:checked + .tab + .login-form .sign-in-admin-htm{
+.login-html .sign-in-admin:checked + .tab + .sign-in-topAdmin + .tab + .login-form .sign-in-admin-htm{
+    transform:rotate(0);
+}
+.login-html .sign-in-topAdmin:checked + .tab + .login-form .sign-in-topAdmin-htm{
     transform:rotate(0);
 }
 .foot-lnk{
@@ -817,7 +824,6 @@ a.nav-link:hover{
     font-size: 10pt;
     margin-top: 5px;
 }
-
 
 /* mypage */
 
