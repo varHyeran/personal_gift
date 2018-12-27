@@ -14,6 +14,7 @@ public class OrderSellService {
 	public int insertOrderSeller(OrderSellVo orderSellVo) {
 		System.out.println("sellerService.insertseller() 호출");
 		int sellerMaxId = orderSellMapper.selectOneAutoMax();
+		System.out.println(sellerMaxId+"sellerMaxId 호출");
 		sellerMaxId += 1;
 		String orderSellerPkLetter = "order_sell_"+sellerMaxId;
 		HashMap<String, Object> map = new HashMap<String, Object>();

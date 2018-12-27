@@ -13,6 +13,10 @@ import com.gift.futurestrading.member.vo.SellerFileRequestVo;
 import com.gift.futurestrading.member.vo.SellerFileVo;
 import com.gift.futurestrading.member.vo.SellerRequestVo;
 
+/**
+ * @author Administrator
+ *
+ */
 @Service
 public class SellerService {
 	@Autowired
@@ -27,7 +31,11 @@ public class SellerService {
 
 		return selectResult;
 	}
-	
+	/**
+	 * @author Administrator
+	 * 계좌확인 매소드 
+	 *
+	 */
 	public int accountCheck(HashMap<String , Object> ajaxValue) {
 		int selectResult = 1;
 		/* 맵퍼 계층의 selectIdCheck 메서드 호출 */

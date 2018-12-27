@@ -10,11 +10,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.gift.futurestrading.member.service.SellerService;
-import com.gift.futurestrading.member.vo.SellerAccountCheckVo;
 import com.gift.futurestrading.member.vo.SellerFileRequestVo;
 import com.gift.futurestrading.member.vo.SellerRequestVo;
 
@@ -23,33 +20,51 @@ import com.gift.futurestrading.member.vo.SellerRequestVo;
 public class SellerController {
 	@Autowired
 	private SellerService sellerService;
-	//test용
+	
+	
+	/**
+	 * @author Administrator
+	 * addMemberSeller 요청
+	 */
 	@RequestMapping(value = "/joinseller", method = RequestMethod.GET)
 	public String test() {
 		System.out.println("출력");
-		return "member/seller/addMemberSeller";
+		return "member/seller/addMemberConsumers";
 	}
-	//sellerDetail 페이지 요청
+	
+	/**
+	 * @author Administrator
+	 * sellerDetail 페이지 요청
+	 */
+
 	@RequestMapping("/joinsellerdetail")
 	public String joinSellerDetail(HttpSession session, Model model) {
 		System.out.println("출력");
 		model.addAttribute("sessionLogin", session.getAttribute("sessionLoginMember"));
 		return "member/seller/addMemberSellerDetail";
 	}
-	// joinsellerdetail 창에서 값을 받아서 이쪽으로 요청
+	/**
+	 * @author Administrator
+	 * sellerDetail 페이지 요청
+	 * joinsellerdetail에서 post방식 요청 처리
+	 * Vo와 파일경로를 service에 보냄
+	 */
+
 	@RequestMapping("/sellerFileUpload")
 	public String getSellerDetail(SellerFileRequestVo sellerFileRequestVo , HttpSession session, Model model) throws IOException {
 		System.out.println("출력111");
 		model.addAttribute("sessionLogin", session.getAttribute("sessionLoginMember"));
-		//D:\gift\maven.1544422656107\futurestrading\src\main\resources\sellerFile
 		String path = session.getServletContext().getRealPath("\\upload\\");
 		String realPath =path;
-		System.out.println(sellerFileRequestVo.getSellerId()+"pathpathpathpath");
-		System.out.println(path+"pathpathpathpath");
-		System.out.println(sellerFileRequestVo.getMultipartFile()+"파일옵로드");
 		sellerService.sellerFileUpload(sellerFileRequestVo, realPath);
 		return "index"; 
 	} 
+	
+	/**
+	 * @author Administrator
+	 * sellerDetail 페이지 요청
+	 * joinsellerdetail에서 post방식 요청 처리
+	 */
 	@RequestMapping(value="/seller/mypage", method=RequestMethod.GET)
 	public String sellerMypage(HttpSession session, Model model) {
 		String returnView = null;
@@ -62,14 +77,22 @@ public class SellerController {
 		model.addAttribute("sessionLogin", session.getAttribute("sessionLoginMember"));
 		return returnView;
 	}
-	//add seller 넘겨준 값 데이터 베이스 저장
+	/**
+	 * @author Administrator
+	 * joinseller에서 회원가입 요청시 insertSeller수행 후 index리턴
+	 */
 	@RequestMapping(value = "/addseller", method = RequestMethod.POST)
 	public String addSeller(SellerRequestVo sellerRequestVo) {
 		int insertResult = sellerService.insertSeller(sellerRequestVo);
 		System.out.println(insertResult + " <---insertResult");
 		return "index";
 	}
-	//ajax 관련
+	/**
+	 * @author Administrator
+	 * Seller회원가입시 아이디 유효성을 ajax로 검사하는 코드
+	 * 특수문자 , 숫자 , 중복을 체크하고 값을 반환함
+	 */
+
 	@RequestMapping(value = "/checkId", method = { RequestMethod.POST })
 	@ResponseBody 
 	public int idCheck(@RequestBody String id) {
@@ -103,7 +126,11 @@ public class SellerController {
 		} 
 		return count;  
 	}     
-	 
+	/**
+	 * @author Administrator
+	 * joinsellerDetail에서 계좌의 유효성을 체크하는 코드
+	 * ajax로 넘어오다 보니 map으로 넘겨줌
+	 */
 	@RequestMapping(value = "/ajaxAccountCheck",method = {RequestMethod.GET, RequestMethod.POST})
 	@ResponseBody
 	public int sellerAccountCheck(@RequestBody HashMap<String , Object> ajaxValue) {
@@ -112,8 +139,6 @@ public class SellerController {
 		System.out.println(ajaxValue.get("sellerName") + " <---sellerName");
 		System.out.println(ajaxValue.get("userAccountBank") + " <---userId");     
 		System.out.println(ajaxValue.get("userAccountNo") + " <---sellerName");  
-		 
-		
 
 		int count = 1;
 		count = sellerService.accountCheck(ajaxValue);
