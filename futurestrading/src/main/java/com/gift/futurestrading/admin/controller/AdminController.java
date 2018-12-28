@@ -37,7 +37,7 @@ public class AdminController {
 	public String checkAdminPw(@RequestBody HashMap<String, Object> idAndPw) {
 		System.out.println("AdminController.checkAdminPw() 관리자 비밀번호확인");
 		System.out.println(idAndPw.get("adminId") + "<-- adminId(ajax)");
-		System.out.println(idAndPw.get("adminPw") + "<-- adminPw(ajax)");
+		System.out.println(idAndPw.get("adminPassword") + "<-- adminPassword(ajax)");
 		String idResult = adminService.adminPwCheck(idAndPw);
 		System.out.println(idResult + "<-----idResult");
 			if(idResult != null) {
@@ -52,12 +52,12 @@ public class AdminController {
 	/*최고관리자 비밀번호 확인(ajax)*/
 	@RequestMapping(value="/checkTopAdminPw", method=RequestMethod.POST)
 	@ResponseBody
-	public String checkTopAdminPw(@RequestBody String topAdminPw, HttpSession session, Model model) {
+	public String checkTopAdminPw(@RequestBody String topAdminPassword, HttpSession session, Model model) {
 		System.out.println("AdminController.checkTopAdminPw() 최고관리자 비밀번호확인");
-		System.out.println(topAdminPw + "<----------topAdminPw");
+		System.out.println(topAdminPassword + "<----------topAdminPassword");
 		model.addAttribute("sessionLogin", session.getAttribute("sessionLoginMember"));
 		String pw = null;
-		String topAdminPwCheck = adminService.checkTopAdmin(topAdminPw);
+		String topAdminPwCheck = adminService.checkTopAdmin(topAdminPassword);
 		System.out.println(topAdminPwCheck + "<------------------topAdminPwCheck1");
 			/*입력한 비밀번호와 최고관리자의 비밀번호를 비교 후 결과를 리턴*/
 			if(topAdminPwCheck != null) {

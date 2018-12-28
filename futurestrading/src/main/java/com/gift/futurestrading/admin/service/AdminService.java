@@ -31,9 +31,9 @@ public class AdminService {
 		adminMapper.deleteAdmin(adminId);
 	}
 	/*최고관리자 비밀번호체크*/
-	public String checkTopAdmin(String topAdminPw) {
+	public String checkTopAdmin(String topAdminPassword) {
 		System.out.println("AdminService.checkTopAdmin() 호출");
-		String topAdminPwCheck = adminMapper.selectTopAdminPw(topAdminPw);
+		String topAdminPwCheck = adminMapper.selectTopAdminPw(topAdminPassword);
 		return topAdminPwCheck;
 	}
 	/*관리자수정처리*/

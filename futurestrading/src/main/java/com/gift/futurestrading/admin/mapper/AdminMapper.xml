@@ -5,7 +5,7 @@
 		<select id="selectAdminPw" parameterType="map" resultType="String">
 	        SELECT
 	        	admin_id_pk
-	        FROM admin WHERE admin_id_pk = #{adminId} AND admin_password = PASSWORD(#{adminPw})
+	        FROM admin WHERE admin_id_pk = #{adminId} AND admin_password = PASSWORD(#{adminPassword})
 	    </select>
 	<!-- 관리자삭제 -->
 		<delete id="deleteAdmin">
@@ -15,13 +15,13 @@
 		<select id="selectTopAdminPw" parameterType="String" resultType="String">
 	        SELECT
 	        	admin_id_pk
-	        FROM admin WHERE admin_password = PASSWORD(#{topAdminPw}) AND admin_id_pk = 'topAdmin'
+	        FROM admin WHERE admin_password = PASSWORD(#{topAdminPassword}) AND admin_id_pk = 'topAdmin'
 	    </select>
 	<!-- 관리자수정 -->
 	    <update id="updateAdmin" parameterType="com.gift.futurestrading.admin.vo.AdminVo">
 			UPDATE admin 
-			SET admin_password = IF(#{adminPw} != "", PASSWORD(#{adminPw}), admin_password),
-				admin_name = IF(#{adminPw} != "", #{adminName}, #{adminName}) 
+			SET admin_password = IF(#{adminPassword} != "", PASSWORD(#{adminPassword}), admin_password),
+				admin_name = IF(#{adminPassword} != "", #{adminName}, #{adminName}) 
 			WHERE admin_id_pk = #{adminId}
 	    </update>	
 	<!-- 관리자수정화면 -->

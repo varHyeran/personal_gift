@@ -31,17 +31,16 @@
 	<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 	<script type="text/javascript">
 	
-	
-	/*특수문자를 포함*/
+	/* 특수문자를 포함 */
 	var specialPattern = /^.*(?=.*[`~!@#$%^&*|\\\'\";:\/?]).*$/;
-	/*대문자, 소문자로 시작하는 7-16자 이내의 아이디*/
+	/* 대문자, 소문자로 시작하는 7-16자 이내의 아이디 */
 	var checkId = /^[A-Za-z]{1}[A-Za-z0-9]{6,15}$/;
-	/*비밀번호 유효성검사 : 5-20자 이내의 숫자,문자,특수문자를 포함한 비밀번호*/
+	/* 비밀번호 유효성검사 : 5-20자 이내의 숫자,문자,특수문자를 포함한 비밀번호 */
 	var checkPassword = /^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*?[#?!@$%^&*-]).{7,15}$/;
-	/*이름 유효성검사 : 한글 이름*/
+	/* 이름 유효성검사 : 한글 이름 */
     var checkName=/^[가-힣]+$/;
 	
-	/*아이디 중복검사*/
+	/* 아이디 중복검사 */
 	var isIdCheck = 0;		// 아이디 중복 or 정규식에 맞지않은 경우 or 입력하지않은 경우 = 0, 중복이 아닐 경우(사용가능) = 1
 	function idCheck() {	
 		console.log('아이디 중복검사');
@@ -73,7 +72,7 @@
 					$('#adminId').focus();
 					isIdCheck = 0;
 				} else if(data == idDoubleCheck) {		// 아이디 사용가능, 유효성검사
-					/*아이디에 특수문자가 들어가지 못하도록, 대소문자로 시작하여 7-16자 이내로 만들어지도록*/
+					/* 아이디에 특수문자가 들어가지 못하도록, 대소문자로 시작하여 7-16자 이내로 만들어지도록 */
 					if(specialPattern.test(adminId)) {
 						$('#adminId').css('background-color', '#F6CECE');	// 붉은색
 						idHelper.text('아이디에 특수문자는 들어갈 수 없습니다')
@@ -97,7 +96,7 @@
     	});	
 	}		// end idCheck()
 	
-	/*비밀번호 유효성검사*/
+	/* 비밀번호 유효성검사 */
 	var isPasswordCheck = 0;
 	function passwordCheck() {
 		console.log('비밀번호 유효성 검사');
@@ -112,7 +111,7 @@
     	}	
 	}		// end passwordCheck()
 	
-	/*비밀번호 확인 검사*/
+	/* 비밀번호 확인 검사 */
 	var isPasswordCheck2 = 0;
 	function passwordCheck2() {
 		console.log('비밀번호 확인 유효성 검사');
@@ -126,7 +125,7 @@
     	}	
 	}		// end passwordCheck2()
 	
-	/*이름 유효성 검사*/
+	/* 이름 유효성 검사 */
 	var isNameCheck = 0;
 	function nameCheck() {
 		console.log('이름 확인 유효성 검사');
@@ -173,7 +172,7 @@
 		if(isPasswordCheck2 == 0) {
 			$('#passwordCheckHelper').text('비밀번호를 다시 한 번 입력해 주세요.');
 			$('#adminPasswordCheck').focus();
-			return false;			
+			return false;	
 		} else {
 			$('#passwordHelper').text('');			
 		}
@@ -211,38 +210,36 @@
 	            <div class="col-md-9">
 	            	<div class="mypage-content tab-content">
 		            	<!-- 관리자 등록 -->
-		            	<!-- <div id="mypage-content-admin-management" class="tab-pane active"> -->
-							<h2>관리자 등록</h2>
-							<form onsubmit="return validateForm();" action="/topAdmin/addAdminAction" id="addAdminForm" method="post">
-								<div class="form-group">
-									<label for="adminId">아이디</label>
-									<input type="text" name="adminId" id="adminId" class="form-control" oninput="idCheck()">
-									<span id="idHelper" class="text-danger"></span>
-								</div>
-								<div class="form-group">
-									<label for="adminPassword">비밀번호</label>
-									<input type="password" name="adminPassword" id="adminPassword" class="form-control" oninput="passwordCheck()">
-									<span id="passwordHelper" class="text-danger"></span>
-								</div>
-								<div class="form-group">
-									<label for="adminPasswordCheck">비밀번호 확인</label>
-									<input type="password" name="adminPasswordCheck" id="adminPasswordCheck" class="form-control" oninput="passwordCheck2()">
-									<span id="passwordCheckHelper" class="text-danger"></span>
-								</div>
-								<div class="form-group">
-									<label for="adminName">이름</label>
-									<input type="text" name="adminName" id="adminName" class="form-control" oninput="nameCheck()">
-									<span id="nameHelper" class="text-danger"></span>
-								</div>
-								<div class="form-group buttons">
-									<button type="submit" id="submitBtn" class="btn">등록</button>
-									<a th:href="@{/topAdmin/listAdmin}">
-										<button type="button" class="btn">취소</button>
-									</a><p>
-									<span id="submitHelper" class="text-danger"></span>
-								</div>
-							</form>
-						<!-- </div> -->
+						<h2>관리자 등록</h2>
+						<form onsubmit="return validateForm();" action="/topAdmin/addAdminAction" id="addAdminForm" method="post">
+							<div class="form-group">
+								<label for="adminId">아이디</label>
+								<input type="text" name="adminId" id="adminId" class="form-control" oninput="idCheck()">
+								<span id="idHelper" class="text-danger"></span>
+							</div>
+							<div class="form-group">
+								<label for="adminPassword">비밀번호</label>
+								<input type="password" name="adminPassword" id="adminPassword" class="form-control" oninput="passwordCheck()">
+								<span id="passwordHelper" class="text-danger"></span>
+							</div>
+							<div class="form-group">
+								<label for="adminPasswordCheck">비밀번호 확인</label>
+								<input type="password" name="adminPasswordCheck" id="adminPasswordCheck" class="form-control" oninput="passwordCheck2()">
+								<span id="passwordCheckHelper" class="text-danger"></span>
+							</div>
+							<div class="form-group">
+								<label for="adminName">이름</label>
+								<input type="text" name="adminName" id="adminName" class="form-control" oninput="nameCheck()">
+								<span id="nameHelper" class="text-danger"></span>
+							</div>
+							<div class="form-group buttons">
+								<button type="submit" id="submitButton" class="btn">등록</button>
+								<a th:href="@{/topAdmin/listAdmin}">
+									<button type="button" class="btn">취소</button>
+								</a><p>
+								<span id="submitHelper" class="text-danger"></span>
+							</div>
+						</form>
 					</div>
 				</div>
 			</div>

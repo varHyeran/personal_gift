@@ -24,7 +24,7 @@ public interface AdminMapper {
 	/*관리자 수정*/
 	int updateAdmin(AdminVo adminRequest);
 	/*최고관리자 비밀번호 체크*/
-	String selectTopAdminPw(String topAdminPw);
+	String selectTopAdminPw(String topAdminPassword);
 	/*관리자 삭제*/
 	int deleteAdmin(String adminId);
 	/*관리자 아이디 중복체크*/
