@@ -52,7 +52,7 @@
 	        	admin_register_date as adminRegisterDate
 	        FROM admin
 	    </select>
-	<!-- 구매자리스트(페이징포함) -->
+	<!-- 구매자리스트(페이징포함)를 조회하기 위한 select -->
 	<select id="selectConsumerAll" resultType="com.gift.futurestrading.member.vo.ConsumerVo" parameterType="com.gift.futurestrading.page.vo.Criteria">
 		SELECT 
 			consumer_id_pk as consumerIdPk,
@@ -70,11 +70,11 @@
 		FROM consumer
 		LIMIT #{pageStart}, #{perPageNum}
 	</select>
-	<!-- 구매자의 전체 행 구하기 -->
+	<!-- 구매자의 전체 행 구하기위한 select -->
 	<select id="selectConsumerAllCount" resultType="int">
 		SELECT COUNT(*) FROM consumer
 	</select>
-	<!-- 판매자리스트(페이징포함) -->
+	<!-- 판매자리스트(페이징포함)를 조회하기 위한 select -->
 	<select id="selectSellerAll" resultType="com.gift.futurestrading.member.vo.SellerVo" parameterType="com.gift.futurestrading.page.vo.Criteria">
 		SELECT
 			seller_id_pk as sellerIdPk,
@@ -94,12 +94,12 @@
 		FROM seller
 		LIMIT #{pageStart}, #{perPageNum}
 	</select>
-	<!-- 판매자의 전체 행 구하기 -->
+	<!-- 판매자의 전체 행 구하기위한 select -->
 	<select id="selectSellerAllCount" resultType="int">
 		SELECT COUNT(*) FROM seller
 	</select>
-	<!-- 구매자 계좌조회(한명) -->
-	<select id="selectConsumerAccount" resultType="com.gift.futurestrading.member.vo.AccountConsumerVo" parameterType="com.gift.futurestrading.member.vo.ConsumerVo">
+	<!-- 구매자 계좌조회(한명)하기위한 select -->
+	<select id="selectConsumerAccountOne" resultType="com.gift.futurestrading.member.vo.AccountConsumerVo" parameterType="com.gift.futurestrading.member.vo.ConsumerVo">
 		SELECT 
 			ac.fk_consumer__account_consumer as fkConsumerAccountConsumer,
 			ac.account_consumer_name as accountConsumerName,
@@ -110,7 +110,7 @@
 		INNER JOIN consumer c ON c.consumer_id_pk=ac.fk_consumer__account_consumer 
 		WHERE c.consumer_id_pk=#{consumerIdPk} 
 	</select>
-	<!-- 판매자 서류업로드조회(한명) -->
+	<!-- 판매자 서류업로드조회(한명)하기위한 select -->
 	<select id="selectSellerDocumentOne" resultType="com.gift.futurestrading.member.vo.SellerFileVo" parameterType="com.gift.futurestrading.member.vo.SellerVo">
 		SELECT 
 			ds.fk_seller__document_seller as sellerId,

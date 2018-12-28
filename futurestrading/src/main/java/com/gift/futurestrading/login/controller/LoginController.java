@@ -14,10 +14,15 @@ import com.gift.futurestrading.login.vo.LoginVo;
 public class LoginController {
 	@Autowired
 	private LoginService loginService;
-	/*  로그인 폼 */
-	@RequestMapping(value="/login/login", method=RequestMethod.GET)
-	public String getLoginMember(HttpSession session) {
-		System.out.println("LoginController.getLoginMember() 호출 GET");
+	/** 로그인폼
+	 * 로그인폼으로 랜더링해주는 메서드
+	 * @param HttpSession session
+	 * @return loginReturn
+	 * @since JDK1.8
+	 */
+	@RequestMapping(value="/login", method=RequestMethod.GET)
+	public String getLogin(HttpSession session) {
+		System.out.println("LoginController.getLogin() 호출 GET");
 		String loginReturn = null;
 		if(session.getAttribute("sessionLoginMember")!=null) {
 			loginReturn = "redirect:/";
@@ -26,14 +31,19 @@ public class LoginController {
 		}
 		return loginReturn;
 	}
-	/*  로그인 액션*/
-	@RequestMapping(value="/login/login", method=RequestMethod.POST)
-	public String getLoginMember(LoginVo loginVo,HttpSession session) {
-		System.out.println("LoginController.getLoginConsumer() 호출 POST");
+	/** 로그인 액션
+	 * 로그인처리를 해주는 메서드
+	 * @param LoginVo loginVo,HttpSession session
+	 * @return loginReturn
+	 * @since JDK1.8
+	 */
+	@RequestMapping(value="/login", method=RequestMethod.POST)
+	public String getLogin(LoginVo loginVo,HttpSession session) {
+		System.out.println("LoginController.getLogin() 호출 POST");
 		String loginReturn = null;
-		if(loginService.getLoginMember(loginVo)!=null) {
+		if(loginService.getLogin(loginVo)!=null) {
 			System.out.println("login success!!");
-			LoginVo sessionLoginMember = loginService.getLoginMember(loginVo);
+			LoginVo sessionLoginMember = loginService.getLogin(loginVo);
 			System.out.println(sessionLoginMember+"<--sessionLoginMember");
 			session.setAttribute("sessionLoginMember", sessionLoginMember);
 			session.setAttribute("sessionLoginId", sessionLoginMember.getSessionId());
@@ -45,10 +55,15 @@ public class LoginController {
 		}
 		return loginReturn;
 	}
-	/* 로그아웃*/
+	/** 로그아웃
+	 * 로그아웃처리해주는 메서드
+	 * @param HttpSession session
+	 * @return redirect:/
+	 * @since JDK1.8
+	 */
 	@RequestMapping(value="/logout", method=RequestMethod.GET)
-	public String logoutMember(HttpSession session) {
-		System.out.println("LoginController.logoutMember() 호출 GET");
+	public String logout(HttpSession session) {
+		System.out.println("LoginController.logout() 호출 GET");
 		session.invalidate();
 		return "redirect:/";
 	}

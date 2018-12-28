@@ -54,7 +54,7 @@
     <h2>회원정보 수정</h2>
     <th:block th:if="${consumerMypageInformation} == null ">
     	<div class="mypage-content-form">
-	        <form th:action="@{/consumer/mypage/information}" method="post">
+	        <form th:action="@{/consumer/get/mypage/information}" method="post">
 	            <div class="input-group">
 	                <div class="input-group-prepend">
 	                  <span class="input-group-text">ID</span>
@@ -66,7 +66,7 @@
 	                <div class="input-group-prepend">
 	                  <span class="input-group-text">PASSWORD</span>
 	                </div>
-	                <input type="password" name="mypagePw" class="form-control" value="pw001***">
+	                <input type="password" name="mypagePassword" class="form-control" value="pw001***">
 	            </div>
 	            <button class="btn" type="submit">확인</button>
 	        </form>

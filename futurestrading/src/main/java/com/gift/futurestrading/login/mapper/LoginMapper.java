@@ -6,6 +6,6 @@ import com.gift.futurestrading.login.vo.LoginVo;
 
 @Mapper
 public interface LoginMapper {
-	/*로그인*/
-	LoginVo selectLoginMember(LoginVo loginVo);
+	/*로그인할때 사용하는 select*/
+	LoginVo selectLogin(LoginVo loginVo);
 }

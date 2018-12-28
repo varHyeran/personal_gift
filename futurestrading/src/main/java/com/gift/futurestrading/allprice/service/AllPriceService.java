@@ -1,15 +1,24 @@
-package com.gift.futurestrading.allprice;
+package com.gift.futurestrading.allprice.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.gift.futurestrading.allprice.mapper.AllPriceMapper;
+import com.gift.futurestrading.allprice.vo.AllPriceVo;
+
 @Service
 public class AllPriceService {
-	
+
 	@Autowired
 	private AllPriceMapper allPriceMapper;
-
-	/* 품목별 시가,종가,최고가,최저가 테이블 insert*/
+	
+	/**
+	 * 품목별 시가,종가,최고가,최저가 테이블 insert
+	 * 
+	 * @param 
+	 * @return 0
+	 * @since JDK1.8
+	 */
 	public int addAllPrice() {
 		System.out.println("AllPriceService.addAllPrice() 호출");
 
@@ -27,7 +36,7 @@ public class AllPriceService {
 		 3. insert
 		*/		
 		String allPriceNoText = "all_price_";
-		int allPriceLastNo = allPriceMapper.selectAllPriceNo();
+		int allPriceLastNo = allPriceMapper.selectOneAutoMaxAllPrice();
 		String allPriceNoPk = allPriceNoText + (allPriceLastNo+1);
 		System.out.println("(allPriceLastNo+1) : "+(allPriceLastNo+1));
 		System.out.println("allPriceLastNo : " + allPriceLastNo);
@@ -51,4 +60,5 @@ public class AllPriceService {
 		System.out.println("allPriceVo :" + allPriceVo);
 		return 0;
 	}
+	
 }

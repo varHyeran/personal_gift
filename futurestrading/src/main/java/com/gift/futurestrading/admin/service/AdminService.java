@@ -68,35 +68,65 @@ public class AdminService {
 		List<AdminVo> adminList = adminMapper.selectAdmin();
 		return adminList;
 	}
-	/*구매자 리스트(페이징)*/
+	/** 구매자 리스트
+	 * 구매자 리스트 select
+	 * @param Criteria cri
+	 * @return consumerList
+	 * @since JDK1.8
+	 */
 	public List<ConsumerVo> getConsumerAll(Criteria cri){
 		System.out.println("AdminService.getConsumerAll() 호출");
 		List<ConsumerVo> consumerList = adminMapper.selectConsumerAll(cri);
 		return consumerList;
 	}
-	/*구매자 리스트(전체 행 수 구하기)*/
+	/** 구매자 리스트
+	 * 구매자 전체 행 갯수 select
+	 * 
+	 * @return adminMapper.selectConsumerAllCount()
+	 * @since JDK1.8
+	 */
 	public int getConsumerAllCount() {
 		System.out.println("SampleService.selectConsumerAllCount() 호출");
 		return adminMapper.selectConsumerAllCount();
 	}
-	/*판매자 리스트(페이징)*/
+	/** 판매자 리스트
+	 * 판매자 리스트 select
+	 * @param Criteria cri
+	 * @return sellerList
+	 * @since JDK1.8
+	 */
 	public List<SellerVo> getSellerAll(Criteria cri){
 		System.out.println("AdminService.getSellerAll() 호출");
 		List<SellerVo> sellerList = adminMapper.selectSellerAll(cri);
 		return sellerList;
 	}
-	/*판매자 리스트(전체 행 수 구하기)*/
+	/** 판매자 리스트
+	 * 판매자의 전체 행 구하기위한 select
+	 * 
+	 * @return adminMapper.selectSellerAllCount()
+	 * @since JDK1.8
+	 */
 	public int getSellerAllCount() {
 		System.out.println("SampleService.selectSellerAllCount() 호출");
 		return adminMapper.selectSellerAllCount();
 	}
-	/*구매자 계좌조회*/
-	public AccountConsumerVo getConsumerAccount(ConsumerVo consumerVo) {
+	/** 구매자 계좌조회
+	 * 구매자 계좌조회(한명)하기위한 select
+	 * 
+	 * @return accountConsumer
+	 * @since JDK1.8
+	 */
+	public AccountConsumerVo getConsumerAccountOne(ConsumerVo consumerVo) {
 		System.out.println("SampleService.getConsumerAccount() 호출");
-		AccountConsumerVo accountConsumer = adminMapper.selectConsumerAccount(consumerVo);
+		AccountConsumerVo accountConsumer = adminMapper.selectConsumerAccountOne(consumerVo);
 		return accountConsumer;
 	}
-	/*판매자 서류조회*/
+	/** 판매자 서류업로드조회
+	 * 판매자 서류업로드조회(한명)하기위한 select
+	 * 
+	 * @return sellerFile
+	 * @since JDK1.8
+	 */
 	public SellerFileVo getSellerDocumentOne(SellerVo sellerVo) {
 		System.out.println("SampleService.getSellerDocumentOne() 호출");
 		SellerFileVo sellerFile = adminMapper.selectSellerDocumentOne(sellerVo);

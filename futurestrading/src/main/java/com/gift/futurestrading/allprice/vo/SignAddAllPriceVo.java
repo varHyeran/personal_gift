@@ -1,4 +1,4 @@
-package com.gift.futurestrading.allprice;
+package com.gift.futurestrading.allprice.vo;
 
 public class SignAddAllPriceVo {
 	private String signPk;

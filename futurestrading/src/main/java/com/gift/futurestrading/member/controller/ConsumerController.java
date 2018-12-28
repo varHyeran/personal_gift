@@ -133,11 +133,11 @@ public class ConsumerController {
 	@RequestMapping(value="/consumer/mypage/password/modify", method=RequestMethod.POST)
 	public String modifyConsumerPassword(String consumerIdPk, String consumerPassword, String consumerChangePassword, HttpSession session) {
 		System.out.println("ConsumerService.modifyConsumerPassword() 호출");
-		Map<String, Object> ConsumerMypageChangePw = new HashMap<>();
-		ConsumerMypageChangePw.put("consumerIdPk", consumerIdPk);
-		ConsumerMypageChangePw.put("consumerPassword", consumerPassword);
-		ConsumerMypageChangePw.put("consumerChangePassword", consumerChangePassword);
-		consumerService.updateConsumerPassword(ConsumerMypageChangePw);
+		Map<String, Object> ConsumerMypageChange = new HashMap<>();
+		ConsumerMypageChange.put("consumerIdPk", consumerIdPk);
+		ConsumerMypageChange.put("consumerPassword", consumerPassword);
+		ConsumerMypageChange.put("consumerChangePassword", consumerChangePassword);
+		consumerService.updateConsumerPassword(ConsumerMypageChange);
 		session.invalidate();
 		return "index";
 	}
@@ -163,13 +163,13 @@ public class ConsumerController {
 	 * @return member/consumer/getMemberConsumerMypage
 	 * @since JDK1.8
 	 */
-	@RequestMapping(value="/consumer/mypage/information", method=RequestMethod.POST)
-	public String getconsumerMypageInformation(String mypagePw, String mypageId, Model model, HttpSession session) {
+	@RequestMapping(value="/consumer/get/mypage/information", method=RequestMethod.POST)
+	public String getConsumerMypageInformation(String mypagePassword, String mypageId, Model model, HttpSession session) {
 		System.out.println("ConsumerController.getconsumerMypageInformation() 호출");
-		System.out.println("mypagePw : " + mypagePw );
+		System.out.println("mypagePassword : " + mypagePassword );
 		
 		Map<String, Object> ConsumerMypageIdPw = new HashMap<>();
-		ConsumerMypageIdPw.put("mypagePw", mypagePw);
+		ConsumerMypageIdPw.put("mypagePassword", mypagePassword);
 		ConsumerMypageIdPw.put("mypageId", mypageId);
 		
 		ConsumerMypageVo consumerMypageVo = consumerService.selectConsumerMypageInformation(ConsumerMypageIdPw);
@@ -189,9 +189,9 @@ public class ConsumerController {
 	 * @since JDK1.8
 	 */
 	@RequestMapping(value="/singup/choice", method=RequestMethod.GET)
-	public String choiceSignUp() {
+	public String signUpChoice() {
 		System.out.println("ConsumerController.choiceSignUp() 호출");
-		return "member/choiceSignUp";
+		return "member/signUpChoice";
 	}
 	
 	/**

@@ -161,11 +161,11 @@ public class AdminController {
 	}
 	/** 구매자 리스트
 	 * ConsumerController에서 등록한 구매자리스트를 보여준다.(Criteria, PageMaker이용해서 페이징)
-	 * 
+	 * @param Criteria cri, Model model, HttpSession session
 	 * @return admin/listConsumer
 	 * @since JDK1.8
 	 */
-	@RequestMapping(value="/listConsumer", method=RequestMethod.GET)
+	@RequestMapping(value="/admin/get/consumer/all", method=RequestMethod.GET)
 	public String getConsumerAll(@ModelAttribute("cri") Criteria cri, Model model, HttpSession session) {
 		System.out.println("AdminController.getConsumerAll() 호출");
 		model.addAttribute("sessionLogin", session.getAttribute("sessionLoginMember"));
@@ -179,11 +179,11 @@ public class AdminController {
 	}
 	/** 판매자 리스트
 	 * SellerController에서 등록한 판매자리스트를 보여준다.(Criteria, PageMaker이용해서 페이징)
-	 * 
+	 * @param Criteria cri, Model model, HttpSession session
 	 * @return admin/listSeller
 	 * @since JDK1.8
 	 */
-	@RequestMapping(value="/listSeller", method=RequestMethod.GET)
+	@RequestMapping(value="/admin/get/seller/all", method=RequestMethod.GET)
 	public String getSellerAll(@ModelAttribute("cri") Criteria cri, Model model, HttpSession session) {
 		System.out.println("AdminController.getSellerAll() 호출");
 		model.addAttribute("sessionLogin", session.getAttribute("sessionLoginMember"));
@@ -197,26 +197,26 @@ public class AdminController {
 	}
 	/** 구매자계좌조회
 	 * 구매자 리스트에서 상세 버튼 누르면 그 아이디에 해당하는 회원의 계좌를 조회
-	 * 
+	 * @param Model model, ConsumerVo consumerVo, HttpSession session
 	 * @return admin/getConsumer
 	 * @since JDK1.8
 	 */
-	@RequestMapping(value="/getConsumer", method = RequestMethod.GET)
-	public String getConsumerAccount(Model model, ConsumerVo consumerVo, HttpSession session) {
+	@RequestMapping(value="/admin/get/consumer/account/one", method = RequestMethod.GET)
+	public String getConsumerAccountOne(Model model, ConsumerVo consumerVo, HttpSession session) {
 		System.out.println("AdminController.getConsumerAccount() 호출");
 		model.addAttribute("sessionLogin", session.getAttribute("sessionLoginMember"));
-		AccountConsumerVo accountConsumer = adminService.getConsumerAccount(consumerVo);
+		AccountConsumerVo accountConsumer = adminService.getConsumerAccountOne(consumerVo);
 		System.out.println(accountConsumer+"<--accountConsumer");
 		model.addAttribute("accountConsumer", accountConsumer);
 		return "admin/getConsumer";
 	}
 	/** 판매자서류조회
 	 * 판매자 리스트에서 상세 버튼 누르면 그 아이디에 해당하는 회원이 올린 서류명을 볼 수 있다.(서류명 누르면 DocumentDownloadController통해서 다운로드)
-	 * 
-	 * @return admin/getConsumer
+	 * @param Model model, SellerVo sellerVo, HttpSession session
+	 * @return admin/getSeller
 	 * @since JDK1.8
 	 */
-	@RequestMapping(value="/getSeller", method = RequestMethod.GET)
+	@RequestMapping(value="/admin/get/seller/document/one", method = RequestMethod.GET)
 	public String getSellerDocumentOne(Model model, SellerVo sellerVo, HttpSession session) {
 		System.out.println("AdminController.getSellerDocumentOne() 호출");
 		model.addAttribute("sessionLogin", session.getAttribute("sessionLoginMember"));

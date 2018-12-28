@@ -69,19 +69,19 @@
 			<td th:text="${list.consumerSignUpDate}"></td>
 			<td th:text="${list.consumerStatus}"></td>
 			<td th:text="${list.consumerAdmitCheckFlag}"></td>
-			<td><a th:text="상세" th:href="@{/getConsumer(consumerIdPk=${list.consumerIdPk})}"></a></td>
+			<td><a th:text="상세" th:href="@{/admin/get/consumer/account/one(consumerIdPk=${list.consumerIdPk})}"></a></td>
 		</tr>
 	</table>
 	<p class="blank"></p>
 	<ul class="pagination justify-content-center">
 		<li th:if="${pageMaker.prev} == true" class="page-item">
-			<a class="page-link" th:href="@{/listConsumer(page=${pageMaker.startPage}-1,perPageNum=${pageMaker.cri.perPageNum})}">&laquo;</a>
+			<a class="page-link" th:href="@{/admin/get/consumer/all(page=${pageMaker.startPage}-1,perPageNum=${pageMaker.cri.perPageNum})}">&laquo;</a>
 		</li>
 		<li class="page-item" th:each="idx,iterStat : ${#numbers.sequence(pageMaker.startPage,pageMaker.endPage)}"  th:classappend="${pageMaker.cri.page} == ${idx} ? active : null">
-			<a class="page-link" th:href="@{/listConsumer(page=${idx},perPageNum=${pageMaker.cri.perPageNum})}" th:text="${idx}"></a>
+			<a class="page-link" th:href="@{/admin/get/consumer/all(page=${idx},perPageNum=${pageMaker.cri.perPageNum})}" th:text="${idx}"></a>
 		</li> 
 		<li class="page-item" th:if="${pageMaker.next} == true and ${pageMaker.endPage > 0}">
-			<a class="page-link" th:href="@{/listConsumer(page=${pageMaker.endPage}+1,perPageNum=${pageMaker.cri.perPageNum})}">&raquo;</a>
+			<a class="page-link" th:href="@{/admin/get/consumer/all(page=${pageMaker.endPage}+1,perPageNum=${pageMaker.cri.perPageNum})}">&raquo;</a>
 		</li>
 	</ul>
 </div>

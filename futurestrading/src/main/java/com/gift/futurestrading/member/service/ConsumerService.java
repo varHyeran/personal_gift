@@ -117,7 +117,7 @@ public class ConsumerService {
 	public ConsumerMypageVo selectConsumerMypageInformation(Map<String, Object> ConsumerMypageIdPw) {
 		System.out.println("ConsumerService.selectConsumerMypageInformation() 호출");
 		System.out.println("서비스 아이디 :: "+"ConsumerMypageIdPw : "+ConsumerMypageIdPw.get("mypageId"));
-		System.out.println("서비스 비번 :: "+"ConsumerMypageIdPw : "+ConsumerMypageIdPw.get("mypagePw"));
+		System.out.println("서비스 비번 :: "+"ConsumerMypageIdPw : "+ConsumerMypageIdPw.get("mypagePassword"));
 		ConsumerMypageVo consumerMypageVo = consumerMapper.selectConsumerMypageInformation(ConsumerMypageIdPw);
 		
 		System.out.println("ConsumerMypageId : "+consumerMypageVo.getConsumerIdPk());

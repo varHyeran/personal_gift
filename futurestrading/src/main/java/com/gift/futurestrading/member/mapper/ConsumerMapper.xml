@@ -94,7 +94,7 @@
 		WHERE
 			consumer_id_pk=#{mypageId}
 		AND
-			consumer_password=password(#{mypagePw}) 
+			consumer_password=password(#{mypagePassword}) 
 	</select>
 	
 	<!-- 구매자 회원가입을 위한 insert -->

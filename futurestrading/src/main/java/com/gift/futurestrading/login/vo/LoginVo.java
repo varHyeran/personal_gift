@@ -8,18 +8,21 @@ public class LoginVo {
 		return sessionId;
 	}
 	public void setSessionId(String sessionId) {
+		System.out.println("LoginVo.setSessionId() 호출");
 		this.sessionId = sessionId;
 	}
 	public String getSessionPassword() {
 		return sessionPassword;
 	}
 	public void setSessionPassword(String sessionPassword) {
+		System.out.println("LoginVo.setSessionPassword() 호출");
 		this.sessionPassword = sessionPassword;
 	}
 	public String getSessionRight() {
 		return sessionRight;
 	}
 	public void setSessionRight(String sessionRight) {
+		System.out.println("LoginVo.setSessionRight() 호출");
 		this.sessionRight = sessionRight;
 	}
 	@Override

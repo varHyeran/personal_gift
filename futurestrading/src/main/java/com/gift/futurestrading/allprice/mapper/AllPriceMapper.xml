@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.gift.futurestrading.allprice.AllPriceMapper">
+<mapper namespace="com.gift.futurestrading.allprice.mapper.AllPriceMapper">
 	
 	<!-- auto increment를 위한 select -->
-	<select id="selectAllPriceNo" resultType="int">
+	<select id="selectOneAutoMaxAllPrice" resultType="int">
 		SELECT MAX(CAST(SUBSTRING(all_price_no_pk, 11) AS DECIMAL)) FROM all_price
 	</select>
 	
-	<!-- 시스템이 실행되는 시간대에 체결된 시가(시작가격), 종가(마지막 가격), 최고가, 최저가  -->
-	<select id="selectSignAddAllPrice" resultType="com.gift.futurestrading.allprice.AllPriceVo">
+	<!-- sign table에서 allPrice테이블에 추가할 리스트(시가(시작가격), 종가(마지막 가격), 최고가, 최저가) select -->
+	<select id="selectSignAddAllPrice" resultType="com.gift.futurestrading.allprice.vo.AllPriceVo">
 			SELECT
 				sign_item_name AS itemName
 				,sign_per_price AS openingPrice
@@ -33,8 +33,8 @@
 			sign_date DESC LIMIT 1
 	</select>
 	
-	<!-- allprice insert -->
-	<insert id="insertAllPrice" parameterType="com.gift.futurestrading.allprice.AllPriceVo">
+	<!-- 품목별 시가,종가,최고가,최저가 테이블 insert -->
+	<insert id="insertAllPrice" parameterType="com.gift.futurestrading.allprice.vo.AllPriceVo">
 		INSERT INTO all_price (
 			all_price_no_pk
 			,item_name

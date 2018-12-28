@@ -11,30 +11,35 @@ public class OrderBuyVo {
 		return fkConsumerOrderBuy;
 	}
 	public void setFkConsumerOrderBuy(String fkConsumerOrderBuy) {
+		System.out.println("OrderBuyVo.setFkConsumerOrderBuy() 호출");
 		this.fkConsumerOrderBuy = fkConsumerOrderBuy;
 	}
 	public String getFkItemDetailOrderBuy() {
 		return fkItemDetailOrderBuy;
 	}
 	public void setFkItemDetailOrderBuy(String fkItemDetailOrderBuy) {
+		System.out.println("OrderBuyVo.setFkItemDetailOrderBuy() 호출");
 		this.fkItemDetailOrderBuy = fkItemDetailOrderBuy;
 	}
 	public String getOrderBuyMethod() {
 		return orderBuyMethod;
 	}
 	public void setOrderBuyMethod(String orderBuyMethod) {
+		System.out.println("OrderBuyVo.setOrderBuyMethod() 호출");
 		this.orderBuyMethod = orderBuyMethod;
 	}
 	public int getOrderBuyPerPrice() {
 		return orderBuyPerPrice;
 	}
 	public void setOrderBuyPerPrice(int orderBuyPerPrice) {
+		System.out.println("OrderBuyVo.setOrderBuyPerPrice() 호출");
 		this.orderBuyPerPrice = orderBuyPerPrice;
 	}
 	public int getOrderBuyAmount() {
 		return orderBuyAmount;
 	}
 	public void setOrderBuyAmount(int orderBuyAmount) {
+		System.out.println("OrderBuyVo.setOrderBuyAmount() 호출");
 		this.orderBuyAmount = orderBuyAmount;
 	}
 	@Override
