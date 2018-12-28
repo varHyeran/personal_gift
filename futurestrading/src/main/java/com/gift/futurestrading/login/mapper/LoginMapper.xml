@@ -13,4 +13,10 @@
 		AND 
 			total_password=PASSWORD(#{sessionPassword});
 	</select>
+	<!-- 아이디와 비밀번호 일치하는지 체크하는 select -->
+	<select id="selectIdPasswordCheck" parameterType="map" resultType="int">
+		SELECT count(*) FROM view_total_id
+		WHERE total_id=#{sessionId} 
+		AND total_password=PASSWORD(#{sessionPassword});
+	</select>
 </mapper>

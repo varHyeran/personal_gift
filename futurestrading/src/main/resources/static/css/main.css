@@ -634,7 +634,7 @@ a.nav-link:hover{
 
 /* 로그인폼 */
 .main-login{
-    height: 800px;
+    height: 687px;
 }
 .login-wrap{
     margin:0 auto;
@@ -729,8 +729,8 @@ a.nav-link:hover{
 } 
 
 .login-form .group input[type=password]{
-    margin-top: 20px;
-    margin-bottom: 20px;
+    margin-top: 8px;
+    margin-bottom: 10px;
 }
 
 .login-form .group input[type=submit]{

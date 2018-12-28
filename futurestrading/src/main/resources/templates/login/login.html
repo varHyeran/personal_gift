@@ -4,6 +4,87 @@
 	data-layout-decorate="~{layout/defaultLayout}">
 <th:block layout:fragment="script">
 	<script type="text/javascript">
+		/* 아이디 */
+		// 정규식을 변수에 할당
+		// 변수 이름을 're_'로 정한 것은 'Regular Expression(정규식)'의 머릿글자
+		var isIdCheck = 0;
+		function idCheck(){
+			console.log("::: 아이디 유효성 검사 :::");
+			var re_sessionId = /^[a-z]+[a-z0-9]{4,19}$/;	// 5-20자의 영문 소문자, 숫자
+			var sessionId = $('#sessionId');
+			var sessionIdValue = $('#sessionId').val();
+			var sessionIdHelper = $('#sessionIdHelper');
+			/* 아이디가 공백일때 */
+			if(sessionIdValue == ''){
+				sessionIdHelper.text('아이디를 입력해주세요.');
+				sessionId.focus();
+				isIdCheck = 0;
+			/* 아이디 형식이 맞지 않을때 */
+			}else if(re_sessionId.test(sessionIdValue)!= true){
+				sessionIdHelper.text('아이디는 5-20자의 영문 소문자, 숫자만 로그인 가능합니다.');
+				sessionId.focus();
+				isIdCheck = 0;
+			/* 아이디가 정규식에 맞게 입력되었을때 */
+			}else{
+				sessionIdHelper.text('');
+				sessionPassword.focus();
+				isIdCheck = 1;
+			}
+			console.log(isIdCheck+'<---isIdCheck');
+		}
+		
+		/* 비밀번호 */
+		var isPasswordCheck = 0;
+		function passwordCheck(){
+			console.log("::: 비밀번호 유효성 검사 :::");
+			var re_sessionPassword = /^(?=.*[a-zA-Z])((?=.*\d)(?=.*\W)).{8,12}$/;	// 8-12자의 영문, 숫자, 특수문자
+			var sessionPassword = $('#sessionPassword');
+			var sessionPasswordValue = $('#sessionPassword').val();
+			var sessionPasswordHelper = $('#sessionPasswordHelper');
+			/* 비밀번호가 공백일때 */
+			if(sessionPasswordValue == ''){
+				sessionPasswordHelper.text('비밀번호를 입력해 주세요.');
+				sessionPassword.focus();
+				isPasswordCheck = 0;
+			/* 비밀번호 형식이 맞지 않을때 */
+			}else if(re_sessionPassword.test(sessionPasswordValue)!= true){
+				sessionPasswordHelper.text('영문,숫자,특수문자를 조합하여 8자 이상 12자 이하로 입력해 주세요.');
+				sessionPassword.focus();
+				isPasswordCheck = 0;
+			/* 비밀번호가 정규식에 맞게 입력되었을때 */
+			}else{
+				sessionPasswordHelper.text('');
+				isPasswordCheck = 1;
+			}
+			console.log(isPasswordCheck+'<---isPasswordCheck');
+		}
+		
+		/* form submit할 때, 유효성 검사 */
+		function validateForm(){
+			
+			// id설정한 것들 변수에 새로 할당
+			var sessionIdValue = $('#sessionId').val();
+			var sessionPasswordValue = $('#sessionPassword').val();
+			
+			// 아이디, 비밀번호 일치/불일치
+			$.ajax({
+				async : false,
+				url : '/get/id/password/check',
+				type : 'POST',
+				data : JSON.stringify({'sessionId': sessionIdValue, 'sessionPassword' : sessionPasswordValue}),
+				contentType: "application/json; charset=UTF-8",
+				success : function(data){
+					console.log('data get!!!');
+					console.log(data+':data');	// count:0인경우가 불일치
+					if(data == 0){
+						alert('아이디 및 비밀번호가 일치하지 않습니다.');
+					}
+				},
+				error: function(error) {					
+					console.log("error: "+error);
+				}	
+			})
+		}
 	</script>
 </th:block>
 <th:block layout:fragment="css">
@@ -11,15 +92,22 @@
 		.blank{
 			margin-top:30px;
 		}
-		p.sing-welcom img{
+		.title-style{
 			margin-top:150px;
+			color:#3d90e2;
+			font-weight: 600;
+			font-size: 40pt;
+		}
+		.warning{
+			margin-top:2px;
+			color:#ff0000;
 		}
 	</style>
 </th:block>
 <div layout:fragment="content">
      <div class="main-login">
             <div class="login-wrap">
-            	<p class="sing-welcom" align="center"><img src="/imgs/giftFuturesLogo-02.png"></p>
+            	<h1 class="title-style">LOGIN</h1>
                 <div class="login-html">
                 	<!-- 로그인 탭 -->
                     <input id="tab-1" type="radio" name="tab" class="sign-in-consumer" checked>
@@ -38,19 +126,20 @@
                     
                     	<!-- 구매자 -->
                         <div class="sign-in-consumer-htm">
-                            <form th:action="@{/login}" method="post" id="loginForm1">
+                            <form onsubmit="validateForm()" th:action="@{/login}" method="post" id="loginForm">
                                 <div class="group" align="center">
-                                    <input id="sessionId1" type="text" class="input" name="sessionId" value="id001">
+                                    <input id="sessionId" type="text" class="input" name="sessionId" value="id001" oninput="idCheck()">    
                                 </div>
+                                <span id="sessionIdHelper" class="warning"></span>
                                 <div class="group" align="center">
-                                    <input id="sessionPassword1" type="password" class="input" data-type="password" name="sessionPassword" value="pw001***">
+                                    <input id="sessionPassword" type="password" class="input" data-type="password" name="sessionPassword" value="pw001***" oninput="passwordCheck()">
                                 </div>
+                                <span id="sessionPasswordHelper" class="warning"></span>
                                 <div class="group" align="center">
-                                    <input id="loginBtn1" type="submit" class="button" value="LOGIN">
+                                    <button id="loginBtn" type="submit" class="button">Login</button>
                                 </div>
-                            </form>                         
+                            </form>                       
                         </div>
-
 						<!-- 판매자 -->
                         <div class="sign-in-seller-htm">
                             <form th:action="@{/login}" method="post" id="loginForm2">
@@ -78,7 +167,7 @@
                                 <div class="group" align="center">
                                     <input id="loginBtn3" type="submit" class="button" value="LOGIN">
                                 </div>
-                            </form>
+                            </form> 
                         </div>
                         <!-- 최고관리자 -->
                         <div class="sign-in-topAdmin-htm">
