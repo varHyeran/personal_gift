@@ -1,5 +1,12 @@
 package com.gift.futurestrading.member.vo;
 
+/**
+ * @author 정진우
+ * @ClassName : SellerRequestVo
+ * @since : JDK1.8
+ * @LatestUpdate : 2018-12-28
+ * 상세 정보 입력시 바인딩 되는 객체
+ */
 public class SellerRequestVo {
 	
 	private String sellerIdPk;		// 아이디

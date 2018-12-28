@@ -10,36 +10,53 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.gift.futurestrading.order.service.OrderSellService;
 import com.gift.futurestrading.order.vo.OrderSellVo;
 
+/**
+ * @author 정진우
+ * @ClassName : OrderSellController
+ * @Version : JDK1.8
+ * @LatestUpdate : 2018-12-28
+ *  주문 등록 , 체결 목록 처리를 위한 Class
+ */
+
 @Controller
 public class OrderSellController {
 	@Autowired
 	private OrderSellService orderSellService;
 	
+	/**
+	 * @author 정진우
+	 * addsellerOrder 화면 렌더링
+	 * @param : 
+	 * @return : rder/seller/addMemeberSellerOrderPepper
+	 */
+	
 	@RequestMapping(value="/seller/order", method=RequestMethod.GET)
 	public String addsellerOrder() {
-		System.out.println("SellerService.addSellerOrder() 호출");
+		System.out.println("OrderSellController / addSellerOrder()");
 		return "order/seller/addMemeberSellerOrderPepper";
 	}
-	@RequestMapping("/order/sell")
-	public String OrderSell(HttpSession session, Model model ,OrderSellVo orderSellVo) {
+	
+	/**
+	 * @author 정진우
+	 * addSellerOrderAction 요청 
+	 * @param : HttpSession , Model , OrderSellVo
+	 * @return : index
+	 */
+	
+	@RequestMapping("/seller/order/re")
+	public String addSellerOrderAction(HttpSession session, Model model ,OrderSellVo orderSellVo) {
 		System.out.println("OrderSellController / OrderSell");
 		model.addAttribute("sessionLogin", session.getAttribute("sessionLoginMember"));
+		
 		System.out.println(model.addAttribute("sessionLogin", session.getAttribute("sessionLoginMember")));
-		System.out.println(session.getAttribute("sessionLoginId"));//id001s
+		System.out.println(session.getAttribute("sessionLoginId"));
 		orderSellVo.setFkSellerOrderSell((String)session.getAttribute("sessionLoginId"));
-		System.out.println(orderSellVo.getFkItemDetailOrderSell()); //배추
-		System.out.println(orderSellVo.getOrderSellAmount()); //123
-		System.out.println(orderSellVo.getOrderSellPerPrice());//0
+		System.out.println(orderSellVo.getFkItemDetailOrderSell()); 
+		System.out.println(orderSellVo.getOrderSellAmount()); 
+		System.out.println(orderSellVo.getOrderSellPerPrice());
+		
 		orderSellVo.setOrderSellMethod(orderSellVo.getOrderSellMethod().substring(1));
-		//service Test
-		
-/*		orderSellVo.setFkSellerOrderSell("seller");
-		orderSellVo.setFkItemDetailOrderSell("배추");
-		orderSellVo.setOrderSellMethod("지정가");
-		orderSellVo.setOrderSellPerPrice(50000);
-		orderSellVo.setOrderSellAmount(20);*/
-		
-		orderSellService.insertOrderSeller(orderSellVo);
+		orderSellService.addSellerOrder(orderSellVo);
 		
 		return "index";
 	}

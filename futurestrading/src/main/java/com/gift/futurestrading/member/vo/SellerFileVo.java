@@ -1,16 +1,23 @@
 package com.gift.futurestrading.member.vo;
 
+/**
+ * @author 정진우
+ * @ClassName : SellerFileVo
+ * @since : JDK1.8
+ * @LatestUpdate : 2018-12-28
+ * 상세정보 입력 중 파일 업로드시 바인딩 되는 객체
+ */
 public class SellerFileVo {
-	private String sellerNoPk;
-	private String sellerId;
+	private String sellerNoPk; 
+	private String sellerId; 
 	private String sellerName;
-	private String sellerPath;
-	private String sellerPathFolder;
-	private String sellerLicence;
-	private String sellerBankCopy;
-	private String sellerCertification;
-	private String sellerCommunicationSales;
-	private String sellerProductGrade;
+	private String sellerPath; // 전체 경로
+	private String sellerPathFolder; //폴더의 경로
+	private String sellerLicence; // 사업자 등록증
+	private String sellerBankCopy; // 통장 사본
+	private String sellerCertification; // 개인인감 증명서
+	private String sellerCommunicationSales; // 통신판매업신고증 사본
+	private String sellerProductGrade; // 상품등급확인서
 
 	
 	public String getSellerNoPk() {

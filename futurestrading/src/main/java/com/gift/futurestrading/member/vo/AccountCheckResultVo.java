@@ -1,5 +1,13 @@
 package com.gift.futurestrading.member.vo;
 
+/**
+ * @author 정진우
+ * @ClassName : AccountCheckResultVo
+ * @Version : JDK1.8
+ * @LatestUpdate : 2018-12-28
+
+ */
+
 public class AccountCheckResultVo {
 	private String contract_bank_user_account_no;
 	private String contract_bank_user_account_status;

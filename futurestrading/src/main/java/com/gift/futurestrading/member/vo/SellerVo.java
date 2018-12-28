@@ -1,9 +1,12 @@
 package com.gift.futurestrading.member.vo;
+
 /**
+ * @author 정진우
  * 관리자 권한으로 판매자리스트를 조회할때 사용하는 VO
- * 
- * @see		com.gift.futurestrading.member.vo.SellerVo
- * @since	JDK1.8
+ * @ClassName : SellerVo
+ * @since: JDK1.8
+ * @LatestUpdate : 2018-12-28
+ * 가입시 바인딩 되는 객체
  */
 public class SellerVo {
 	private String sellerIdPk;				// 아이디

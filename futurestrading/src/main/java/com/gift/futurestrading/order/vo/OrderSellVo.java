@@ -1,5 +1,13 @@
 package com.gift.futurestrading.order.vo;
 
+/**
+ * @author 정진우
+ * @ClassName : OrderSellVo
+ * @Version : JDK1.8
+ * @LatestUpdate : 2018-12-28
+ * 주문의 데이터를 담아 acion으로 넘길시 바인딩 되는 객체
+ */
+
 public class OrderSellVo {
 	private String fkSellerOrderSell;
 	private String fkItemDetailOrderSell;
@@ -14,7 +22,6 @@ public class OrderSellVo {
 	public void setOrderSellPerPrice(int orderSellPerPrice) {
 		this.orderSellPerPrice = orderSellPerPrice;
 	}
-
 
 	public String getFkSellerOrderSell() {
 		return fkSellerOrderSell;
@@ -46,7 +53,13 @@ public class OrderSellVo {
 	public void setOrderSellAmount(int orderSellAmount) {
 		this.orderSellAmount = orderSellAmount;
 	}
+	@Override
+	public String toString() {
+		return "OrderSellVo [fkSellerOrderSell=" + fkSellerOrderSell + ", fkItemDetailOrderSell="
+				+ fkItemDetailOrderSell + ", orderSellMethod=" + orderSellMethod + ", orderSellPerPrice="
+				+ orderSellPerPrice + ", orderSellAmount=" + orderSellAmount + "]";
+	}
 
-
+	
 	
 }

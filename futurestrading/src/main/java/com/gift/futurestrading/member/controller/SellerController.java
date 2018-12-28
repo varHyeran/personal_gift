@@ -14,7 +14,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.gift.futurestrading.member.service.SellerService;
 import com.gift.futurestrading.member.vo.SellerFileRequestVo;
 import com.gift.futurestrading.member.vo.SellerRequestVo;
-
+/**
+ * @author 정진우
+ * @ClassName : SellerController
+ * @Version : JDK1.8
+ * @LatestUpdate : 2018-12-28
+ * seller 가입 , 정보수정 , 상세파일 업로드 , 가입 시 필요한 ajax 요청등을 수행
+ */
 
 @Controller
 public class SellerController {
@@ -23,48 +29,74 @@ public class SellerController {
 	
 	
 	/**
-	 * @author Administrator
-	 * addMemberSeller 요청
+	 * @author 정진우
+	 * addseller 요청
+	 * 회원가입 초기 화면
+	 * @param : 
+	 * @return : member/seller/addMemberSeller
+	 * 
 	 */
-	@RequestMapping(value = "/joinseller", method = RequestMethod.GET)
-	public String test() {
-		System.out.println("출력");
-		return "member/seller/addMemberConsumers";
+	@RequestMapping(value="/signup/addseller", method = RequestMethod.GET)
+	public String addSellerForm() {
+		System.out.println("SellerController / addSellerForm() 호출");
+		return "member/seller/addMemberSeller";
+	}
+	/**
+	 * @author 정진우
+	 * addrSeller 요청
+	 * 고객(사용자)가 가입 정보 입력 후 회원 가입 요청 
+	 * @param : sellerRequestVo
+	 * @return : index
+	 * 
+	 */
+	@RequestMapping(value = "/signup/addseller/re", method = RequestMethod.POST)
+	public String addSeller(SellerRequestVo sellerRequestVo) {
+		int insertResult = sellerService.insertSeller(sellerRequestVo);
+		System.out.println(insertResult + " <---insertResult");
+		return "index";
 	}
 	
 	/**
-	 * @author Administrator
-	 * sellerDetail 페이지 요청
+	 * @author 정진우
+	 * addSellerDetail 요청
+	 * 판매자 정보 상세입력 화면 요처잇 렌더링
+	 * @param : HttpSession , Model
+	 * @return : member/seller/addMemberSellerDetail
+	 * 
 	 */
-
-	@RequestMapping("/joinsellerdetail")
-	public String joinSellerDetail(HttpSession session, Model model) {
-		System.out.println("출력");
+	@RequestMapping("/signup/addseller/detail")
+	public String addSellerDetail(HttpSession session, Model model) {
+		System.out.println("SellerController / addSellerDetail");
 		model.addAttribute("sessionLogin", session.getAttribute("sessionLoginMember"));
 		return "member/seller/addMemberSellerDetail";
 	}
+	
 	/**
-	 * @author Administrator
-	 * sellerDetail 페이지 요청
-	 * joinsellerdetail에서 post방식 요청 처리
-	 * Vo와 파일경로를 service에 보냄
+	 * @author 정진우
+	 * addSellerDetail 요청
+	 * action 및 서브스 호출
+	 * @param : SellerFileRequestVo , HttpSession
+	 * @return : member/seller/index
+	 * 
 	 */
-
-	@RequestMapping("/sellerFileUpload")
-	public String getSellerDetail(SellerFileRequestVo sellerFileRequestVo , HttpSession session, Model model) throws IOException {
-		System.out.println("출력111");
+	@RequestMapping("/signup/addseller/detail/re")
+	public String addSellerDetailAction(SellerFileRequestVo sellerFileRequestVo , HttpSession session, Model model) throws IOException {
+		System.out.println("SellerController/ addSellerDetailAction");
 		model.addAttribute("sessionLogin", session.getAttribute("sessionLoginMember"));
 		String path = session.getServletContext().getRealPath("\\upload\\");
-		String realPath =path;
-		sellerService.sellerFileUpload(sellerFileRequestVo, realPath);
+		sellerService.sellerFileUpload(sellerFileRequestVo, path);
 		return "index"; 
 	} 
 	
 	/**
-	 * @author Administrator
-	 * sellerDetail 페이지 요청
-	 * joinsellerdetail에서 post방식 요청 처리
+	 * @author 정진우
+	 * sellerMypage 요청
+	 * mypage를 요청했을때 세션값의 유무에따라 화면 결정
+	 * @param : HttpSession , Model
+	 * @return : member/seller/addMemberSeller
+	 * 
 	 */
+	
 	@RequestMapping(value="/seller/mypage", method=RequestMethod.GET)
 	public String sellerMypage(HttpSession session, Model model) {
 		String returnView = null;
@@ -73,30 +105,23 @@ public class SellerController {
 		}else {
 			returnView = "member/seller/getMemberSellerMypage";
 		}
-		
 		model.addAttribute("sessionLogin", session.getAttribute("sessionLoginMember"));
 		return returnView;
 	}
-	/**
-	 * @author Administrator
-	 * joinseller에서 회원가입 요청시 insertSeller수행 후 index리턴
-	 */
-	@RequestMapping(value = "/addseller", method = RequestMethod.POST)
-	public String addSeller(SellerRequestVo sellerRequestVo) {
-		int insertResult = sellerService.insertSeller(sellerRequestVo);
-		System.out.println(insertResult + " <---insertResult");
-		return "index";
-	}
-	/**
-	 * @author Administrator
-	 * Seller회원가입시 아이디 유효성을 ajax로 검사하는 코드
-	 * 특수문자 , 숫자 , 중복을 체크하고 값을 반환함
-	 */
 
+	/**
+	 * @author 정진우
+	 * idCheck 요청
+	 * ajax 비동기적 요청
+	 * 데이터베이스 확인후 중복 여부 리턴
+	 * @param : String
+	 * @return : count
+	 * 
+	 */
 	@RequestMapping(value = "/checkId", method = { RequestMethod.POST })
 	@ResponseBody 
-	public int idCheck(@RequestBody String id) {
-		System.out.println("SellerController");
+	public int checkId(@RequestBody String id) {
+		System.out.println("SellerController / checkId");
 		System.out.println(id + " <---id");
 
 		String pattern = "^[a-zA-Z0-9]*$";
@@ -127,9 +152,13 @@ public class SellerController {
 		return count;  
 	}     
 	/**
-	 * @author Administrator
-	 * joinsellerDetail에서 계좌의 유효성을 체크하는 코드
-	 * ajax로 넘어오다 보니 map으로 넘겨줌
+	 * @author 정진우
+	 * sellerAccountCheck 요청
+	 * ajax비동기적 요청 
+	 * 데이터 베이스 확인 후  가능여부 리턴
+	 * @param : HashMap<String , Object>
+	 * @return : count
+	 * 
 	 */
 	@RequestMapping(value = "/ajaxAccountCheck",method = {RequestMethod.GET, RequestMethod.POST})
 	@ResponseBody
@@ -139,7 +168,6 @@ public class SellerController {
 		System.out.println(ajaxValue.get("sellerName") + " <---sellerName");
 		System.out.println(ajaxValue.get("userAccountBank") + " <---userId");     
 		System.out.println(ajaxValue.get("userAccountNo") + " <---sellerName");  
-
 		int count = 1;
 		count = sellerService.accountCheck(ajaxValue);
 		return count; 

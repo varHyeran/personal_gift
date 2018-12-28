@@ -14,27 +14,42 @@ import com.gift.futurestrading.member.vo.SellerFileVo;
 import com.gift.futurestrading.member.vo.SellerRequestVo;
 
 /**
- * @author Administrator
- *
+ * @author 정진우
+ * @ClassName : SellerService
+ * @Version : JDK1.8
+ * @LatestUpdate : 2018-12-28
+ * seller 가입 , 정보수정 , 상세파일 업로드 , 가입 시 필요한 ajax 요청등을 수행
  */
+
 @Service
 public class SellerService {
 	@Autowired
 	private SellerMapper sellerMapper;
+
+	/**
+	 * @author 정진우
+	 * idCheck 요청 처리
+	 * 데이터베이스 요회후 가능여부 리턴 (0 or 1)
+	 * @param : String
+	 * @return : int
+	 */
 	
 	public int idCheck(String id) {
 		int selectResult = 0;
 
 		/* 맵퍼 계층의 selectIdCheck 메서드 호출 */
-		selectResult = sellerMapper.selectIdCheck(id);
+		selectResult = sellerMapper.selectOneIdCheck(id);
 		System.out.println(selectResult + " <---selectResult");
 
 		return selectResult;
 	}
+	
 	/**
-	 * @author Administrator
-	 * 계좌확인 매소드 
-	 *
+	 * @author 정진우
+	 * accountCheck 요청 처리
+	 * 데이터베이스 요회후 가능여부 리턴 (0 or 1)
+	 * @param : HashMap<String , Object>
+	 * @return : int
 	 */
 	public int accountCheck(HashMap<String , Object> ajaxValue) {
 		int selectResult = 1;
@@ -63,14 +78,12 @@ public class SellerService {
 		}
 		return selectResult;
 	} 
-
-
 	/**
+	 * @author 정진우
+	 * insertSeller 요청 처리
 	 * 컨트롤러로부터 넘겨받은 데이터를 가공하여 SQL 메서드를 호출할 때 param으로 넘김
-	 * 
-	 * @param sellerRequestVo
-	 * @return
-	 * @since JDK1.8
+	 * @param : SellerRequestVo
+	 * @return : int
 	 */
 	public int insertSeller(SellerRequestVo sellerRequestVo) {
 		System.out.println("sellerService.insertseller() 호출");
@@ -95,9 +108,10 @@ public class SellerService {
 	}
 
 	/**
-	 * joinSellerDetail 대한 정보를 데이터베이스에 등록
-	 *
-	 * @param seller 입력된 샘플에 대한 정보
+	 * @author 정진우
+	 * addSellerDetailAction 대한 정보를 데이터베이스에 등록
+	 * 컨트롤러로부터 넘겨받은 데이터를 가공하여 SQL 메서드를 호출할 때 param으로 넘김
+	 * @param : SellerFileRequestVo , String
 	 * @throws IOException 
 	 */
 
