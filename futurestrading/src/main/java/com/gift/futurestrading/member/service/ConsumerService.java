@@ -1,6 +1,7 @@
 package com.gift.futurestrading.member.service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,16 +11,24 @@ import com.gift.futurestrading.member.mapper.ConsumerMapper;
 import com.gift.futurestrading.member.vo.AccountOfConsumerRequestVo;
 import com.gift.futurestrading.member.vo.ConsumerMypageVo;
 import com.gift.futurestrading.member.vo.ConsumerRequestVo;
+import com.gift.futurestrading.member.vo.ConsumerSignDetailVo;
 
 @Service
 public class ConsumerService {
 	@Autowired
 	private ConsumerMapper consumerMapper;	
 	
-	public int getSignDetail(String getId) {
+	/**
+	 * 로그인 상태의 아이디로 자신의 체결내역을 불러오는 메서드 호출
+	 * 
+	 * @param getId
+	 * @return consumerSignDetailVo
+	 * @since JDK1.8
+	 */
+	public List<ConsumerSignDetailVo> getSignDetail(String getId) {
 		System.out.println("ConsumerService.getSignDetail() 호출");
-		consumerMapper.selectSignDetail(getId);
-		return 0;
+		List<ConsumerSignDetailVo> consumerSignDetailVo = consumerMapper.selectSignDetail(getId);
+		return consumerSignDetailVo;
 	}
 	
 	/**

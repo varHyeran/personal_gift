@@ -2,6 +2,7 @@
 package com.gift.futurestrading.member.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -19,20 +20,30 @@ import com.gift.futurestrading.member.service.ConsumerService;
 import com.gift.futurestrading.member.vo.AccountOfConsumerRequestVo;
 import com.gift.futurestrading.member.vo.ConsumerMypageVo;
 import com.gift.futurestrading.member.vo.ConsumerRequestVo;
+import com.gift.futurestrading.member.vo.ConsumerSignDetailVo;
 
 @Controller
 public class ConsumerController {
 	@Autowired
 	private ConsumerService consumerService;
 	
-	@RequestMapping(value="/consumer/mywallet/signdetail", method=RequestMethod.GET)
-	public String signDetail(HttpSession session, Model model) {
-		System.out.println("ConsumerController.signDetail() 호출");
+	/**
+	 *  해당 url로 요청이 들어왔을 때, 구매자 체결내역 뷰로 랜더링 해준다.
+	 * 
+	 * @param session
+	 * @param model
+	 * @return member/consumer/getSignDetail
+	 * @since JDK1.8
+	 */
+	@RequestMapping(value="/consumer/mywallet/get/signdetail", method=RequestMethod.GET)
+	public String getSignDetail(HttpSession session, Model model) {
+		System.out.println("ConsumerController.getSignDetail() 호출");
 		model.addAttribute("sessionLogin", session.getAttribute("sessionLoginMember"));
 		System.out.println(session.getAttribute("sessionLoginId")+ "<---- getId");
 		String getId = (String)session.getAttribute("sessionLoginId");
-		/*consumerService.getSignDetail(getId);*/
-		return "member/consumer/signDetail";
+		List<ConsumerSignDetailVo> signDetailList = consumerService.getSignDetail(getId);
+		model.addAttribute("signDetail", signDetailList);
+		return "member/consumer/getSignDetail";
 	}
 	
 	/**

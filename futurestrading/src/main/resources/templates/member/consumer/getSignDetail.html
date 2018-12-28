@@ -61,7 +61,8 @@
 									<option>마늘</option>
 									<option>고구마</option>
 									<option>배추</option>
-								</select> <select>
+								</select>
+								<select>
 									<option>전체</option>
 									<option>지정가</option>
 									<option>시장가</option>
@@ -79,28 +80,24 @@
 									<th>수량</th>
 									<th>전체체결가</th>
 									<th>체결증거금</th>
-									<th>주문날짜</th>
 									<th>체결날짜</th>
 									<th>선물거래시작일</th>
 									<th>선물거래만기일</th>
-									<th>최종결제일(예상수취일)</th>
 								</tr>
 							</thead>
 							<tbody>
-								<tr>
-									<td>체결번호</td>
-									<td>매수주문번호</td>
-									<td>판매자아이디</td>
-									<td>판매자이름</td>
-									<td>가격(1계약)</td>
-									<td>수량</td>
-									<td>전체체결가</td>
-									<td>체결증거금</td>
-									<td>주문날짜</td>
-									<td>체결날짜</td>
-									<td>선물거래시작일</td>
-									<td>선물거래만기일</td>
-									<td>최종결제일(예상수취일)</td>
+								<tr th:each="list : ${signDetail}">
+									<td th:text="${list.signPk}"></td>
+									<td th:text="${list.fkOrderBuySign}"></td>
+									<td th:text="${list.fkSellerSign}"></td>
+									<td th:text="${list.signSellerName}"></td>
+									<td th:text="${list.signPerPrice}"></td>
+									<td th:text="${list.signAmount}"></td>
+									<td th:text="${list.signTotalPrice}"></td>
+									<td th:text="${list.signInitialMargin}"></td>
+									<td th:text="${list.signDate}"></td>
+									<td th:text="${list.signFuturesTradeBeginDate}"></td>
+									<td th:text="${list.signFuturesTradeEndDate}"></td>
 								</tr>
 							</tbody>
 							<tfoot>
@@ -108,10 +105,6 @@
 							</tfoot>
 						</table>
 					</div>
-					<!-- 체결내역(일일정산중인상태) -->
-					<!-- 최종입금 대기 거래내역 -->
-					<!-- 이전거래내역 -->
-					<!-- 납품거래내역 -->
 				</div>
 			</div>
 		</div>
