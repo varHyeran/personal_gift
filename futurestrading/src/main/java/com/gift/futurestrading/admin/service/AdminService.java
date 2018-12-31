@@ -20,9 +20,9 @@ public class AdminService {
 	private AdminMapper adminMapper;
 	
 	/*관리자 비밀번호체크*/
-	public String adminPwCheck(HashMap<String, Object> idAndPw) {
-		System.out.println("AdminService.adminPwCheck() 호출");
-		String idResult = adminMapper.selectAdminPw(idAndPw);
+	public String adminPasswordCheck(HashMap<String, Object> idAndPassword) {
+		System.out.println("AdminService.adminPasswordCheck() 호출");
+		String idResult = adminMapper.selectAdminPassword(idAndPassword);
 		return idResult;
 	}
 	/*관리자삭제처리*/
@@ -33,8 +33,8 @@ public class AdminService {
 	/*최고관리자 비밀번호체크*/
 	public String checkTopAdmin(String topAdminPassword) {
 		System.out.println("AdminService.checkTopAdmin() 호출");
-		String topAdminPwCheck = adminMapper.selectTopAdminPw(topAdminPassword);
-		return topAdminPwCheck;
+		String passwordCheck = adminMapper.selectTopAdminPassword(topAdminPassword);
+		return passwordCheck;
 	}
 	/*관리자수정처리*/
 	public void modifyAdmin(AdminVo adminRequest) {
@@ -52,7 +52,7 @@ public class AdminService {
 		System.out.println("AdminService.addAdmin() 호출");
 		AdminVo adminVo = new AdminVo();
 		adminVo.setAdminId(adminVoRequest.getAdminId());
-		adminVo.setAdminPw(adminVoRequest.getAdminPw());
+		adminVo.setAdminPassword(adminVoRequest.getAdminPassword());
 		adminVo.setAdminName(adminVoRequest.getAdminName());
 		adminMapper.insertAdmin(adminVoRequest);
 	}

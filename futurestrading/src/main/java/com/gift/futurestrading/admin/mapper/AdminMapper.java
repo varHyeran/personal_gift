@@ -14,7 +14,7 @@ import com.gift.futurestrading.page.vo.Criteria;
 @Mapper
 public interface AdminMapper {
 	/*관리자 비밀번호 체크*/
-	String selectAdminPw(HashMap<String, Object> idAndPw);
+	String selectAdminPassword(HashMap<String, Object> idAndPassword);
 	/*관리자 리스트*/
 	List<AdminVo> selectAdmin();
 	/*관리자 등록*/
@@ -24,7 +24,7 @@ public interface AdminMapper {
 	/*관리자 수정*/
 	int updateAdmin(AdminVo adminRequest);
 	/*최고관리자 비밀번호 체크*/
-	String selectTopAdminPw(String topAdminPassword);
+	String selectTopAdminPassword(String topAdminPassword);
 	/*관리자 삭제*/
 	int deleteAdmin(String adminId);
 	/*관리자 아이디 중복체크*/

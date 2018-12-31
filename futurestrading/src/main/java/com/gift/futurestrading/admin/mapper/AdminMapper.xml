@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gift.futurestrading.admin.mapper.AdminMapper">
 	<!-- 관리자 비밀번호 확인 -->
-		<select id="selectAdminPw" parameterType="map" resultType="String">
+		<select id="selectAdminPassword" parameterType="map" resultType="String">
 	        SELECT
 	        	admin_id_pk
 	        FROM admin WHERE admin_id_pk = #{adminId} AND admin_password = PASSWORD(#{adminPassword})
@@ -12,7 +12,7 @@
 			DELETE FROM admin WHERE admin_id_pk = #{adminId} AND #{adminId} != 'topAdmin'
 		</delete>
 	<!-- 최고관리자 비밀번호 확인 -->
-		<select id="selectTopAdminPw" parameterType="String" resultType="String">
+		<select id="selectTopAdminPassword" parameterType="String" resultType="String">
 	        SELECT
 	        	admin_id_pk
 	        FROM admin WHERE admin_password = PASSWORD(#{topAdminPassword}) AND admin_id_pk = 'topAdmin'
@@ -28,7 +28,7 @@
 		<select id="selectAdminOne" resultType="com.gift.futurestrading.admin.vo.AdminVo">
 	        SELECT
 	        	admin_id_pk as adminId, 
-	        	admin_password as adminPw,
+	        	admin_password as adminPassword,
 	        	admin_name as adminName,
 	        	admin_right as adminRight,
 	        	admin_register_date as adminRegisterDate
@@ -37,7 +37,7 @@
 	<!-- 관리자등록 -->
 		<insert id="insertAdmin" parameterType="com.gift.futurestrading.admin.vo.AdminVo">
 		    INSERT INTO admin(admin_id_pk, admin_password, admin_name, admin_right, admin_register_date) 
-		    	VALUES(#{adminId}, PASSWORD(#{adminPw}), #{adminName}, '관리자', now())
+		    	VALUES(#{adminId}, PASSWORD(#{adminPassword}), #{adminName}, '관리자', now())
 		</insert>
 	<!-- 관리자 아이디 중복체크 -->	
 		<select id="selectInputAdminId" resultType="int">

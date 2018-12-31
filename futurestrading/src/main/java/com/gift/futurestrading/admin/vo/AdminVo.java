@@ -2,7 +2,7 @@ package com.gift.futurestrading.admin.vo;
 
 public class AdminVo {
 	private String adminId;				/*관리자아이디*/
-	private String adminPw;				/*관리자비밀번호*/
+	private String adminPassword;		/*관리자비밀번호*/
 	private String adminName;			/*관리자이름*/
 	private String adminRight;			/*권한*/
 	private String adminRegisterDate;	/*등록날짜*/
@@ -14,12 +14,12 @@ public class AdminVo {
 		this.adminId = adminId;
 		System.out.println(adminId + "<-- setAdminId");
 	}
-	public String getAdminPw() {
-		return adminPw;
+	public String getAdminPassword() {
+		return adminPassword;
 	}
-	public void setAdminPw(String adminPw) {
-		this.adminPw = adminPw;
-		System.out.println(adminPw + "<-- setAdminPw");
+	public void setAdminPassword(String adminPassword) {
+		this.adminPassword = adminPassword;
+		System.out.println(adminPassword + "<-- setAdminPassword");
 	}
 	public String getAdminName() {
 		return adminName;
@@ -44,7 +44,7 @@ public class AdminVo {
 	}
 	@Override
 	public String toString() {
-		return "AdminVo [adminId=" + adminId + ", adminPw=" + adminPw + ", adminName=" + adminName + ", adminRight="
+		return "AdminVo [adminId=" + adminId + ", adminPassword=" + adminPassword + ", adminName=" + adminName + ", adminRight="
 				+ adminRight + ", adminRegisterDate=" + adminRegisterDate + "]";
 	}
 }

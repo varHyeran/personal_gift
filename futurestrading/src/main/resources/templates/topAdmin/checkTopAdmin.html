@@ -28,7 +28,7 @@
 		var submitHelper = $('#submitHelper');
     	$.ajax({
     		async : false,
-    		url : '/checkTopAdminPw',
+    		url : '/topadmin/check/password',
     		type : 'POST',
     		data : topAdminPassword,
     		dataType : false,
@@ -36,7 +36,7 @@
     		success : function(data){
     			if(data != null){
     				console.log('data 받아오기 성공');
-					console.log(data + '<---topAdminPw');
+					console.log(data + '<---topAdminPassword');
     			}
 			 	if(data == '불일치') {		// 비밀번호 불일치
 					submitHelper.text('비밀번호가 일치하지 않습니다');
@@ -58,7 +58,7 @@
 		console.log('validateForm');
 		
 		/* 비밀번호 유효성 검사 */
-		if(isPasswordCheck = 0) {
+		if(isPasswordCheck == 0) {
 			$('#submitHelper').text('유효한 비밀번호를 입력해 주세요.');
 			$('#topAdminPassword').focus();
 			return false;
@@ -67,14 +67,13 @@
 		}
 		
 		/* 최고관리자 비밀번호 검사 */
-		if(isSubmitCheck = 0) {
+		if(isSubmitCheck == 0) {
 			$('#submitHelper').text('비밀번호가 일치하지 않습니다.');
 			$('#topAdminPassword').focus();
 			return false;
 		} else {
 			$('#submitHelper').text('');
 		}
-		
 		return true;
 	}		// end validateForm()
 			
@@ -98,7 +97,7 @@
 
 	<div layout:fragment="content" class="main-box container">
 		<h1>최고관리자 비밀번호 확인</h1>
-		<form onsubmit="return validateForm();" action="/topAdmin/checkTopAdmin" id="topAdminPasswordForm" method="post">
+		<form onsubmit="return validateForm();" action="/topadmin/check/re" id="topAdminPasswordForm" method="post">
 			<div th:each=adminId:${getAdminId}>
 				<div>
 					<input type="password" name="topAdminPassword" id="topAdminPassword" class="form-control" oninput="passwordCheck()"><p>
@@ -107,7 +106,7 @@
 				</div>
 			</div>
 			<div class="buttons">
-				<a th:href="@{/topAdmin/listAdmin}">
+				<a th:href="@{/topadmin/list/admin}">
 					<button type="button" class="btn">리스트</button>
 				</a>
 				<button type="submit" id="submitButton" class="btn" onclick="submitCheck()">삭제</button><p>

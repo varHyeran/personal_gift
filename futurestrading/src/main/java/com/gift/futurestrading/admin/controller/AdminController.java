@@ -32,13 +32,13 @@ public class AdminController {
 	private AdminService adminService;
 	
 	/*관리자 비밀번호 확인(ajax)*/
-	@RequestMapping(value="/adminPwCheck", method=RequestMethod.POST)
+	@RequestMapping(value="/topadmin/check/admin/password", method=RequestMethod.POST)
 	@ResponseBody
-	public String checkAdminPw(@RequestBody HashMap<String, Object> idAndPw) {
-		System.out.println("AdminController.checkAdminPw() 관리자 비밀번호확인");
-		System.out.println(idAndPw.get("adminId") + "<-- adminId(ajax)");
-		System.out.println(idAndPw.get("adminPassword") + "<-- adminPassword(ajax)");
-		String idResult = adminService.adminPwCheck(idAndPw);
+	public String checkAdminPassword(@RequestBody HashMap<String, Object> idAndPassword) {
+		System.out.println("AdminController.checkAdminPassword() 관리자 비밀번호확인");
+		System.out.println(idAndPassword.get("adminId") + "<-- adminId(ajax)");
+		System.out.println(idAndPassword.get("adminPassword") + "<-- adminPassword(ajax)");
+		String idResult = adminService.adminPasswordCheck(idAndPassword);
 		System.out.println(idResult + "<-----idResult");
 			if(idResult != null) {
 				System.out.println("현재 비밀번호 일치");
@@ -50,34 +50,34 @@ public class AdminController {
 		return idResult;
 	}
 	/*최고관리자 비밀번호 확인(ajax)*/
-	@RequestMapping(value="/checkTopAdminPw", method=RequestMethod.POST)
+	@RequestMapping(value="/topadmin/check/password", method=RequestMethod.POST)
 	@ResponseBody
-	public String checkTopAdminPw(@RequestBody String topAdminPassword, HttpSession session, Model model) {
-		System.out.println("AdminController.checkTopAdminPw() 최고관리자 비밀번호확인");
+	public String checkTopAdminPassword(@RequestBody String topAdminPassword, HttpSession session, Model model) {
+		System.out.println("AdminController.checkTopAdminPassword() 최고관리자 비밀번호확인");
 		System.out.println(topAdminPassword + "<----------topAdminPassword");
 		model.addAttribute("sessionLogin", session.getAttribute("sessionLoginMember"));
-		String pw = null;
-		String topAdminPwCheck = adminService.checkTopAdmin(topAdminPassword);
-		System.out.println(topAdminPwCheck + "<------------------topAdminPwCheck1");
+		String password = null;
+		String passwordCheck = adminService.checkTopAdmin(topAdminPassword);
+		System.out.println(passwordCheck + "<------------------passwordCheck1");
 			/*입력한 비밀번호와 최고관리자의 비밀번호를 비교 후 결과를 리턴*/
-			if(topAdminPwCheck != null) {
+			if(passwordCheck != null) {
 				System.out.println("최고관리자 비밀번호 일치");
-				pw = "일치";
+				password = "일치";
 			} else {
 				System.out.println("최고관리자 비밀번호 불일치");
-				pw = "불일치";
+				password = "불일치";
 			}
-		return pw;
+		return password;
 	}
 	/*최고관리자 비밀번호 확인, 관리자 삭제액션*/
-	@RequestMapping(value="/topAdmin/checkTopAdmin", method=RequestMethod.POST)
-	public String checkTopAdmin(@RequestParam(value="topAdminPw") String topAdminPw, @RequestParam(value="adminId") String adminId, HttpSession session, Model model) {
+	@RequestMapping(value="/topadmin/check/re", method=RequestMethod.POST)
+	public String checkTopAdmin(@RequestParam(value="topAdminPassword") String topAdminPassword, @RequestParam(value="adminId") String adminId, HttpSession session, Model model) {
 		System.out.println("AdminController.checkTopAdmin() 최고관리자 비밀번호확인, 관리자삭제");
 		model.addAttribute("sessionLogin", session.getAttribute("sessionLoginMember"));
-		String topAdminPwCheck = adminService.checkTopAdmin(topAdminPw);
+		String passwordCheck = adminService.checkTopAdmin(topAdminPassword);
 			/*입력한 비밀번호와 최고관리자의 비밀번호가 일치한다면 관리자를 삭제*/
-		System.out.println(topAdminPwCheck + "<------------------topAdminPwCheck2");
-			if(topAdminPwCheck != null) {
+		System.out.println(passwordCheck + "<------------------passwordCheck2");
+			if(passwordCheck != null) {
 				System.out.println("최고관리자 비밀번호 일치");
 				adminService.removeAdmin(adminId);
 			} else {
@@ -86,9 +86,9 @@ public class AdminController {
 		return "redirect:/topAdmin/listAdmin";
 	}
 	/*최고관리자 비밀번호 확인폼*/
-	@RequestMapping(value="/topAdmin/checkTopAdminForm", method=RequestMethod.GET)
-	public String checkTopAdminForm(Model model, HttpServletRequest request, HttpSession session) {
-		System.out.println("AdminController.checkTopAdminForm() 최고관리자 비밀번호확인폼");
+	@RequestMapping(value="/topadmin/check", method=RequestMethod.GET)
+	public String checkTopAdmin(Model model, HttpServletRequest request, HttpSession session) {
+		System.out.println("AdminController.checkTopAdmin() 최고관리자 비밀번호확인폼");
 		model.addAttribute("sessionLogin", session.getAttribute("sessionLoginMember"));
 		String adminId = request.getParameter("adminId");
 		System.out.println(adminId + "<--------------get으로 보낸 아이디");
@@ -97,19 +97,19 @@ public class AdminController {
 	}
 	
 	/*관리자수정액션*/
-	@RequestMapping(value="/topAdmin/modifyAdminAction", method=RequestMethod.POST)
-	public String modifyAdminAction(@RequestParam(value="adminId") String adminId, @RequestParam(value="newAdminPw") String newAdminPw, @RequestParam(value="adminName") String adminName, HttpSession session, Model model) {
-		System.out.println("AdminController.modifyAdminAction() 수정액션");
+	@RequestMapping(value="/topadmin/modify/admin/re", method=RequestMethod.POST)
+	public String modifyAdmin(@RequestParam(value="adminId") String adminId, @RequestParam(value="newAdminPassword") String newAdminPassword, @RequestParam(value="adminName") String adminName, HttpSession session, Model model) {
+		System.out.println("AdminController.modifyAdmin() 수정액션");
 		model.addAttribute("sessionLogin", session.getAttribute("sessionLoginMember"));
 		AdminVo adminRequest = new AdminVo();
 		adminRequest.setAdminId(adminId);
-		adminRequest.setAdminPw(newAdminPw);
+		adminRequest.setAdminPassword(newAdminPassword);
 		adminRequest.setAdminName(adminName);
 		adminService.modifyAdmin(adminRequest);
 		return "redirect:/topAdmin/listAdmin";
 	}
 	/*관리자수정폼*/
-	@RequestMapping(value="/topAdmin/modifyAdminForm", method=RequestMethod.GET)
+	@RequestMapping(value="/topadmin/modify/admin", method=RequestMethod.GET)
 	public String modifyAdminForm(Model model, @RequestParam(value="adminId") String adminId, HttpSession session) {
 		System.out.println("AdminController.modifyAdminForm() 수정폼");
 		model.addAttribute("sessionLogin", session.getAttribute("sessionLoginMember"));
@@ -118,7 +118,7 @@ public class AdminController {
 		return "topAdmin/modifyAdmin";
 	}
 	/*관리자 아이디중복체크(ajax)*/	
-	@RequestMapping(value="/adminIdCheck", method=RequestMethod.POST)
+	@RequestMapping(value="/topadmin/admin/id/check", method=RequestMethod.POST)
 	@ResponseBody
 	public int adminIdcheck(@RequestBody String inputAdminId, HttpSession session, Model model) {
 		System.out.println("AdminController.adminIdcheck() 아이디 중복체크");
@@ -136,22 +136,22 @@ public class AdminController {
 		return countId;
 	}
 	/*관리자등록액션*/
-	@RequestMapping(value="/topAdmin/addAdminAction", method=RequestMethod.POST)
-	public String addAdminAction(AdminVo adminVoRequest, HttpSession session, Model model) {
-		System.out.println("AdminController.addAdminAction() 등록액션");
+	@RequestMapping(value="/topadmin/add/admin/re", method=RequestMethod.POST)
+	public String addAdmin(AdminVo adminVoRequest, HttpSession session, Model model) {
+		System.out.println("AdminController.addAdmin() 등록액션");
 		model.addAttribute("sessionLogin", session.getAttribute("sessionLoginMember"));
 		adminService.addAdmin(adminVoRequest);
 		return "redirect:/topAdmin/listAdmin";
 	}
 	/*관리자등록폼*/
-	@RequestMapping(value="/topAdmin/addAdminForm", method=RequestMethod.GET)
-	public String addAdminForm(HttpSession session, Model model) {
+	@RequestMapping(value="/topadmin/add/admin", method=RequestMethod.GET)
+	public String addAdmin(HttpSession session, Model model) {
+		System.out.println("AdminController.addAdmin() 등록폼");
 		model.addAttribute("sessionLogin", session.getAttribute("sessionLoginMember"));
-		System.out.println("AdminController.addAdminForm() 등록폼");
 		return "topAdmin/addAdmin";
 	}
 	/*관리자조회*/
-	@RequestMapping(value="/topAdmin/listAdmin", method=RequestMethod.GET)
+	@RequestMapping(value="/topadmin/list/admin", method=RequestMethod.GET)
 	public String listAdmin(Model model,HttpSession session) {
 		System.out.println("AdminController.listAdmin() 관리자리스트");
 		model.addAttribute("sessionLogin", session.getAttribute("sessionLoginMember"));

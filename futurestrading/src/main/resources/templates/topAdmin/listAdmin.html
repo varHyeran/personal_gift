@@ -59,14 +59,14 @@
 									<td>등록날짜</td>
 								</tr>
 								<tr th:each="list : ${adminList}">
-									<td><a th:text="${list.adminId}" th:href="@{/topAdmin/modifyAdminForm(adminId=${list.adminId})}" class="text-primary"></a></td>
+									<td><a th:text="${list.adminId}" th:href="@{/topadmin/modify/admin(adminId=${list.adminId})}" class="text-primary"></a></td>
 									<td th:text="${list.adminName}"></td>
 									<td th:text="${list.adminRight}"></td>
 									<td th:text="${list.adminRegisterDate}"></td>
 								</tr>
 							</table>
 							<div class="insertBtn">
-								<a th:href="@{/topAdmin/addAdminForm}">
+								<a th:href="@{/topadmin/add/admin}">
 									<button type="button" class="btn">관리자 등록</button>
 								</a>
 							</div>
