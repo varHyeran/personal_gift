@@ -1,10 +1,15 @@
 package com.gift.futurestrading.order.service;
 
 import java.util.HashMap;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.gift.futurestrading.member.vo.SellerVo;
 import com.gift.futurestrading.order.mapper.OrderSellMapper;
 import com.gift.futurestrading.order.vo.OrderSellVo;
+import com.gift.futurestrading.page.vo.Criteria;
 
 /**
  * @author 정진우
@@ -48,4 +53,30 @@ public class OrderSellService {
 
 		return insertResult;
 	}
+	/** 판매자 리스트
+	 * 판매자 리스트 select
+	 * @param Criteria cri
+	 * @return sellerList
+	 * @since JDK1.8
+	 */
+	public List<OrderSellVo> getSellerOrderAll(Criteria cri , String id){
+		System.out.println("AdminService.getSellerAll() 호출");
+		HashMap<String , Object> map = new HashMap<String, Object>();
+		map.put("id", id);
+		map.put("pageStart", cri.getPageStart());
+		map.put("perPageNum", cri.getPerPageNum());
+		List<OrderSellVo> sellerList = orderSellMapper.selectOrderSellAll(map);
+		return sellerList;
+	}
+	/** 판매자 리스트
+	 * 판매자의 전체 행 구하기위한 select
+	 * 
+	 * @return adminMapper.selectSellerAllCount()
+	 * @since JDK1.8
+	 */
+	public int getSellerOrderAllCount() {
+		System.out.println("SampleService.selectSellerAllCount() 호출");
+		return orderSellMapper.selectOrderSellAllCount();
+	}
+	
 }

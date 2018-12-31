@@ -1,14 +1,20 @@
 package com.gift.futurestrading.order.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.gift.futurestrading.member.vo.SellerVo;
 import com.gift.futurestrading.order.service.OrderSellService;
 import com.gift.futurestrading.order.vo.OrderSellVo;
+import com.gift.futurestrading.page.vo.Criteria;
+import com.gift.futurestrading.page.vo.PageMaker;
 
 /**
  * @author 정진우
@@ -22,6 +28,28 @@ import com.gift.futurestrading.order.vo.OrderSellVo;
 public class OrderSellController {
 	@Autowired
 	private OrderSellService orderSellService;
+
+	/**
+	 * @author 정진우
+	 * listOrder rendering
+	 * @param : HttpSession , Model , OrderSellVo
+	 * @return : listOrder
+	 */
+	
+	@RequestMapping(value="/seller/order/list", method=RequestMethod.GET)
+	public String listOrder(@ModelAttribute("cri") Criteria cri, Model model, HttpSession session) {
+		System.out.println("OrderSellController / listOrder()");
+		String id = (String) session.getAttribute("sessionLoginId");
+		model.addAttribute("sessionLogin", session.getAttribute("sessionLoginMember"));
+		List<OrderSellVo> orderSellerList = orderSellService.getSellerOrderAll(cri , id);
+		model.addAttribute("orderSellerList", orderSellerList);
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setCri(cri);
+		pageMaker.setTotalCount(orderSellService.getSellerOrderAllCount());
+		model.addAttribute("pageMaker", pageMaker);
+		return "order/seller/listOrder";
+	}
+	 
 	
 	/**
 	 * @author 정진우

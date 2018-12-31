@@ -25,4 +25,24 @@
 		<select id="selectOneAutoMax" parameterType="String" resultType="int">
 		select max(CAST(substring(order_sell_pk,12) AS DECIMAL)) from order_sell
 	</select>
+	
+		<!-- 판매자주문리스트(페이징포함)를 조회하기 위한 select -->
+	<select id="selectOrderSellAll" resultType="com.gift.futurestrading.order.vo.OrderSellVo" parameterType="hashmap">
+		SELECT
+			order_sell_pk as orderSellPk,
+			fk_seller__order_sell as fkSellerOrderSell,
+			(select item_detail_name from item_detail where item_detail_no_pk = fk_item_detail__order_sell)
+			 as fkItemDetailOrderSell,
+			order_sell_method as orderSellMethod,
+			order_sell_per_price as orderSellPerPrice,
+			order_sell_amount as orderSellAmount,
+			order_sell_date as orderSellDate
+		FROM order_sell 
+		where fk_seller__order_sell=#{id}
+		LIMIT #{pageStart}, #{perPageNum}
+	</select>
+		<!-- 판매자의주무 전체 행 구하기위한 select -->
+	<select id="selectOrderSellAllCount" resultType="int">
+		SELECT COUNT(*) FROM order_sell
+	</select>
 </mapper>

@@ -9,13 +9,28 @@ package com.gift.futurestrading.order.vo;
  */
 
 public class OrderSellVo {
+	private String orderSellPk;
 	private String fkSellerOrderSell;
 	private String fkItemDetailOrderSell;
 	//private String orderSellSellerName;
 	private String orderSellMethod;
 	private int orderSellPerPrice;
 	private int orderSellAmount;
+	private String orderSellDate;
 	
+	
+	public String getOrderSellPk() {
+		return orderSellPk;
+	}
+	public void setOrderSellPk(String orderSellPk) {
+		this.orderSellPk = orderSellPk;
+	}
+	public String getOrderSellDate() {
+		return orderSellDate;
+	}
+	public void setOrderSellDate(String orderSellDate) {
+		this.orderSellDate = orderSellDate;
+	}
 	public int getOrderSellPerPrice() {
 		return orderSellPerPrice;
 	}
