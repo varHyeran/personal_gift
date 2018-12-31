@@ -7,6 +7,9 @@
 		.tab-content{
 			background-color: #fff;
 		}
+		.warning{
+			color:#ff0000;
+		}
 	</style>
 </th:block>
 <th:block layout:fragment="script">
@@ -14,56 +17,91 @@
 	<script type="text/javascript" src="/webjars/highcharts/6.2.0/highstock.js"></script>
 	<script type="text/javascript">
         $(document).ready(function(){
-            $(".nav-tabs a").click(function(e){
+        	/* 품목 선택 */
+           	$(".nav-tabs a").click(function(e){
                 $(this).tab('show');
                 e.preventDefault();
             });
+           	
+           	/* 지정가, 시장가 선택 */
+	        $("#tab-select").change(function() {
+	            var target = $(this).val();
+	            $('.tab-contents').hide();
+	            $(target).show();
+	        });
+           	
             /* 수량에 따른 총주문금액, 개시증거금, 수수료 계산 */
+           
             $('.marketAmount').on('keyup', function(e){
             	$('.marketTotalPrice').empty();
             	$('.marketInitialMargin').empty();
             	$('.marketCharge').empty();
-            	/* toLocaleString() : 자릿수에 콤마 */
+            	// toLocaleString() : 자릿수에 콤마 
+            	// 시장가의 총 주문금액은 수량과 종가를 곱한다. 
             	var marketTotalPrice = ($('.marketClosing').val()*$('.marketAmount').val()).toLocaleString();
             	$('.marketTotalPrice').append(marketTotalPrice+"원");
+            	// 개시증거금은 총 주문금액의 10%이다. 
             	var marketInitialMargin = ($('.marketClosing').val()*$('.marketAmount').val()*0.1).toLocaleString();
             	$('.marketInitialMargin').append(marketInitialMargin+"원");
+            	// 수수료는 총 주문금액의 1%이다. 
             	var marketCharge = ($('.marketClosing').val()*$('.marketAmount').val()*0.01).toLocaleString();
             	$('.marketCharge').append(marketCharge+"원");
             });
-          	$('.selectAmount').on('keyup', function(e){	
-         		$('.selectTotalPrice').empty();
-         		$('.selectInitialMargin').empty();
-               	$('.selectCharge').empty();
-               	var selectTotalPrice = ($('.selectPrice').val()*$('.selectAmount').val()).toLocaleString();
-               	$('.selectTotalPrice').append(selectTotalPrice+"원");
-               	var selectInitialMargin = ($('.selectPrice').val()*$('.selectAmount').val()*0.1).toLocaleString();
-               	$('.selectInitialMargin').append(selectInitialMargin+"원");
-               	var selectCharge = ($('.selectPrice').val()*$('.selectAmount').val()*0.01).toLocaleString();
-               	$('.selectCharge').append(selectCharge+"원");
-          		
+          	$('.selectAmount').on('keyup', function(e){
+        		$('.selectTotalPrice').empty();
+           		$('.selectInitialMargin').empty();
+                $('.selectCharge').empty();
+             	// 지정가의 총 주문금액은 수량과 지정가를 곱한다. 
+                var selectTotalPrice = ($('.selectPrice').val()*$('.selectAmount').val()).toLocaleString();
+                $('.selectTotalPrice').append(selectTotalPrice+"원");
+             	// 개시증거금은 총 주문금액의 10%이다. 
+                var selectInitialMargin = ($('.selectPrice').val()*$('.selectAmount').val()*0.1).toLocaleString();
+                $('.selectInitialMargin').append(selectInitialMargin+"원");
+             	// 수수료는 총 주문금액의 1%이다.
+                var selectCharge = ($('.selectPrice').val()*$('.selectAmount').val()*0.01).toLocaleString();
+                $('.selectCharge').append(selectCharge+"원");	
           	});
+          	
           	/* 매수방법에 따라 분기(시장가일때는 지정가 input 막고, 지정가일때는 시장가 input 막는다.) */
           	$('#orderBuyBtn').click(function() {
         		console.log($('#tab-select').val() + "('#tab-select').val()");
         		if($('#tab-select').val() == '#시장가'){
         			$('#selectPrice').attr('disabled', true);
         			$('#selectAmount').attr('disabled', true);
-        			$('#orderBuyForm').submit();	
+        			
+        			/* 시장가 유효성 검사 */
+        			if($('#marketAmount').val()==''){
+        				console.log('수량이 공백일때');
+        				$('#marketHelper').text('수량을 입력해주세요.');
+        				
+        			}else if(isNaN($('#marketAmount').val())==true){
+        				console.log('수량이 숫자가 아닐때');
+        				$('#marketHelper').text('수량을 숫자만 입력해주세요.');
+        				
+        			}else{
+        				console.log('제출');
+        				$('#orderBuyForm').submit();
+        			}
         		} else if($('#tab-select').val() == '#지정가') {
         			$('#marketPrice').attr('disabled', true);
         			$('#marketAmount').attr('disabled', true);
-        			$('#orderBuyForm').submit();
+        			
+        			/* 지정가 유효성 검사 */
+        			if($('#selectAmount').val()=='' || $('#selectPrice').val()==''){
+        				console.log('수량과 지정가가 공백일때');
+        				$('#selectHelper').text('수량과 지정가를 모두 입력해주세요.');
+        				
+        			}else if(isNaN($('#selectAmount').val())==true || isNaN($('#selectPrice').val())==true){
+        				console.log('수량과 지정가가 숫자가 아닐때');
+        				$('#selectHelper').text('수량과 지정가를 숫자만 입력해주세요.');
+        				
+        			}else{
+        				console.log('제출');
+        				$('#orderBuyForm').submit();
+        			}
         		}
         	});
           	
-	        /* 지정가, 시장가 선택 */
-	        $("#tab-select").change(function() {
-	            var target = $(this).val();
-	            $('.tab-contents').hide();
-	            $(target).show();
-	        });
-	        
 	        /* highchart */
 	        $.getJSON('/data_json/daily_chart.json', function (data) {
 	        	   // Create the chart
@@ -116,26 +154,26 @@
 		                </a>
 		            </li>
 		            <li class="nav-item">
-		                <a class="nav-link active" href="#goods1">
+		                <a class="nav-link active" href="#goods1" onclick="tabs()">
 		                    	청양고추
 		                    <span>+3.15%</span>
 		                </a>
 		
 		            </li>
 		            <li class="nav-item">
-		                <a class="nav-link" href="#goods2">
+		                <a class="nav-link" href="#goods2" onclick="tabs()">
 		                    	마늘
 		                    <span>-12.5%</span>
 		                </a>
 		            </li>
 		            <li class="nav-item">
-		                <a class="nav-link" href="#goods3">
+		                <a class="nav-link" href="#goods3" onclick="tabs()">
 		                   	 배추
 		                    <span>+2.5%</span>
 		                </a>
 		            </li>
 		            <li class="nav-item">
-		                <a class="nav-link" href="#goods4">
+		                <a class="nav-link" href="#goods4" onclick="tabs()">
 		                   	 고구마
 		                    <span>+3.5%</span>
 		                </a>
@@ -291,10 +329,10 @@
                                                     <th>수량</th>
                                                     <td><input type="text" class="form-control marketAmount" name="orderBuyAmount" id="marketAmount" placeholder="수량을 입력해주세요."></td>
                                                 </tr>
-                                               <!--  <tr>
-                                                    <th>예약기준가격</th>
-                                                    <td><input type="text" class="form-control" placeholder="시장가 매수 예약 가격을 입력하세요."></td>
-                                                </tr> -->
+                                               	<tr>
+                                                    <th></th>
+                                                    <td><span id="marketHelper" class="warning"></span></td>
+                                                </tr>
                                                 <tr>
                                                     <td colspan="2"><hr></td>
                                                 </tr>
@@ -321,6 +359,10 @@
                                                 <tr>
                                                     <th>수량</th>
                                                     <td><input type="text" class="form-control selectAmount" name="orderBuyAmount" id="selectAmount" placeholder="수량을 입력해주세요."></td>
+                                                </tr>
+                                                <tr>
+                                                    <th></th>
+                                                    <td><span id="selectHelper" class="warning"></span></td>
                                                 </tr>
                                                 <tr>
                                                     <td colspan="2"><hr></td>

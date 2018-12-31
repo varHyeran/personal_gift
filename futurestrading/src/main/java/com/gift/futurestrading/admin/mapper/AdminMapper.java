@@ -41,4 +41,6 @@ public interface AdminMapper {
 	AccountConsumerVo selectConsumerAccountOne(ConsumerVo consumerVo);
 	/*판매자 서류업로드조회(한명)하기위한 select*/
 	SellerFileVo selectSellerDocumentOne(SellerVo sellerVo);
+	/*판매자 서류업로드조회 후 승인하기위한 update*/
+	int updateSellerRightCheck(HashMap<String, Object> map);
 }

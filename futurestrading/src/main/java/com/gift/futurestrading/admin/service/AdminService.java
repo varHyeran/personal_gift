@@ -107,7 +107,7 @@ public class AdminService {
 	 * @since JDK1.8
 	 */
 	public int getSellerAllCount() {
-		System.out.println("SampleService.selectSellerAllCount() 호출");
+		System.out.println("AdminService.selectSellerAllCount() 호출");
 		return adminMapper.selectSellerAllCount();
 	}
 	/** 구매자 계좌조회
@@ -117,7 +117,7 @@ public class AdminService {
 	 * @since JDK1.8
 	 */
 	public AccountConsumerVo getConsumerAccountOne(ConsumerVo consumerVo) {
-		System.out.println("SampleService.getConsumerAccount() 호출");
+		System.out.println("AdminService.getConsumerAccount() 호출");
 		AccountConsumerVo accountConsumer = adminMapper.selectConsumerAccountOne(consumerVo);
 		return accountConsumer;
 	}
@@ -128,9 +128,24 @@ public class AdminService {
 	 * @since JDK1.8
 	 */
 	public SellerFileVo getSellerDocumentOne(SellerVo sellerVo) {
-		System.out.println("SampleService.getSellerDocumentOne() 호출");
+		System.out.println("AdminService.getSellerDocumentOne() 호출");
 		SellerFileVo sellerFile = adminMapper.selectSellerDocumentOne(sellerVo);
-		return sellerFile;
-		
+		return sellerFile;	
+	}
+	/** 판매자 승인
+	 * 판매자 서류업로드조회 후 승인하기위한 update
+	 * 
+	 * @return 
+	 * @since JDK1.8
+	 */
+	public int modifySellerRightCheck(SellerVo sellerVo) {
+		System.out.println("AdminService.modifySellerRightCheck() 호출");
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("sellerIdPk", sellerVo.getSellerIdPk());
+		System.out.println(sellerVo.getSellerIdPk()+"<--sellerVo.getSellerIdPk()");
+		map.put("adminIdPk", sellerVo.getSellerAdmitAdmin());
+		System.out.println(sellerVo.getSellerAdmitAdmin()+"<--sellerVo.getSellerAdmitAdmin()");
+ 		int sellerCheck = adminMapper.updateSellerRightCheck(map);
+		return sellerCheck;
 	}
 }

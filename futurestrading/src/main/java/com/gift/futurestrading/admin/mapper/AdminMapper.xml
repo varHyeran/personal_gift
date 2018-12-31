@@ -126,4 +126,14 @@
 		ON s.seller_id_pk=ds.fk_seller__document_seller 
 		WHERE s.seller_id_pk=#{sellerIdPk}
 	</select>
+	<!-- 판매자 서류업로드조회 후 승인하기위한 update -->
+	<update id="updateSellerRightCheck" parameterType="map">
+		UPDATE 
+			seller 
+		SET 
+			seller_right = '판매자_승인',
+			seller_admit_date = now(),
+			seller_admit_admin = #{adminIdPk}
+		WHERE seller_id_pk=#{sellerIdPk};
+	</update>
 </mapper>

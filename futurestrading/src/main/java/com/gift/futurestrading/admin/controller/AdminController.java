@@ -225,4 +225,20 @@ public class AdminController {
 		model.addAttribute("sellerFile", sellerFile);
 		return "admin/getSeller";
 	}
+	/** 판매자 승인
+	 * 판매자 서류업로드조회 후 승인하기위한 update
+	 * 
+	 * @return 
+	 * @since JDK1.8
+	 */
+	@RequestMapping(value="/admin/modify/seller/right/check", method = RequestMethod.GET)
+	public String modifySellerRightCheck(SellerVo sellerVo, HttpSession session, Model model) {
+		System.out.println("AdminController.modifySellerRightCheck() 호출");
+		model.addAttribute("sessionLogin", session.getAttribute("sessionLoginMember"));
+		String sessionLoginId = (String) session.getAttribute("sessionLoginId");
+		System.out.println(sessionLoginId+"<--sessionLoginId");
+		sellerVo.setSellerAdmitAdmin(sessionLoginId);
+		adminService.modifySellerRightCheck(sellerVo);
+		return "redirect:/admin/get/seller/all";
+	}
 }
