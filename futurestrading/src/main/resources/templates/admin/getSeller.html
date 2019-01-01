@@ -4,97 +4,188 @@
 	data-layout-decorate="~{layout/defaultLayout}">
 <th:block layout:fragment="css">
 	<style>
-		.input-group>.input-group-prepend {
-    		flex: 0 0 30%;
-		}
-		.input-group .input-group-text {
-   			 width: 100%;
-		}
-		.blank{
-			margin-top:100px;
-		}
-		.center{
-			text-align: center;
-		}
-		.title-style {
-			font-size: 14pt;
-	    	font-weight: 300;
-	   	 	color: #404040;
-	    	border-bottom: 1px solid #e0e2e4;
-	    	padding-bottom: 10px;
-	    	margin-bottom: 40px;
-		}
-		.btn {
-			border-radius: 0;
-    		padding: 5px 40px;
-    		margin-top: 20px;
-    		float: left;
-    		background-color: #fff;
-    		border: 1px solid #0047b3;
-    		color: #0047b3;
-		}
-		.btn-check {
-			border-radius: 0;
-    		padding: 5px 40px;
-    		margin-top: 20px;
-    		float: right;
-    		background-color: #fff;
-    		border: 1px solid #ff0000;
-    		color: #ff0000;
-		}
-	</style>
+.input-group {
+	width: 100%;
+	padding-bottom: 20px;
+}
+
+.input-group>.input-group-prepend {
+	flex: 0 0 30%;
+}
+
+.input-group .input-group-text {
+	width: 100%;
+}
+
+.input-group-text {
+	width: 100%;
+	background-color: #f0f0f0;
+	font-size: 11pt;
+	font-weight: 300;
+	border: 1px solid #e0e2e4;
+	border-radius: 0;
+}
+
+.form-control {
+	width: 100%;
+	background-color: #fff;
+	font-size: 11pt;
+	font-weight: 300;
+	border: 1px solid #e0e2e4;
+	border-radius: 0;
+}
+
+.blank {
+	margin-top: 100px;
+}
+
+.blank-side {
+	padding: 10px;
+}
+
+.center {
+	text-align: center;
+}
+
+.title-style {
+	font-size: 14pt;
+	font-weight: 300;
+	color: #404040;
+	border-bottom: 1px solid #e0e2e4;
+	padding-bottom: 10px;
+	margin-bottom: 40px;
+}
+
+.btn {
+	border-radius: 0;
+	padding: 5px 40px;
+	margin-top: 20px;
+	float: left;
+	background-color: #fff;
+	border: 1px solid #0047b3;
+	color: #0047b3;
+}
+
+.btn-check {
+	border-radius: 0;
+	padding: 5px 40px;
+	margin-top: 20px;
+	float: right;
+	background-color: #fff;
+	border: 1px solid #ff0000;
+	color: #ff0000;
+}
+
+.btn-null {
+	border-radius: 0;
+	padding: 5px 40px;
+	margin-top: 20px;
+	background-color: #fff;
+	border: 1px solid #0047b3;
+	color: #0047b3;
+}
+
+.content-style {
+	font-size: 12pt;
+	font-weight: 200;
+	color: #404040;
+	padding-bottom: 10px;
+	margin-bottom: 40px;
+}
+</style>
 </th:block>
 <div layout:fragment="content" class="main-box container">
 	<h2 class="title-style center">판매자 서류제출현황</h2>
-    <form class="blank center">
-		<div class="input-group">
-		    <div class="input-group-prepend">
-		      <span class="input-group-text">회원 아이디</span>
-		    </div>
-		    <p class="form-control" th:text="${sellerFile.sellerId}"></p>
+	<th:block th:if="${sellerFile}==null">
+		<div align="center" class="content-style">해당 판매자가 업로드한 파일이 없습니다.</div>
+		<p class="blank"></p>
+		<div align="center">
+			<a th:href="@{/admin/get/seller/all}"><button class="btn-null"
+					type="button">목록</button></a>
 		</div>
-		<div class="input-group">
-		    <div class="input-group-prepend">
-		      <span class="input-group-text">회원 이름</span>
-		    </div>
-		    <p class="form-control" th:text="${sellerFile.sellerName}"></p>
+		<p class="blank"></p>
+		<p class="blank"></p>
+		<p class="blank"></p>
+	</th:block>
+	<th:block th:if="${sellerFile}!=null">
+		<div align="center" class="content-style">
+			<span th:text="${sellerFile.sellerId}"></span>님의 서류제출현황입니다. 관리자는 모든
+			서류 확인 후 승인해주세요.
 		</div>
-		<div class="input-group">
-		    <div class="input-group-prepend">
-		      <span class="input-group-text">사업자등록증</span>
-		    </div>
-		    <p class="form-control"><a th:text="${sellerFile.sellerLicence}" th:href="@{/download/file/}+${sellerFile.sellerPathFolder}+@{/}+${sellerFile.sellerLicence}"></a></p>
+		<form class="blank center">
+			<div class="input-group">
+				<div class="input-group-prepend">
+					<span class="input-group-text">회원 아이디</span>
+				</div>
+				<p class="form-control" th:text="${sellerFile.sellerId}"></p>
+			</div>
+			<div class="input-group">
+				<div class="input-group-prepend">
+					<span class="input-group-text">회원 이름</span>
+				</div>
+				<p class="form-control" th:text="${sellerFile.sellerName}"></p>
+			</div>
+			<div class="input-group">
+				<div class="input-group-prepend">
+					<span class="input-group-text">사업자등록증</span>
+				</div>
+				<p class="form-control">
+					<span th:text="${sellerFile.sellerLicence}"></span><span
+						class="blank-side"></span><a th:text="[다운로드]"
+						th:href="@{/download/file/}+${sellerFile.sellerPathFolder}+@{/}+${sellerFile.sellerLicence}"></a>
+				</p>
+			</div>
+			<div class="input-group">
+				<div class="input-group-prepend">
+					<span class="input-group-text">대표자통장사본</span>
+				</div>
+				<p class="form-control">
+					<span th:text="${sellerFile.sellerBankCopy}"></span><span
+						class="blank-side"></span><a th:text="[다운로드]"
+						th:href="@{/download/file/}+${sellerFile.sellerPathFolder}+@{/}+${sellerFile.sellerBankCopy}"></a>
+				</p>
+			</div>
+			<div class="input-group">
+				<div class="input-group-prepend">
+					<span class="input-group-text">개인인감증명서(또는 본인서명사실확인서)</span>
+				</div>
+				<p class="form-control">
+					<span th:text="${sellerFile.sellerCertification}"></span><span
+						class="blank-side"></span><a th:text="[다운로드]"
+						th:href="@{/download/file/}+${sellerFile.sellerPathFolder}+@{/}+${sellerFile.sellerCertification}"></a>
+				</p>
+			</div>
+			<div class="input-group">
+				<div class="input-group-prepend">
+					<span class="input-group-text">통신판매업신고증</span>
+				</div>
+				<p class="form-control">
+					<span th:text="${sellerFile.sellerCommunicationSales}"></span><span
+						class="blank-side"></span><a th:text="[다운로드]"
+						th:href="@{/download/file/}+${sellerFile.sellerPathFolder}+@{/}+${sellerFile.sellerCommunicationSales}"></a>
+				</p>
+			</div>
+			<div class="input-group">
+				<div class="input-group-prepend">
+					<span class="input-group-text">상품등급확인서</span>
+				</div>
+				<p class="form-control">
+					<span th:text="${sellerFile.sellerProductGrade}"></span><span
+						class="blank-side"></span><a th:text="[다운로드]"
+						th:href="@{/download/file/}+${sellerFile.sellerPathFolder}+@{/}+${sellerFile.sellerProductGrade}"></a>
+				</p>
+			</div>
+		</form>
+		<p class="blank"></p>
+		<div>
+			<a th:href="@{/admin/get/seller/all}"><button class="btn"
+					type="button">목록</button></a>
+			<div></div>
+			<a
+				th:href="@{/admin/modify/seller/right/check(sellerIdPk=${sellerFile.sellerId})}"><button
+					class="btn-check" type="button">승인</button></a>
 		</div>
-		<div class="input-group">
-		    <div class="input-group-prepend">
-		      <span class="input-group-text">대표자통장사본</span>
-		    </div>
-		    <p class="form-control"><a th:text="${sellerFile.sellerBankCopy}" th:href="@{/download/file/}+${sellerFile.sellerPathFolder}+@{/}+${sellerFile.sellerBankCopy}"></a></p>
-		</div>
-		<div class="input-group">
-		    <div class="input-group-prepend">
-		      <span class="input-group-text">개인인감증명서(또는 본인서명사실확인서)</span>
-		    </div>
-		    <p class="form-control"><a th:text="${sellerFile.sellerCertification}" th:href="@{/download/file/}+${sellerFile.sellerPathFolder}+@{/}+${sellerFile.sellerCertification}"></a></p>
-		</div>
-		<div class="input-group">
-		    <div class="input-group-prepend">
-		      <span class="input-group-text">통신판매업신고증</span>
-		    </div>
-		    <p class="form-control"><a th:text="${sellerFile.sellerCommunicationSales}" th:href="@{/download/file/}+${sellerFile.sellerPathFolder}+@{/}+${sellerFile.sellerCommunicationSales}" ></a></p>
-		</div>  
-		<div class="input-group">
-		    <div class="input-group-prepend">
-		      <span class="input-group-text">상품등급확인서</span>
-		    </div>
-		    <p class="form-control"><a th:text="${sellerFile.sellerProductGrade}" th:href="@{/download/file/}+${sellerFile.sellerPathFolder}+@{/}+${sellerFile.sellerProductGrade}"></a></p>
-		</div> 
-	</form>
-	<p class="blank"></p>
-	<div align="center">
-		<a th:href="@{/admin/get/seller/all}"><button class="btn" type="button">목록</button></a>
-		<a th:href="@{/admin/modify/seller/right/check(sellerIdPk=${sellerFile.sellerId})}"><button class="btn-check" type="button">승인</button></a>
-	</div>
-	<p class="blank"></p>
+		<p class="blank"></p>
+	</th:block>
 </div>
 </html>

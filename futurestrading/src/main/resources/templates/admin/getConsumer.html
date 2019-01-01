@@ -4,83 +4,134 @@
 	data-layout-decorate="~{layout/defaultLayout}">
 <th:block layout:fragment="css">
 	<style>
-		.input-group>.input-group-prepend {
-    		flex: 0 0 20%;
-		}
-		.input-group .input-group-text {
-   			 width: 100%;
-		}
-		.blank{
-			margin-top:100px;
-		}
-		.center{
-			text-align: center;
-		}
-		.title-style{
-			font-size: 14pt;
-	    	font-weight: 300;
-	   	 	color: #404040;
-	    	border-bottom: 1px solid #e0e2e4;
-	    	padding-bottom: 10px;
-	    	margin-bottom: 40px;
-		}
-		.btn{
-			border-radius: 0;
-    		padding: 5px 40px;
-    		margin-top: 20px;
-    		float: center;
-    		background-color: #fff;
-    		border: 1px solid #0047b3;
-    		color: #0047b3;
-		}
-	</style>
+.input-group {
+	width: 100%;
+	padding-bottom: 20px;
+}
+
+.input-group>.input-group-prepend {
+	flex: 0 0 20%;
+}
+
+.input-group .input-group-text {
+	width: 100%;
+}
+
+.input-group-text {
+	width: 100%;
+	background-color: #f0f0f0;
+	font-size: 11pt;
+	font-weight: 300;
+	border: 1px solid #e0e2e4;
+	border-radius: 0;
+}
+
+.form-control {
+	width: 100%;
+	background-color: #fff;
+	font-size: 11pt;
+	font-weight: 300;
+	border: 1px solid #e0e2e4;
+	border-radius: 0;
+}
+
+.blank {
+	margin-top: 100px;
+}
+
+.center {
+	text-align: center;
+}
+
+.title-style {
+	font-size: 14pt;
+	font-weight: 300;
+	color: #404040;
+	border-bottom: 1px solid #e0e2e4;
+	padding-bottom: 10px;
+	margin-bottom: 40px;
+}
+
+.btn {
+	border-radius: 0;
+	padding: 5px 40px;
+	margin-top: 20px;
+	float: center;
+	background-color: #fff;
+	border: 1px solid #0047b3;
+	color: #0047b3;
+}
+
+.content-style {
+	font-size: 12pt;
+	font-weight: 200;
+	color: #404040;
+	padding-bottom: 10px;
+	margin-bottom: 40px;
+}
+
+.blank-side {
+	padding: 10px;
+}
+</style>
 </th:block>
 <div layout:fragment="content" class="main-box container">
 	<h2 class="title-style center">구매자 회원정보</h2>
-    <form class="blank center">
-		<div class="input-group">
-		    <div class="input-group-prepend">
-		      <span class="input-group-text">회원 아이디</span>
-		    </div>
-		    <p class="form-control" th:text="${accountConsumer.fkConsumerAccountConsumer}"></p>
+	<th:block th:if="${accountConsumer}==null">
+		<div class="content-style" align="center">해당 구매자의 계좌정보가 없습니다.</div>
+		<p class="blank"></p>
+		<div align="center">
+			<a th:href="@{/admin/get/consumer/all}"><button class="btn"
+					type="button">목록</button></a>
 		</div>
-		<div class="input-group">
-		    <div class="input-group-prepend">
-		      <span class="input-group-text">회원 이름</span>
-		    </div>
-		    <p class="form-control" th:text="${accountConsumer.accountConsumerName}"></p>
+		<p class="blank"></p>
+	</th:block>
+	<th:block th:if="${accountConsumer}!=null">
+		<div align="center" class="content-style">구매자의 인증된 계좌정보입니다.</div>
+		<form class="blank center">
+			<div class="input-group">
+				<div class="input-group-prepend">
+					<span class="input-group-text">회원 아이디</span>
+				</div>
+				<p class="form-control"
+					th:text="${accountConsumer.fkConsumerAccountConsumer}"></p>
+			</div>
+			<div class="input-group">
+				<div class="input-group-prepend">
+					<span class="input-group-text">회원 이름</span>
+				</div>
+				<p class="form-control"
+					th:text="${accountConsumer.accountConsumerName}"></p>
+			</div>
+			<div class="input-group">
+				<div class="input-group-prepend">
+					<span class="input-group-text">은행명</span>
+				</div>
+				<p class="form-control"
+					th:text="${accountConsumer.accountConsumerBankName}"></p>
+			</div>
+			<div class="input-group">
+				<div class="input-group-prepend">
+					<span class="input-group-text">계좌 번호</span>
+				</div>
+				<p class="form-control"
+					th:text="${accountConsumer.accountConsumerAccountNo}"></p>
+			</div>
+			<div class="input-group">
+				<div class="input-group-prepend">
+					<span class="input-group-text">계좌등록일</span>
+				</div>
+				<p class="form-control"
+					th:text="${accountConsumer.accountConsumerSignUpDate}"></p>
+			</div>
+		</form>
+		<p class="blank"></p>
+		<div align="center">
+			<a th:href="@{/admin/get/consumer/all}"><button class="btn"
+					type="button">목록</button></a>
 		</div>
-		<div class="input-group">
-		    <div class="input-group-prepend">
-		      <span class="input-group-text">은행명</span>
-		    </div>
-		    <p class="form-control" th:text="${accountConsumer.accountConsumerBankName}"></p>
-		</div>
-		<div class="input-group">
-		    <div class="input-group-prepend">
-		      <span class="input-group-text">계좌 번호</span>
-		    </div>
-		    <p class="form-control" th:text="${accountConsumer.accountConsumerAccountNo}"></p>
-		</div>
-		<div class="input-group">
-		    <div class="input-group-prepend">
-		      <span class="input-group-text">계좌등록일</span>
-		    </div>
-		    <p class="form-control" th:text="${accountConsumer.accountConsumerSignUpDate}"></p>
-		</div>  
-	</form>
-	<p class="blank"></p>
-	<div align="center">
-		<a th:href="@{/admin/get/consumer/all}"><button class="btn" type="button">목록</button></a>
-	</div>
-	<p class="blank"></p>
+		<p class="blank"></p>
+	</th:block>
 </div>
 
 </html>
-
-
-
-
-
-
-

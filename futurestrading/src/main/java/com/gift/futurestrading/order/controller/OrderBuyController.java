@@ -39,7 +39,7 @@ public class OrderBuyController {
 	 * @return index
 	 * @since JDK1.8
 	 */
-	@RequestMapping(value="consumer/add/order/buy", method=RequestMethod.POST)
+	@RequestMapping(value="consumer/add/order/re", method=RequestMethod.POST)
 	public String addOrderBuy(HttpSession session, Model model , OrderBuyVo orderBuyVo) {
 		System.out.println("OrderBuyController.addOrderBuy() 호출");
 		model.addAttribute("sessionLogin", session.getAttribute("sessionLoginMember"));

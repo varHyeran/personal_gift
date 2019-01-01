@@ -41,7 +41,7 @@ public class LoginController {
 	 * @return loginReturn
 	 * @since JDK1.8
 	 */
-	@RequestMapping(value="/login", method=RequestMethod.POST)
+	@RequestMapping(value="/login/re", method=RequestMethod.POST)
 	public String getLogin(LoginVo loginVo,HttpSession session) {
 		System.out.println("LoginController.getLogin() 호출 POST");
 		String loginReturn = null;

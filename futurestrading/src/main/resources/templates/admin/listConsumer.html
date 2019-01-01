@@ -3,41 +3,45 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	data-layout-decorate="~{layout/defaultLayout}">
 <th:block layout:fragment="css">
-<style>
-	.table tr td {
-		font-size : 9pt;
-		padding : 3px;
-		margin : 0px;
-	}
-	.list{
-		width: 1400px;
-		margin: auto;
-		text-align: center;
-	}	
-	.blank{
-		margin-top:100px;
-	}
-	.title-style{
-		font-size: 14pt;
-    	font-weight: 300;
-   	 	color: #404040;
-    	border-bottom: 1px solid #e0e2e4;
-    	padding-bottom: 10px;
-    	margin-bottom: 40px;
-	}
-	table.consumer-data-table{
-		font-size: 10pt;
-   		font-weight: 100;
-    	width: 100%;
-    	padding: 0;
-    	word-break: keep-all;
-	}
-	table.consumer-data-table th,
-	table.consumer-data-table td{
-		border: 1px solid #e0e2e4; 
-    	padding: 10px;
-    	color: #404040;
-	}
+	<style>
+.table tr td {
+	font-size: 9pt;
+	padding: 3px;
+	margin: 0px;
+}
+
+.list {
+	width: 1400px;
+	margin: auto;
+	text-align: center;
+}
+
+.blank {
+	margin-top: 100px;
+}
+
+.title-style {
+	font-size: 14pt;
+	font-weight: 300;
+	color: #404040;
+	border-bottom: 1px solid #e0e2e4;
+	padding-bottom: 10px;
+	margin-bottom: 40px;
+}
+
+table.consumer-data-table {
+	font-size: 10pt;
+	font-weight: 100;
+	width: 100%;
+	padding: 0;
+	word-break: keep-all;
+}
+
+table.consumer-data-table th, table.consumer-data-table td {
+	border: 1px solid #e0e2e4;
+	padding: 10px;
+	color: #404040;
+}
 </style>
 </th:block>
 <div layout:fragment="content" class="main-box container">
@@ -69,19 +73,27 @@
 			<td th:text="${list.consumerSignUpDate}"></td>
 			<td th:text="${list.consumerStatus}"></td>
 			<td th:text="${list.consumerAdmitCheckFlag}"></td>
-			<td><a th:text="상세" th:href="@{/admin/get/consumer/account/one(consumerIdPk=${list.consumerIdPk})}"></a></td>
+			<td><a th:text="[계좌정보보기]"
+				th:href="@{/admin/get/consumer/account/one(consumerIdPk=${list.consumerIdPk})}"></a></td>
 		</tr>
 	</table>
 	<p class="blank"></p>
 	<ul class="pagination justify-content-center">
-		<li th:if="${pageMaker.prev} == true" class="page-item">
-			<a class="page-link" th:href="@{/admin/get/consumer/all(page=${pageMaker.startPage}-1,perPageNum=${pageMaker.cri.perPageNum})}">&laquo;</a>
+		<li th:if="${pageMaker.prev} == true" class="page-item"><a
+			class="page-link"
+			th:href="@{/admin/get/consumer/all(page=${pageMaker.startPage}-1,perPageNum=${pageMaker.cri.perPageNum})}">&laquo;</a>
 		</li>
-		<li class="page-item" th:each="idx,iterStat : ${#numbers.sequence(pageMaker.startPage,pageMaker.endPage)}"  th:classappend="${pageMaker.cri.page} == ${idx} ? active : null">
-			<a class="page-link" th:href="@{/admin/get/consumer/all(page=${idx},perPageNum=${pageMaker.cri.perPageNum})}" th:text="${idx}"></a>
-		</li> 
-		<li class="page-item" th:if="${pageMaker.next} == true and ${pageMaker.endPage > 0}">
-			<a class="page-link" th:href="@{/admin/get/consumer/all(page=${pageMaker.endPage}+1,perPageNum=${pageMaker.cri.perPageNum})}">&raquo;</a>
+		<li class="page-item"
+			th:each="idx,iterStat : ${#numbers.sequence(pageMaker.startPage,pageMaker.endPage)}"
+			th:classappend="${pageMaker.cri.page} == ${idx} ? active : null">
+			<a class="page-link"
+			th:href="@{/admin/get/consumer/all(page=${idx},perPageNum=${pageMaker.cri.perPageNum})}"
+			th:text="${idx}"></a>
+		</li>
+		<li class="page-item"
+			th:if="${pageMaker.next} == true and ${pageMaker.endPage > 0}">
+			<a class="page-link"
+			th:href="@{/admin/get/consumer/all(page=${pageMaker.endPage}+1,perPageNum=${pageMaker.cri.perPageNum})}">&raquo;</a>
 		</li>
 	</ul>
 </div>

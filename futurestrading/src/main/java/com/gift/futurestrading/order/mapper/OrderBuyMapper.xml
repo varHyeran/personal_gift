@@ -11,7 +11,8 @@
 			order_buy_consumer_name, 	
 			order_buy_method, 		
 			order_buy_per_price, 		
-			order_buy_amount, 		
+			order_buy_amount,
+			order_buy_variable_amount_for_sign, 		
 			order_buy_date,
 			order_buy_final_pay_date			
 		) VALUES (
@@ -21,6 +22,7 @@
 			(SELECT consumer_name FROM consumer WHERE consumer_id_pk=#{order_buy_consumer_name}),
 			substr(#{order_buy_method},2),
 			#{order_buy_per_price},
+			#{order_buy_amount},
 			#{order_buy_amount},
 			now(),
 			date_add(now(), interval +3 month)
