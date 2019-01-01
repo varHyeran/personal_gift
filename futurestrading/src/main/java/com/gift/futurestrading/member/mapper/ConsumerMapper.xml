@@ -2,6 +2,24 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.gift.futurestrading.member.mapper.ConsumerMapper">
+	<!-- 날짜별 체결내역 select -->
+	<select id="selectSignSearch" parameterType="String" resultType="com.gift.futurestrading.member.vo.ConsumerSignDetailVo">
+		SELECT sign_pk as signPk
+			, fk_order_buy__sign as fkOrderBuySign
+			, fk_seller__sign as fkSellerSign
+			, sign_seller_name as signSellerName
+			, sign_per_price as signPerPrice
+			, sign_amount as signAmount
+			, sign_total_price as signTotalPrice
+			, sign_initial_margin as signInitialMargin
+			, sign_date as signDate
+			, sign_futures_trade_begin_date as signFuturesTradeBeginDate
+			, sign_futures_trade_end_date as signFuturesTradeEndDate
+		FROM sign
+		WHERE fk_consumer__sign = #{getId}
+			AND (date(sign_date) <![CDATA[>=]]> #{startDate} AND date(sign_date) <![CDATA[<=]]> #{endDate}) 
+	</select>
+	
 	<!-- 체결내역 select -->
 	<select id="selectSignDetail" resultType="com.gift.futurestrading.member.vo.ConsumerSignDetailVo">
 		SELECT sign_pk as signPk

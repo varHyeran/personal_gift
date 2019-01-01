@@ -20,34 +20,74 @@
 	    });
 	</script>
 </th:block>
+<th:block layout:fragment="script">
+	<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+	<script type="text/javascript">
+	
+	/* 날짜별 검색결과 가져오기 */
+	function searchCheck(){
+		console.log('날짜별 데이터 가져오기');
+		
+		/* 검색버튼 누를 때 처음 리스트를 숨김 */
+		$('#firstList').hide();
+		/* 클릭을 할 때마다 테이블에 데이터가 쌓이지 않게 함 */
+		/* :gt(index) 주어진 인덱스보다 높은 인덱스를 갖는 모든 요소와 일치
+			tr:gt(0)는 문서에 존재하는 모든 tr 중 그 인덱스가 0 이상인 모든 열들을 선택 */
+		$("#signList").find("tr:gt(0)").remove();
+		
+   		var startDate = $('#startDate').val();
+   		var endDate = $('#endDate').val();
+   		console.log(startDate + '<-----startDate');
+   		console.log(endDate + '<-----endDate');
+     	$.ajax({
+    		async : false,
+    		url : '/consumer/get/search/list',
+    		type : 'POST',
+    		data : JSON.stringify({'startDate': startDate, 'endDate': endDate}),
+    		contentType: "application/json; charset=UTF-8",
+    		success : function(data){
+    			console.log('data 받아오기 성공');
+    			console.log(data);
+
+    			$.each(data, function () {
+    				$('#signList').append("<tr><td>" + this.signPk 
+						+ "</td><td>" + this.fkOrderBuySign
+						+ "</td><td>" + this.fkSellerSign 
+						+ "</td><td>" + this.signSellerName 
+						+ "</td><td>" + this.signPerPrice 
+						+ "</td><td>" + this.signAmount 
+						+ "</td><td>" + this.signTotalPrice 
+						+ "</td><td>" + this.signInitialMargin 
+						+ "</td><td>" + this.signDate 
+						+ "</td><td>" + this.signFuturesTradeBeginDate
+						+ "</td><td>" + this.signFuturesTradeEndDate
+						+ "</td></tr>");
+    			});
+    		},
+    		error: function(error) {					
+				console.log("error: "+error);
+			}
+    	});
+	}
+	</script>
 
 <th:block layout:fragment="content" class="main-box container">
 	<div class="container mypage">
 		<div class="row">
-			<!-- mypage side nav -->
-			<div class="col-md-3 mypage-nav">
-				<ul class="nav nav-tabs flex-column">
-					<li class="nav-item"><a class="nav-link active"
-						th:href="@{/topAdmin/listAdmin}">관리자관리</a>
-					</li>
-					<li class="nav-item"><a class="nav-link"
-						href="#mypage-content-profit-management">수익관리</a>
-					</li>
-				</ul>
-			</div>
 			<!-- mypage content -->
 			<div class="col-md-9">
 				<div class="mypage-content tab-content">
-					<!-- 거래내역 -->
-					<!-- 주문내역(미체결 상태) -->
-					<div class="sub-sub-content">
+					<!-- 체결내역 -->
+					<div id="wallet-tab-history" class="sub-sub-content">
 						<h2>체결내역</h2>
 						<!-- 검색 창 -->
 						<div class="gift-search">
 							<div class="gift-search-date">
-								<span>기간</span> <input type="date"> <span>~</span> <input
-									type="date">
-								<button type="button" class="btn">검색</button>
+								<span>기간</span>
+									<input type="date" name="startDate" id="startDate">
+								<span>~</span>
+									<input type="date" name="endDate" id="endDate">
+								<button type="button" class="btn" onclick="searchCheck()">검색</button>
 							</div>
 							<div class="gift-search-date-btn">
 								<button type="button" class="btn">7일</button>
@@ -69,8 +109,9 @@
 								</select>
 							</div>
 						</div>
+
 						<table class="table gift-table">
-							<thead>
+							<thead id="signList">
 								<tr>
 									<th>체결번호</th>
 									<th>매수주문번호</th>
@@ -85,7 +126,7 @@
 									<th>선물거래만기일</th>
 								</tr>
 							</thead>
-							<tbody>
+							<tbody id="firstList">
 								<tr th:each="list : ${signDetail}">
 									<td th:text="${list.signPk}"></td>
 									<td th:text="${list.fkOrderBuySign}"></td>

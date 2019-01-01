@@ -19,35 +19,62 @@ public class AdminService {
 	@Autowired
 	private AdminMapper adminMapper;
 	
-	/*관리자 비밀번호체크*/
+	/** 관리자 비밀번호확인
+	 * 관리자 비밀번호 select
+	 * @param HashMap<String, Object> idAndPassword
+	 * @return idResult
+	 * @since JDK1.8
+	 */
 	public String adminPasswordCheck(HashMap<String, Object> idAndPassword) {
 		System.out.println("AdminService.adminPasswordCheck() 호출");
 		String idResult = adminMapper.selectAdminPassword(idAndPassword);
 		return idResult;
 	}
-	/*관리자삭제처리*/
+	/** 관리자 삭제
+	 * 관리자 정보 delete
+	 * @param String adminId
+	 * @since JDK1.8
+	 */
 	public void removeAdmin(String adminId) {
 		System.out.println("AdminService.removeAdmin() 호출");
 		adminMapper.deleteAdmin(adminId);
 	}
-	/*최고관리자 비밀번호체크*/
+	/** 최고관리자 비밀번호확인
+	 * 최고관리자 비밀번호 select
+	 * @param String topAdminPassword
+	 * @return passwordCheck
+	 * @since JDK1.8
+	 */
 	public String checkTopAdmin(String topAdminPassword) {
 		System.out.println("AdminService.checkTopAdmin() 호출");
 		String passwordCheck = adminMapper.selectTopAdminPassword(topAdminPassword);
 		return passwordCheck;
 	}
-	/*관리자수정처리*/
+	/** 관리자 수정처리
+	 * 관리자 수정 update
+	 * @param AdminVo adminRequest
+	 * @since JDK1.8
+	 */
 	public void modifyAdmin(AdminVo adminRequest) {
 		System.out.println("AdminService.modifyAdmin() 호출");
 		adminMapper.updateAdmin(adminRequest);
 	}
-	/*관리자수정화면*/
+	/** 관리자 수정폼
+	 * 관리자 수정폼 관련 select
+	 * @param String adminId
+	 * @return getAdminOneVo
+	 * @since JDK1.8
+	 */
 	public AdminVo getAdminOne(String adminId) {
 		System.out.println("AdminService.getAdminOne() 호출");
 		AdminVo getAdminOneVo = adminMapper.selectAdminOne(adminId);
 		return getAdminOneVo;
 	}
-	/*관리자등록*/
+	/** 관리자 등록
+	 * 관리자 insert
+	 * @param AdminVo adminVoRequest
+	 * @since JDK1.8
+	 */
 	public void addAdmin(AdminVo adminVoRequest) {
 		System.out.println("AdminService.addAdmin() 호출");
 		AdminVo adminVo = new AdminVo();
@@ -56,13 +83,22 @@ public class AdminService {
 		adminVo.setAdminName(adminVoRequest.getAdminName());
 		adminMapper.insertAdmin(adminVoRequest);
 	}
-	/*관리자 아이디중복체크*/
+	/** 관리자 아이디중복체크
+	 * 관리자 아이디 select
+	 * @param String inputAdminId
+	 * @return countId
+	 * @since JDK1.8
+	 */
 	public int inputIdcheck(String inputAdminId) {
 		System.out.println("AdminService.inputIdcheck() 호출");
 		int countId = adminMapper.selectInputAdminId(inputAdminId);
 		return countId;
 	}
-	/*관리자조회*/
+	/** 관리자 리스트
+	 * 관리자 리스트 select
+	 * @return adminList
+	 * @since JDK1.8
+	 */
 	public List<AdminVo> getAdmin(){
 		System.out.println("AdminService.getAdmin() 호출");
 		List<AdminVo> adminList = adminMapper.selectAdmin();

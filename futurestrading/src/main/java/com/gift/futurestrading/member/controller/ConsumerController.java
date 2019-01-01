@@ -26,6 +26,28 @@ import com.gift.futurestrading.member.vo.ConsumerSignDetailVo;
 public class ConsumerController {
 	@Autowired
 	private ConsumerService consumerService;
+	/**
+	 *  해당 url로 요청이 들어왔을 때(ajax), 날짜별 데이터를 보낸다.
+	 * 
+	 * @param session
+	 * @param model, searchDate
+	 * @return searchListVo
+	 * @since JDK1.8
+	 */
+	@RequestMapping(value="/consumer/get/search/list", method=RequestMethod.POST)
+	@ResponseBody
+	public List<ConsumerSignDetailVo> getSearchList(HttpSession session, Model model, @RequestBody HashMap<String, Object> searchDate) {
+		System.out.println("ConsumerController.getSearchResult() 호출");
+		model.addAttribute("sessionLogin", session.getAttribute("sessionLoginMember"));
+		String getId = (String)session.getAttribute("sessionLoginId");
+		String startDate = (String) searchDate.get("startDate");
+		String endDate = (String) searchDate.get("endDate");
+		System.out.println(getId + "<-- getId");
+		System.out.println(startDate + "<-- startDate");
+		System.out.println(endDate + "<-- endDate");
+		List<ConsumerSignDetailVo> searchListVo = consumerService.getSearchResult(startDate, endDate, getId);
+		return searchListVo;
+	}
 	
 	/**
 	 *  해당 url로 요청이 들어왔을 때, 구매자 체결내역 뷰로 랜더링 해준다.
@@ -35,7 +57,7 @@ public class ConsumerController {
 	 * @return member/consumer/getSignDetail
 	 * @since JDK1.8
 	 */
-	@RequestMapping(value="/consumer/mywallet/get/signdetail", method=RequestMethod.GET)
+	@RequestMapping(value="/consumer/get/sign/detail", method=RequestMethod.GET)
 	public String getSignDetail(HttpSession session, Model model) {
 		System.out.println("ConsumerController.getSignDetail() 호출");
 		model.addAttribute("sessionLogin", session.getAttribute("sessionLoginMember"));

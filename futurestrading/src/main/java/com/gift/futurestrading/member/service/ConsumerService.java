@@ -19,6 +19,19 @@ public class ConsumerService {
 	private ConsumerMapper consumerMapper;	
 	
 	/**
+	 * 검색을 이용해서 날짜별 체결내역을 불러오는 메서드 호출
+	 * 
+	 * @param startDate, endDate, getId
+	 * @return searchListVo
+	 * @since JDK1.8
+	 */
+	public List<ConsumerSignDetailVo> getSearchResult(String startDate, String endDate, String getId) {
+		System.out.println("ConsumerService.getSearchResult() 호출");
+		List<ConsumerSignDetailVo> searchListVo = consumerMapper.selectSignSearch(startDate, endDate, getId);
+		return searchListVo;
+	}
+	
+	/**
 	 * 로그인 상태의 아이디로 자신의 체결내역을 불러오는 메서드 호출
 	 * 
 	 * @param getId

@@ -11,6 +11,9 @@ import com.gift.futurestrading.member.vo.ConsumerSignDetailVo;
 
 @Mapper
 public interface ConsumerMapper {
+	/* 구매자 날짜별 체결내역 select*/
+	List<ConsumerSignDetailVo> selectSignSearch(String startDate, String endDate, String getId);
+	
 	/* 구매자 체결내역 select*/
 	List<ConsumerSignDetailVo> selectSignDetail(String getId);
 	

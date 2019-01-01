@@ -2,14 +2,14 @@
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	data-layout-decorate="~{layout/defaultLayout}">
-<th:block layout:fragment="css">
+<div layout:fragment="css">
 	<style type="text/css">
 		.tab-content{
             background-color: #fff;
         }
 	</style>
-</th:block>
-<th:block layout:fragment="script">
+</div>
+<div layout:fragment="script">
 	<script type="text/javascript">
 		$(document).ready(function(){
 			/* side menu */
@@ -19,7 +19,7 @@
             });
 	    });
 	</script>
-</th:block>
+</div>
 <th:block layout:fragment="content">
 	<div class="container mypage">
         <div class="row">
@@ -45,9 +45,6 @@
                     <!-- 자산 현황 -->
                     <div id="wallet-tab-property" class="tab-pane active">
                         <h2>자산 현황</h2>
-                        <!-- 거래가능자산 -->
-                        <!-- 손익현황 -->
-                        <!-- 입출금내역 -->
                     </div>
                     <!-- 입금 -->
                     <div id="wallet-tab-input" class="tab-pane">
@@ -57,100 +54,15 @@
                     <div id="wallet-tab-output" class="tab-pane">
                         <h2>출금</h2>
                     </div>
-                    <!-- 거래내역 -->
+                    <!-- 체결내역 -->
                     <div id="wallet-tab-history" class="tab-pane">
-                        <!-- 주문내역(미체결 상태) -->
                         <div class="sub-sub-content">
-                            <h2>거래내역</h2>
-                            <!-- 검색 창 -->
-                            <div class="gift-search">
-                                <div class="gift-search-date">
-                                    <span>기간</span>
-                                    <input type="date">
-                                    <span>~</span>
-                                    <input type="date">
-                                    <button type="button" class="btn">검색</button>
-                                </div>
-                                <div class="gift-search-date-btn">
-                                    <button type="button" class="btn">7일</button>
-                                    <button type="button" class="btn">30일</button>
-                                    <button type="button" class="btn">90일</button>
-                                    <button type="button" class="btn">180일</button>
-                                </div>
-                                <div class="gift-search-goods">
-                                    <select>
-                                        <option>전체</option>
-                                        <option>마늘</option>
-                                        <option>고구마</option>
-                                        <option>배추</option>
-                                    </select>
-                                    <select>
-                                        <option>전체</option>
-                                        <option>지정가</option>
-                                        <option>시장가</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <table class="table gift-table">
-                                <thead>
-                                    <tr>
-                                        <th>매수주문번호</th>
-                                        <th>품목상세</th>
-                                        <th>매수방법(시장가/지정가)</th>
-                                        <th>가격(1계약)</th>
-                                        <th>수량</th>
-                                        <th>주문날짜</th>
-                                        <th>주문매수상태</th>
-                                        <th>최종결제일(예상수취일)</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>01</td>
-                                        <td>마늘</td>
-                                        <td>지정가</td>
-                                        <td>140,000원</td>
-                                        <td>5</td>
-                                        <td>2018.12.19</td>
-                                        <td>미체결</td>
-                                        <td>2019.02.14</td>
-                                    </tr>
-                                    <tr>
-                                        <td>01</td>
-                                        <td>마늘</td>
-                                        <td>지정가</td>
-                                        <td>140,000원</td>
-                                        <td>5</td>
-                                        <td>2018.12.19</td>
-                                        <td>미체결</td>
-                                        <td>2019.02.14</td>
-                                    </tr>
-                                    <tr>
-                                        <td>01</td>
-                                        <td>마늘</td>
-                                        <td>지정가</td>
-                                        <td>140,000원</td>
-                                        <td>5</td>
-                                        <td>2018.12.19</td>
-                                        <td>미체결</td>
-                                        <td>2019.02.14</td>
-                                    </tr>
-                                </tbody>
-                                <tfoot>
-                                    <tr></tr>
-                                </tfoot>
-                            </table>
+                            <h2>체결내역</h2>
                         </div>
-                        <!-- 체결내역(일일정산중인상태) -->
-                        <!-- 최종입금 대기 거래내역 -->
-                        <!-- 이전거래내역 -->
-                        <!-- 납품거래내역 -->
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
 </th:block>
-
 </html>
