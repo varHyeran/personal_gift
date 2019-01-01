@@ -1,5 +1,8 @@
 package com.gift.futurestrading.allprice.mapper;
 
+import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.annotations.Mapper;
 
 import com.gift.futurestrading.allprice.vo.AllPriceVo;
@@ -12,8 +15,14 @@ public interface AllPriceMapper {
 	int insertAllPrice(AllPriceVo allPriceVo);
 	
 	/*sign table에서 allPrice테이블에 추가할 리스트(시가(시작가격), 종가(마지막 가격), 최고가, 최저가) select*/
-	AllPriceVo selectSignAddAllPrice();
+	List<AllPriceVo> selectSignAddAllPrice();
 	
 	/* auto increment를 위한 select */
 	int selectOneAutoMaxAllPrice();
+	
+	/*index chart*/
+	List<Map<String,Object>> selectIndexCahrtAllPrice();
+	
+	/*order chart*/
+	List<Map<String,Object>> selectOrderCahrtAllPrice();
 }

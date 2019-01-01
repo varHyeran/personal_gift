@@ -2,6 +2,32 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gift.futurestrading.allprice.mapper.AllPriceMapper">
 	
+	<!-- order chart -->
+	<select id="selectOrderCahrtAllPrice" resultType="map">
+		SELECT 
+			UNIX_TIMESTAMP(all_price_date)*1000 as allPriceDate
+			, closing_price as allPriceClose
+			, all_price_date
+		FROM all_price
+		WHERE  item_name = '청양고추'
+		ORDER BY all_price_date DESC
+		LIMIT 1,50
+	</select>
+
+	<!-- index chart -->
+	<select id="selectIndexCahrtAllPrice" resultType="map">
+		SELECT 
+			UNIX_TIMESTAMP(all_price_date)*1000 as allPriceDate
+			, opening_price as allPriceOpen
+			, closing_price as allPriceClose
+			, top_price as allPriceHigh
+			, bottom_price as allPriceRow
+			, all_price_date
+		FROM all_price
+		WHERE  item_name = '청양고추'
+		ORDER BY all_price_date ASC
+	</select>
+
 	<!-- auto increment를 위한 select -->
 	<select id="selectOneAutoMaxAllPrice" resultType="int">
 		SELECT MAX(CAST(SUBSTRING(all_price_no_pk, 11) AS DECIMAL)) FROM all_price

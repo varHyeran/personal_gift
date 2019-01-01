@@ -11,29 +11,73 @@
 	<script type="text/javascript" src="/webjars/highcharts/6.2.0/themes/dark-unica.js" th:src="@{/webjars/highcharts/6.2.0/themes/dark-unica.js}"></script>
 	<script type="text/javascript">
 		$(document).ready(function() {
-			<!-- Highcharts date연결 -->
-			$.getJSON('/data_json/sample.json', function (data) {
-			// create the chart
-			    console.log(data);
+			/*Highcharts date연결*/
+			$.getJSON('/Ajax/index/chart', function (data) {
+				// create the chart
+				console.log(data);
+				/* tooltip 천단위 , 입력 */
+				Highcharts.setOptions({
+					lang: {
+					thousandsSep: ','
+					}
+				});
 			    Highcharts.stockChart('container-chart1', {
-			        rangeSelector: {
-			            selected: 1
-			        },
-		
-			        title: {
-			            text: ''
-			        },
-		
+					/* 차트 상단 버튼 범위 지정 */
+					rangeSelector: {
+						buttons: [{
+							type: 'day',
+							count: 1,
+							text: '1d'
+						}, {
+							type: 'day',
+							count: 3,
+							text: '3d'
+						}, {
+							type: 'day',
+							count: 6,
+							text: '6d'
+						}, {
+							type: 'week',
+							text: '1w'
+						}, {
+							type: 'week',
+							count: 3,
+							text: '3w'
+						}, {
+							type: 'all',
+							text: 'All'
+						}],
+			            selected: 3
+					},
+					/* tooltip 수치 맨 뒤에 텍스트 입력 */
+					tooltip: {
+						valueSuffix: ' KRW'
+					},
+					/* 차트 눈금 정리 */
+			        chart: {
+			            alignTicks: false
+					},
+					/* y축 단위 지정 */
+					yAxis: {
+				        tickInterval: 1000
+					},
+					/* 차트를 구성하는 데이터에 대한 옵션 */
 			        series: [{
 			            type: 'candlestick',
-			            name: 'AAPL Stock Price',
+			            name: '청양고추',
 			            data: data,
 			            dataGrouping: {
 			                units: [
 			                    [
-			                        'week', // unit name
-			                        [1] // allowed multiples
-			                    ], [
+									'hour',
+									[1, 2, 3, 4, 6, 8, 12]
+								], [
+									'day',
+									[1]
+								], [
+									'week',
+									[1]
+								],[
 			                        'month',
 			                        [1, 2, 3, 4, 6]
 			                    ]
@@ -102,7 +146,7 @@
 			        }]
 			    });
 			});
-			<!-- main 슬라이드, 탭  -->
+			/* main 슬라이드, 탭 */
 	        // Activate Carousel
 	        // interval 속도
 	        $("#myCarousel").carousel({

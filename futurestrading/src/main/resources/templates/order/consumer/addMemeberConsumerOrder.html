@@ -103,25 +103,26 @@
         	});
           	
 	        /* highchart */
-	        $.getJSON('/data_json/daily_chart.json', function (data) {
-	        	   // Create the chart
+	        $.getJSON('/Ajax/Order/chart', function (data) {
+				   // Create the chart
+				   /* tooltip 천단위 , 입력 */
+					Highcharts.setOptions({
+						lang: {
+						thousandsSep: ','
+						}
+					});
 	        	   Highcharts.stockChart('dailychart', {
-	      	        
 	        	       rangeSelector: {
 	        	           selected: 1
 	        	       },
-	
 	        	       navigator: {
 	        	           enabled: false
 	        	       },
-
 	        	       series: [{
-	        	           name: 'AAPL Stock Price',
-	        	           data: data,
-	        	           tooltip: {
-	        	               valueDecimals: 2
-	        	           }
-	        	       }],
+	        	           name: '청양고추',
+						   data: data
+					   }],
+					   /* 버튼 외 지정범위 보이는 옵션 숨김 */
 	        	       rangeSelector:{
 	        	        inputEnabled: false,
 	        	        enabled: false,
