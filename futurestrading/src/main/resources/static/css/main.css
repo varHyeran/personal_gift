@@ -979,7 +979,9 @@ table.log-data-table th
     padding-bottom: 10px;
     padding-left: 15px;
 }
-.member-remove-text a.btn{
+
+.member-remove-ready a.btn
+,.member-remove-text a.btn{
     font-size: 12pt;
     border-radius: 0;
     display: block;
@@ -996,11 +998,13 @@ table.log-data-table th
     text-decoration: none;
     border: none;
 }
-.member-remove-text a.btn:hover{
+.member-remove-ready a.btn:hover
+,.member-remove-text a.btn:hover{
     background-position: right center;
     background-image: linear-gradient(to left, #22bdd2 0%, #545cae 51%, #438bc0 100%);
 }
-.member-remove-text a.btn:active{
+.member-remove-ready a.btn:active
+,.member-remove-text a.btn:active{
     background-color: #545cae;
 }
 
@@ -1076,6 +1080,11 @@ table.log-data-table th
 /* 회원탈퇴 처리*/
 .member-remove-complete{
     display: none;
+}
+.member-remove-complete h1{
+    margin: auto;
+    text-align: center;
+    margin-top: 55px;
 }
 
 /* 회원가입 전 권한 선택 페이지 */

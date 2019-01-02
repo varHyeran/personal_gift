@@ -72,13 +72,28 @@
     
     <!-- 탈퇴신청 -->
     <div class="member-remove-ready" id="member-remove-ready">
-        <p>탈퇴 신청</p>
-        <a class="btn member-remove-ready-btn" href="#member-remove-ready">신청</a>
+        <div class="mypage-content-form">
+	        <form>
+	            <div class="input-group">
+	                <div class="input-group-prepend">
+	                  <span class="input-group-text">ID</span>
+	                </div>
+	                <input type="text" name="mypageId" class="form-control" th:value="${sessionLogin.sessionId}">
+	            </div>
+	            <div class="input-group">
+	                <div class="input-group-prepend">
+	                  <span class="input-group-text">PASSWORD</span>
+	                </div>
+	                <input type="password" name="mypagePassword" class="form-control" value="pw001***">
+	            </div>
+	            <a class="btn member-remove-ready-btn" href="#member-remove-complete">탈퇴신청</a>
+	        </form>
+	    </div>
     </div>
     
     <!-- 탈퇴처리 -->
     <div class="member-remove-complete" id="member-remove-complete">
-        <p>탈퇴 처리</p>
+        <h1>탈퇴가 완료되었습니다.</h1>
     </div>
 </div>
 	
