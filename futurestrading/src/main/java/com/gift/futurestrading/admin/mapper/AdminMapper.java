@@ -13,6 +13,7 @@ import com.gift.futurestrading.member.vo.SellerVo;
 import com.gift.futurestrading.page.vo.Criteria;
 @Mapper
 public interface AdminMapper {
+	String selectChart(HashMap<String, Object> years);
 	/*관리자 비밀번호 체크*/
 	String selectAdminPassword(HashMap<String, Object> idAndPassword);
 	/*관리자 리스트*/

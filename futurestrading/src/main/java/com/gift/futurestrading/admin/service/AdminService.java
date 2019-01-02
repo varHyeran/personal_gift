@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import com.gift.futurestrading.admin.mapper.AdminMapper;
 import com.gift.futurestrading.admin.vo.AdminVo;
@@ -18,6 +19,12 @@ import com.gift.futurestrading.page.vo.Criteria;
 public class AdminService {
 	@Autowired
 	private AdminMapper adminMapper;
+	
+	public String getChart(HashMap<String, Object> years) {
+		System.out.println("AdminService.getChart() 호출");
+		adminMapper.selectChart(years);
+		return null;
+	}
 	
 	/** 관리자 비밀번호확인
 	 * 관리자 비밀번호 select

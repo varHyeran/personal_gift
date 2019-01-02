@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	data-layout-decorate="~{layout/defaultLayout}">
+<th:block layout:fragment="css">
+	<style type="text/css">
+		#addAdminForm{
+			width: 500px;
+			margin: auto;
+		}
+		.tab-content{
+			background-color: #fff;
+		}
+		.buttons{
+			text-align: center;
+		}
+	</style>
+</th:block>
+<th:block layout:fragment="script">
+	<script type="text/javascript">
+        $(document).ready(function(){           
+        	/* side menu */
+        	$(".nav-tabs a").click(function(e){
+                $(this).tab('show');
+                e.preventDefault();
+            });
+        });
+    </script>
+</th:block>
+<th:block layout:fragment="script">
+
+</th:block>
+
+	<div layout:fragment="content" class="main-box container">
+		<div class="container mypage">
+			<div class="row">
+           		<!-- mypage content -->
+	            <div class="col-md-9">
+	            	<div class="mypage-content tab-content">
+	            	<select>
+	            		<option>2018</option>
+	            		<option>2017</option>
+	            	</select>
+					<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    				<script type="text/javascript">
+						google.charts.load('current', {'packages':['corechart']});
+						google.charts.setOnLoadCallback(drawChart);
+						
+						var year1 = '2017';
+						var year2 = '2018';
+				     	$.ajax({
+				    		async : false,
+				    		url : '/tempt',
+				    		type : 'POST',
+				    		data : JSON.stringify({'year1': year1, 'year2': year2}),
+				    		contentType: "application/json; charset=UTF-8",
+				    		success : function(data){
+				    			console.log('data 받아오기 성공');
+				    			console.log(data);
+
+				    			$.each(data, function () {
+				    				$('#signList').append("<tr><td>" + this.signPk 
+										+ "</td><td>" + this.fkOrderBuySign
+										+ "</td><td>" + this.fkSellerSign 
+										+ "</td><td>" + this.signSellerName 
+										+ "</td><td>" + this.signPerPrice 
+										+ "</td><td>" + this.signAmount 
+										+ "</td><td>" + this.signTotalPrice 
+										+ "</td><td>" + this.signInitialMargin 
+										+ "</td><td>" + this.signDate 
+										+ "</td><td>" + this.signFuturesTradeBeginDate
+										+ "</td><td>" + this.signFuturesTradeEndDate
+										+ "</td></tr>");
+				    			});
+				    		},
+				    		error: function(error) {					
+								console.log("error: "+error);
+							}
+				    	});
+						
+						function drawChart() {
+						
+						var data = google.visualization.arrayToDataTable([
+						  ['Month', year1, year2],
+						  ['1월', 500, 730],
+						  ['2월', 650, 700],
+						  ['3월', 660, 830],
+						  ['4월', 720, 850],
+						  ['5월', 800, 920],
+						  ['6월', 830, 900],
+						  ['7월', 750, 880],
+						  ['8월', 800, 920],
+						  ['9월', 830, 1000],
+						  ['10월', 860, 980],
+						  ['11월', 820, 1200],
+						  ['12월', 800, 1500],
+						]);
+						
+						var options = {
+						  title: '월별 수익비교',
+						  curveType: 'function',
+						  legend: { position: 'bottom' }
+						};
+						
+						var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+						
+						chart.draw(data, options);
+						}
+					</script>
+					<div id="curve_chart" style="width: 1000px; height: 600px"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</html>

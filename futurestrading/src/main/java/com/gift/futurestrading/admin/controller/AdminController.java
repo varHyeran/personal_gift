@@ -31,6 +31,24 @@ public class AdminController {
 	@Autowired
 	private AdminService adminService;
 	
+	@RequestMapping(value="/tempt", method=RequestMethod.POST)
+	@ResponseBody
+	public String tempt(@RequestBody HashMap<String, Object> years) {
+		System.out.println("AdminController.tempt() 호출");
+		System.out.println(years.get("year1") + "<-- year1(ajax)");
+		System.out.println(years.get("year2") + "<-- year2(ajax)");
+		adminService.getChart(years);
+
+		return null;
+	}
+	
+	@RequestMapping(value="/testchart", method=RequestMethod.GET)
+	public String testChart(Model model, HttpSession session) {
+		System.out.println("AdminController.testChart() 호출");
+		model.addAttribute("sessionLogin", session.getAttribute("sessionLoginMember"));
+		return "topAdmin/getProfitDetail";
+	}
+	
 	/** 관리자 비밀번호 확인(ajax)
 	 * 수정폼의 현재 비밀번호 부분에서 관리자의 비밀번호가 일치하는지 확인한다.
 	 * @param String topAdminPassword
