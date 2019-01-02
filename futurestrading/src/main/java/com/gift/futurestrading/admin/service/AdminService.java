@@ -122,7 +122,7 @@ public class AdminService {
 	 * @since JDK1.8
 	 */
 	public int getConsumerAllCount() {
-		System.out.println("SampleService.selectConsumerAllCount() 호출");
+		System.out.println("AdminService.selectConsumerAllCount() 호출");
 		return adminMapper.selectConsumerAllCount();
 	}
 	/** 판매자 리스트

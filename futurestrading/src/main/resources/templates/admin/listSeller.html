@@ -42,6 +42,26 @@ table.seller-data-table th, table.seller-data-table td {
 	padding: 10px;
 	color: #404040;
 }
+
+.btn-detail {
+    width: 100%;
+    background-color: #3d90e2;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+}
+
+ul.pagination li.page-item a {
+	border: 1px solid #ccc !important;
+	border-radius: 0 !important;
+	padding: 5px 10px;
+	font-size: 8pt;
+}
+
+ul.pagination li.page-item.active a {
+	background-color: #3d90e2;
+	border: 1px solid #3d90e2 !important;
+}
 </style>
 </th:block>
 <div layout:fragment="content" class="main-box container">
@@ -77,8 +97,11 @@ table.seller-data-table th, table.seller-data-table td {
 			<td th:text="${list.sellerRight}"></td>
 			<td th:text="${list.sellerAdmitAdmin}"></td>
 			<td th:text="${list.sellerAdmitDate}"></td>
-			<td><a th:text="[서류현황보기]"
-				th:href="@{/admin/get/seller/document/one(sellerIdPk=${list.sellerIdPk})}"></a></td>
+			<td>
+				<a th:href="@{/admin/get/seller/document/one(sellerIdPk=${list.sellerIdPk})}">
+					<button class="btn-detail">서류제출현황</button>
+				</a>
+			</td>
 		</tr>
 	</table>
 	<p class="blank"></p>

@@ -42,6 +42,26 @@ table.consumer-data-table th, table.consumer-data-table td {
 	padding: 10px;
 	color: #404040;
 }
+
+.btn-detail {
+    width: 100%;
+    background-color: #3d90e2;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+}
+
+ul.pagination li.page-item a {
+	border: 1px solid #ccc !important;
+	border-radius: 0 !important;
+	padding: 5px 10px;
+	font-size: 8pt;
+}
+
+ul.pagination li.page-item.active a {
+	background-color: #3d90e2;
+	border: 1px solid #3d90e2 !important;
+}
 </style>
 </th:block>
 <div layout:fragment="content" class="main-box container">
@@ -73,8 +93,11 @@ table.consumer-data-table th, table.consumer-data-table td {
 			<td th:text="${list.consumerSignUpDate}"></td>
 			<td th:text="${list.consumerStatus}"></td>
 			<td th:text="${list.consumerAdmitCheckFlag}"></td>
-			<td><a th:text="[계좌정보보기]"
-				th:href="@{/admin/get/consumer/account/one(consumerIdPk=${list.consumerIdPk})}"></a></td>
+			<td>
+				<a th:href="@{/admin/get/consumer/account/one(consumerIdPk=${list.consumerIdPk})}">
+					<button class="btn-detail">계좌정보</button>
+				</a>
+			</td>
 		</tr>
 	</table>
 	<p class="blank"></p>
