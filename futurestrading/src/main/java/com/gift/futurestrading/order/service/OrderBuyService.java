@@ -1,17 +1,46 @@
 package com.gift.futurestrading.order.service;
 
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.gift.futurestrading.order.mapper.OrderBuyMapper;
+import com.gift.futurestrading.order.vo.OrderBuyListVo;
 import com.gift.futurestrading.order.vo.OrderBuyVo;
+import com.gift.futurestrading.page.vo.Criteria;
 
 @Service
 public class OrderBuyService {
 	@Autowired
 	private OrderBuyMapper orderBuyMapper;
+	/**
+	 * 주문리스트 전체 행 구하기 위한 select 
+	 * @param String 
+	 * @return 
+	 * @since JDK1.8
+	 */
+	public int getOrderBuyAllConut(String sessionLoginId) {
+		System.out.println("OrderBuyService.getOrderBuyList() 호출");		
+		return orderBuyMapper.selectOrderBuyAllCount(sessionLoginId);
+	}
+	/**
+	 * 멤버별 매수 주문 리스트
+	 * 주문페이지에 들어갈 매수주문 리스트
+	 * @param String 
+	 * @return 
+	 * @since JDK1.8
+	 */
+	public List<OrderBuyListVo> getOrderBuyList(String sessionLoginId, Criteria cri) {
+		System.out.println("OrderBuyService.getOrderBuyList() 호출");		
+		Map<String, Object> idAndCri = new HashMap<>();
+		idAndCri.put("sessionLoginId", sessionLoginId);
+		idAndCri.put("pageStart", cri.getPageStart());
+		idAndCri.put("perPageNum", 5);
+		return orderBuyMapper.selectOrderBuyList(idAndCri);
+	}
 	/**
 	 * 매수 등록
 	 * 매수주문에 필요한 메서드

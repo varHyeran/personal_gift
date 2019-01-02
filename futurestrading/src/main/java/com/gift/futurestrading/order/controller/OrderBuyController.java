@@ -1,15 +1,21 @@
 package com.gift.futurestrading.order.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.gift.futurestrading.order.service.OrderBuyService;
+import com.gift.futurestrading.order.vo.OrderBuyListVo;
 import com.gift.futurestrading.order.vo.OrderBuyVo;
+import com.gift.futurestrading.page.vo.Criteria;
+import com.gift.futurestrading.page.vo.PageMaker;
 
 @Controller
 public class OrderBuyController {
@@ -23,10 +29,19 @@ public class OrderBuyController {
 	 * @since JDK1.8
 	 */
 	@RequestMapping(value="/consumer/add/order", method=RequestMethod.GET)
-	public String addConsumerOrder(HttpSession session, Model model, OrderBuyVo orderBuyVo) {
+	public String addConsumerOrder(@ModelAttribute("cri") Criteria cri, HttpSession session, Model model, OrderBuyVo orderBuyVo) {
 		System.out.println("OrderBuyController.addConsumerOrder() 호출");
 		model.addAttribute("sessionLogin", session.getAttribute("sessionLoginMember"));
 		
+		/*회원별 리스트 가져옴 페이징완료*/
+		String sessionLoginId = (String) session.getAttribute("sessionLoginId");
+		List<OrderBuyListVo> getOrderBuyList = orderBuyService.getOrderBuyList(sessionLoginId, cri);
+		System.out.println(getOrderBuyList+"<--getOrderBuyList");
+		model.addAttribute("orderBuyList", getOrderBuyList);
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setCri(cri);
+		pageMaker.setTotalCount(orderBuyService.getOrderBuyAllConut(sessionLoginId));
+		model.addAttribute("pageMaker", pageMaker);
 		/*종가가져옴*/
 		int getClosingPriceResult = orderBuyService.getClosePriceItemOne();
 		model.addAttribute("closingPrice", getClosingPriceResult);
@@ -53,6 +68,6 @@ public class OrderBuyController {
 		System.out.println(orderBuyVo.getOrderBuyPerPrice()+"<--orderBuyVo.getOrderBuyPerPrice()");	
 		System.out.println(orderBuyVo.getOrderBuyAmount()+"<--orderBuyVo.getOrderBuyAmount()");
 		orderBuyService.addOrderBuy(orderBuyVo);
-		return "index";
+		return "redirect:/consumer/add/order";
 	}
 }

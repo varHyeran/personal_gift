@@ -10,6 +10,22 @@
 		.warning{
 			color:#ff0000;
 		}
+		.btn {
+			border: none;
+		}
+		.side-nav .flex-column{
+			padding: 0px 0px 7px 0px ;
+		}
+		ul.pagination li.page-item a {
+			border: 1px solid #ccc !important;
+			border-radius: 0 !important;
+			padding: 5px 10px;
+			font-size: 8pt;
+		}
+		ul.pagination li.page-item.active a {
+			background-color: #4556b8;
+			border: 1px solid #4556b8 !important;
+		}
 	</style>
 </th:block>
 <th:block layout:fragment="script">
@@ -394,28 +410,41 @@
 		                            <table class="order-list gift-table table">
 		                                <thead>
 		                                    <tr>
-		                                        <th>예약주문시간</th>
-		                                        <th>구분</th>
-		                                        <th>예약주문수량</th>
+		                                        <th>예약주문no</th>
+		                                        <th>주문시간</th>
+		                                        <th>주문방법</th>
 		                                        <th>예약기준가격</th>
-		                                        <th>예약지정가격</th>
+		                                        <th>수량</th>
 		                                        <th>취소</th>
 		                                    </tr>
 		                                </thead>
 		                                <tbody>
-		                                    <tr>
-		                                        <td>5시</td>
-		                                        <td>시장가</td>
-		                                        <td>5</td>
-		                                        <td>20,000</td>
-		                                        <td>15,000</td>
-		                                        <td><a type="btn" class="btn">취소</a></td>
-		                                    </tr>
+											<th:block th:if="${orderBuyList} != null" >
+												<tr th:each="list : ${orderBuyList}">
+													<td th:text="${list.orderBuyPk}"></td>
+													<td th:text="${list.orderBuyFinalPayTime}"></td>
+													<td th:text="${list.orderBuyMethod}"></td>
+													<td th:text="${list.orderBuyPerPrice}">20,000</td>
+													<td th:text="${list.orderBuyAmount}">15,000</td>
+													<td><a type="btn" class="btn">취소</a></td>
+												</tr>
+											</th:block>
 		                                </tbody>
 		                                <tfoot>
 		                                    <tr></tr>
 		                                </tfoot>
-		                            </table>
+									</table>
+									<ul class="pagination justify-content-center">
+										<li th:if="${pageMaker.prev} == true" class="page-item">
+											<a class="page-link" th:href="@{/consumer/add/order(page=${pageMaker.startPage}-1,perPageNum=${pageMaker.cri.perPageNum})}">&laquo;</a>
+										</li>
+										<li class="page-item" th:each="idx,iterStat : ${#numbers.sequence(pageMaker.startPage,pageMaker.endPage)}"  th:classappend="${pageMaker.cri.page} == ${idx} ? active : null">
+											<a class="page-link" th:href="@{/consumer/add/order(page=${idx},perPageNum=${pageMaker.cri.perPageNum})}" th:text="${idx}"></a>
+										</li> 
+										<li class="page-item" th:if="${pageMaker.next} == true and ${pageMaker.endPage > 0}">
+											<a class="page-link" th:href="@{//consumer/add/order(page=${pageMaker.endPage}+1,perPageNum=${pageMaker.cri.perPageNum})}">&raquo;</a>
+										</li>
+									</ul>
 		                        </div>
 		                    </div>
 		                </div>
