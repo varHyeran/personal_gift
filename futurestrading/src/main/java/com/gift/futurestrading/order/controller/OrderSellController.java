@@ -45,7 +45,7 @@ public class OrderSellController {
 		model.addAttribute("orderSellerList", orderSellerList);
 		PageMaker pageMaker = new PageMaker();
 		pageMaker.setCri(cri);
-		pageMaker.setTotalCount(orderSellService.getSellerOrderAllCount());
+		pageMaker.setTotalCount(orderSellService.getSellerOrderAllCount(id));
 		model.addAttribute("pageMaker", pageMaker);
 		return "order/seller/listOrder";
 	}
@@ -59,8 +59,17 @@ public class OrderSellController {
 	 */
 	
 	@RequestMapping(value="/seller/order", method=RequestMethod.GET)
-	public String addsellerOrder() {
+	public String addsellerOrder(@ModelAttribute("cri") Criteria cri,HttpSession session, Model model) {
 		System.out.println("OrderSellController / addSellerOrder()");
+		model.addAttribute("sessionLogin", session.getAttribute("sessionLoginMember"));
+		String id = (String) session.getAttribute("sessionLoginId");
+		List<OrderSellVo> orderSellerList = orderSellService.getSellerOrderViewBottom(id, cri);
+		model.addAttribute("orderSellList", orderSellerList);
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setCri(cri);
+		pageMaker.setTotalCount(orderSellService.getSellerOrderAllCount(id));
+		System.out.println(orderSellService.getSellerOrderAllCount(id));
+		model.addAttribute("pageMaker", pageMaker);
 		return "order/seller/addMemeberSellerOrderPepper";
 	}
 	

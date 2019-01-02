@@ -25,5 +25,5 @@ public interface OrderSellMapper {
 	/*판매자리스트(페이징포함)를 조회하기 위한 select*/
 	List<OrderSellVo> selectOrderSellAll(HashMap<String, Object> map);
 	/*판매자의 전체 행 구하기위한 select*/
-	int selectOrderSellAllCount();
+	int selectOrderSellAllCount(String id);
 }
