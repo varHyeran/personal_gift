@@ -1,29 +1,9 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	data-layout-decorate="~{layout/defaultLayout}">
-<th:block layout:fragment="css">
-	<style type="text/css">
-		.tab-content{
-            background-color: #fff;
-        }
-	</style>
-</th:block>
-<th:block layout:fragment="script">
-	<script type="text/javascript">
-		$(document).ready(function(){
-			/* side menu */
-        	$(".nav-tabs a").click(function(e){
-                $(this).tab('show');
-                e.preventDefault();
-            });
-	    });
-	</script>
-</th:block>
-<th:block layout:fragment="script">
-	<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
-	<script type="text/javascript">
-	
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<div th:fragment="mypage-content-member-remove">
+	<script>
 	/* 날짜별 검색결과 가져오기 */
 	function searchCheck(){
 		console.log('날짜별 데이터 가져오기');
@@ -70,85 +50,73 @@
     	});
 	}
 	</script>
-
-<th:block layout:fragment="content" class="main-box container">
-	<div class="container mypage">
-		<div class="row">
-			<!-- mypage content -->
-			<div class="col-md-9">
-				<div class="mypage-content tab-content">
-					<!-- 체결내역 -->
-					<div id="wallet-tab-history" class="sub-sub-content">
-						<h2>체결내역</h2>
-						<!-- 검색 창 -->
-						<div class="gift-search">
-							<div class="gift-search-date">
-								<span>기간</span>
-									<input type="date" name="startDate" id="startDate">
-								<span>~</span>
-									<input type="date" name="endDate" id="endDate">
-								<button type="button" class="btn" onclick="searchCheck()">검색</button>
-							</div>
-							<div class="gift-search-date-btn">
-								<button type="button" class="btn">7일</button>
-								<button type="button" class="btn">30일</button>
-								<button type="button" class="btn">90일</button>
-								<button type="button" class="btn">180일</button>
-							</div>
-							<div class="gift-search-goods">
-								<select>
-									<option>전체</option>
-									<option>마늘</option>
-									<option>고구마</option>
-									<option>배추</option>
-								</select>
-								<select>
-									<option>전체</option>
-									<option>지정가</option>
-									<option>시장가</option>
-								</select>
-							</div>
-						</div>
-
-						<table class="table gift-table">
-							<thead id="signList">
-								<tr>
-									<th>체결번호</th>
-									<th>매수주문번호</th>
-									<th>판매자아이디</th>
-									<th>판매자이름</th>
-									<th>가격(1계약)</th>
-									<th>수량</th>
-									<th>전체체결가</th>
-									<th>체결증거금</th>
-									<th>체결날짜</th>
-									<th>선물거래시작일</th>
-									<th>선물거래만기일</th>
-								</tr>
-							</thead>
-							<tbody id="firstList">
-								<tr th:each="list : ${signDetail}">
-									<td th:text="${list.signPk}"></td>
-									<td th:text="${list.fkOrderBuySign}"></td>
-									<td th:text="${list.fkSellerSign}"></td>
-									<td th:text="${list.signSellerName}"></td>
-									<td th:text="${list.signPerPrice}"></td>
-									<td th:text="${list.signAmount}"></td>
-									<td th:text="${list.signTotalPrice}"></td>
-									<td th:text="${list.signInitialMargin}"></td>
-									<td th:text="${list.signDate}"></td>
-									<td th:text="${list.signFuturesTradeBeginDate}"></td>
-									<td th:text="${list.signFuturesTradeEndDate}"></td>
-								</tr>
-							</tbody>
-							<tfoot>
-								<tr></tr>
-							</tfoot>
-						</table>
-					</div>
-				</div>
+	<h2>체결내역</h2>
+	<div class="sub-sub-content">
+		<!-- 검색 창 -->
+		<div class="gift-search">
+			<div class="gift-search-date">
+				<span>기간</span>
+					<input type="date" name="startDate" id="startDate">
+				<span>~</span>
+					<input type="date" name="endDate" id="endDate">
+				<button type="button" class="btn" onclick="searchCheck()">검색</button>
+			</div>
+			<div class="gift-search-date-btn">
+				<button type="button" class="btn">7일</button>
+				<button type="button" class="btn">30일</button>
+				<button type="button" class="btn">90일</button>
+				<button type="button" class="btn">180일</button>
+			</div>
+			<div class="gift-search-goods">
+				<select>
+					<option>전체</option>
+					<option>마늘</option>
+					<option>고구마</option>
+					<option>배추</option>
+				</select>
+				<select>
+					<option>전체</option>
+					<option>지정가</option>
+					<option>시장가</option>
+				</select>
 			</div>
 		</div>
-	</div>
-</th:block>
+		
+		<table class="table gift-table">
+			<thead id="signList">
+				<tr>
+					<th>체결번호</th>
+					<th>매수주문번호</th>
+					<th>판매자아이디</th>
+					<th>판매자이름</th>
+					<th>가격(1계약)</th>
+					<th>수량</th>
+					<th>전체체결가</th>
+					<th>체결증거금</th>
+					<th>체결날짜</th>
+					<th>선물거래시작일</th>
+					<th>선물거래만기일</th>
+				</tr>
+			</thead>
+			<tbody id="firstList">
+				<tr th:each="list : ${signDetail}">
+					<td th:text="${list.signPk}"></td>
+					<td th:text="${list.fkOrderBuySign}"></td>
+					<td th:text="${list.fkSellerSign}"></td>
+					<td th:text="${list.signSellerName}"></td>
+					<td th:text="${list.signPerPrice}"></td>
+					<td th:text="${list.signAmount}"></td>
+					<td th:text="${list.signTotalPrice}"></td>
+					<td th:text="${list.signInitialMargin}"></td>
+					<td th:text="${list.signDate}"></td>
+					<td th:text="${list.signFuturesTradeBeginDate}"></td>
+					<td th:text="${list.signFuturesTradeEndDate}"></td>
+				</tr>
+			</tbody>
+			<tfoot>
+				<tr></tr>
+			</tfoot>
+		</table>
+		</div>
+</div>
 </html>

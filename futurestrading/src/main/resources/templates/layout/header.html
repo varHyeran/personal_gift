@@ -15,7 +15,7 @@
 	                        <a class="nav-link" th:href="@{/consumer/add/order}">주문</a>
 	                    </li>
 	                    <li class="nav-item">
-	                        <a class="nav-link" href="/sorry">부가서비스</a>
+	                        <a class="nav-link" th:href="@{/sorry}">부가서비스</a>
 	                    </li>
 	                </ul>
 	               	<ul class="navbar-nav nav-memeber">
@@ -39,7 +39,7 @@
 			                        <a class="nav-link" th:href="@{/consumer/add/order}">주문</a>
 			                    </li>
 			                    <li class="nav-item">
-			                        <a class="nav-link" href="/sorry">부가서비스</a>
+			                        <a class="nav-link" th:href="@{/sorry}">부가서비스</a>
 			                    </li>
 			                </ul>
 			                <!-- 서브메뉴 -->
@@ -48,10 +48,9 @@
 				           			<a class="nav-link dropdown-toggle" role="button" data-toggle="dropdown">지갑관리<i class="material-icons">keyboard_arrow_down</i></a>
 			                      	<ul class="dropdown-menu dropdown-menu-money" role="menu">
 			                           <li><a th:href="@{/consumer/mywallet}">자산현황</a></li>
-			                           <li><a href="/sorry">입금</a></li>
-			                           <li><a href="/sorry">출금</a></li>
-			                           <li><a href="/sorry">송금</a></li>
-			                           <li><a th:href="@{/consumer/get/sign/detail}">체결내역</a></li>
+			                           <li><a th:href="@{/consumer/mywallet}">체결내역</a></li>
+			                           <li><a th:href="@{/sorry}">입금</a></li>
+			                           <li><a th:href="@{/sorry}">출금</a></li>
 			                      	</ul>
 				           		</li>
 					            <li class="nav-item nav-member-dropdown">
@@ -68,10 +67,10 @@
 				            <!-- 메인메뉴 -->
 		                	<ul class="navbar-nav nav-futures">
 			                    <li class="nav-item">
-			                        <a class="nav-link" href="/seller/order">주문</a>
+			                        <a class="nav-link" th:href="@{/seller/order}">주문</a>
 			                    </li>
 			                    <li class="nav-item">
-			                        <a class="nav-link" href="/sorry">부가서비스</a>
+			                        <a class="nav-link" th:href="@{/sorry}">부가서비스</a>
 			                    </li>
 			                </ul>
 			                <!-- 서브메뉴 -->
@@ -79,16 +78,16 @@
 					            <li class="nav-item nav-member-dropdown">
 				           			<a class="nav-link dropdown-toggle" role="button" href="#" data-toggle="dropdown">지갑관리<i class="material-icons">keyboard_arrow_down</i></a>
 			                      	<ul class="dropdown-menu dropdown-menu-money" role="menu">
-			                           <li><a href="/sorry">자산현황</a></li>
-			                           <li><a href="/sorry">출금</a></li>
-			                           <li><a href="/seller/order/list">주문내역</a></li>
-			                           <li><a href="/seller/order/list">거래내역</a></li>
+			                           <li><a th:href="@{/sorry}">자산현황</a></li>
+			                           <li><a th:href="@{/sorry}">출금</a></li>
+			                           <li><a th:href="@{/seller/order/list}">주문내역</a></li>
+			                           <li><a th:href="@{/seller/order/list}">거래내역</a></li>
 			                      	</ul>
 				           		</li>
 					            <li class="nav-item nav-member-dropdown">
 					            	<a class="nav-link dropdown-toggle" role="button" href="#" data-toggle="dropdown"><span th:text="${sessionLogin.sessionId}"></span><i class="material-icons">keyboard_arrow_down</i></a>
 			                       	<ul class="dropdown-menu dropdown-menu-id" role="menu">
-			                            <li><a href="/seller/mypage">계정관리</a></li>
+			                            <li><a th:href="@{/seller/mypage}">계정관리</a></li>
 			                            <li><a th:href="@{/logout}">logout</a></li>
 			                        </ul>
 					            </li>
@@ -109,15 +108,15 @@
 			                      	<ul class="dropdown-menu dropdown-menu-money" role="menu">
 			                           <li><a th:href="@{/admin/get/consumer/all}">구매자관리</a></li>
 			                           <li><a th:href="@{/admin/get/seller/all}">판매자관리</a></li>
-			                           <li><a href="/sorry">주문관리</a></li>
-			                           <li><a href="/sorry">체결관리</a></li>
-			                           <li><a href="/sorry">반대매매관리</a></li>
+			                           <li><a th:href="@{/sorry}">주문관리</a></li>
+			                           <li><a th:href="@{/sorry}">체결관리</a></li>
+			                           <li><a th:href="@{/sorry}">반대매매관리</a></li>
 			                      	</ul>
 				           		</li>
 					            <li class="nav-item nav-member-dropdown">
 					            	<a class="nav-link dropdown-toggle" role="button" href="#" data-toggle="dropdown"><span th:text="${sessionLogin.sessionId}"></span><i class="material-icons">keyboard_arrow_down</i></a>
 			                       	<ul class="dropdown-menu dropdown-menu-id" role="menu">
-			                            <li><a href="/sorry">계정관리</a></li>
+			                            <li><a th:href="@{/sorry}">계정관리</a></li>
 			                            <li><a th:href="@{/logout}">logout</a></li>
 			                        </ul>
 					            </li>
@@ -137,13 +136,13 @@
 									<a class="nav-link dropdown-toggle" role="button" href="#" data-toggle="dropdown">전체관리<i class="material-icons">keyboard_arrow_down</i></a>
 									<ul class="dropdown-menu dropdown-menu-money" role="menu">
 									    <li><a th:href="@{/topadmin/list/admin}">관리자관리</a></li>
-									    <li><a href="/sorry">수익관리</a></li>
+									    <li><a th:href="@{/sorry}">수익관리</a></li>
 									</ul>
 								</li>
 								<li class="nav-item nav-member-dropdown">
 									<a class="nav-link dropdown-toggle" role="button" href="#" data-toggle="dropdown"><span th:text="${sessionLogin.sessionId}"></span><i class="material-icons">keyboard_arrow_down</i></a>
 									<ul class="dropdown-menu dropdown-menu-id" role="menu">
-									    <li><a href="/sorry">계정관리</a></li>
+									    <li><a th:href="@{/sorry}">계정관리</a></li>
 									    <li><a th:href="@{/logout}">logout</a></li>
 									</ul>
 								</li>
