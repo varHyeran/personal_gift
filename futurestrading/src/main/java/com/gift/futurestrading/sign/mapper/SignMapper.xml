@@ -2,24 +2,44 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 	<mapper namespace="com.gift.futurestrading.sign.mapper.SignMapper">
 	
-		<!-- sign 테이블에 데이터 추가 되면 order_sell 테이블의 상태 컬럼에 '미체결' -> '체결'로 update 시키기 -->
-		<update id="updateStatusOfOrderSell" parameterType="String">
-			UPDATE 
+		<!-- orderSellVariableAmount 값에 따라 조건에 맞는 order_sell 테이블의 update -->
+		<update id="updateOrderSell" parameterType="map">
+			UPDATE
 				order_sell
 			SET
-				order_sell_status = '체결'
+				<choose>
+					<when test="orderSellVariableAmount != 0">
+						order_sell_variable_amount=#{orderSellVariableAmount}
+						
+					</when>
+					<otherwise>
+						order_sell_variable_amount=#{orderSellVariableAmount},
+						order_sell_status = '체결'
+						
+					</otherwise>
+				</choose>
 			WHERE
-				order_sell_pk=#{orderSellPk}	
+				order_sell_pk = #{orderSellPk}
 		</update>
 	
-		<!-- sign 테이블에 데이터 추가 되면 order_buy 테이블의 상태 컬럼에 '미체결' -> '체결'로 update 시키기 -->
-		<update id="updateStatusOfOrderBuy" parameterType="String">
-			UPDATE 
+		<!-- orderBuyVariableAmount 값에 따라 조건에 맞는 order_buy 테이블의 update -->
+		<update id="updateOrderBuy" parameterType="map">
+			UPDATE
 				order_buy
 			SET
-				order_buy_status = '체결'
+				<choose>
+					<when test="orderBuyVariableAmount != 0">
+						order_buy_variable_amount=#{orderBuyVariableAmount}
+						
+					</when>
+					<otherwise>
+						order_buy_variable_amount=#{orderBuyVariableAmount},
+						order_buy_status = '체결'
+						
+					</otherwise>
+				</choose>
 			WHERE
-				order_buy_pk=#{orderBuyPk}	
+				order_buy_pk = #{orderBuyPk}
 		</update>
 		
 		<!-- order_buy, order_sell 테이블에서 각각 조회해온 데이터를 sign 테이블에 insert 시키기 -->
@@ -64,121 +84,123 @@
 		<!-- order_sell 테이블에서 '가격우선원칙(최소값) -> 시간우선원칙 -> 수량우선원칙'을 만족하는 데이터 select -->
 		<select id="selectOneRowOfOrderSellForSign" resultType="com.gift.futurestrading.sign.vo.OrderSellVo">
 			SELECT 
-				order_sell_pk AS orderSellPk
-				,fk_seller__order_sell AS fkSellerOrderSell
-				,fk_item_detail__order_sell AS fkItemDetailOrderSell
-				,order_sell_seller_name AS orderSellSellerName
-				,order_sell_method AS orderSellMethod
-				,order_sell_per_price AS orderSellPerPrice
-				,order_sell_amount AS orderSellAmount
-				,order_sell_date AS orderSellDate
-				,order_sell_status AS orderSellStatus
-				,order_sell_final_pay_date AS orderSellFinalPayDate
-			FROM
-				(SELECT *
-				 FROM
+					order_sell_pk AS orderSellPk
+					,fk_seller__order_sell AS fkSellerOrderSell
+					,fk_item_detail__order_sell AS fkItemDetailOrderSell
+					,order_sell_seller_name AS orderSellSellerName
+					,order_sell_method AS orderSellMethod
+					,order_sell_per_price AS orderSellPerPrice
+					,order_sell_amount AS orderSellAmount
+					,order_sell_variable_amount AS orderSellVariableAmount
+					,order_sell_date AS orderSellDate
+					,order_sell_status AS orderSellStatus
+					,order_sell_final_pay_date AS orderSellFinalPayDate
+				FROM
 					(SELECT *
 					 FROM
-						order_sell
-					 WHERE
-						fk_item_detail__order_sell='goods_detail01'
-					 AND
-						order_sell_status='미체결'
-					 AND
-						order_sell_per_price=(SELECT 
-												 MIN(order_sell_per_price)
-											  FROM
-												 order_sell
-											  WHERE
-												 order_sell_status='미체결'
-											  AND
-												 fk_item_detail__order_sell='goods_detail01')
-					) AS price_priority
-					WHERE
-						order_sell_date = (SELECT
-											 MIN(order_sell_date)
-										   FROM
-											 (SELECT *
-											  FROM
-												(SELECT *
-												 FROM
-													order_sell
-												 WHERE
-													fk_item_detail__order_sell='goods_detail01'
-												 AND
-													order_sell_status='미체결'
-												 AND
-													order_sell_per_price=(SELECT 
-																			MIN(order_sell_per_price)
-																		  FROM
-																			order_sell
-																		  WHERE
-																			order_sell_status='미체결'
-																		  AND
-																			fk_item_detail__order_sell='goods_detail01')
-												) AS price_priority
-										   	 ) AS time_priority
-											)
-					) AS amount_priority
-			WHERE
-				order_sell_amount = (SELECT 
-										MIN(order_sell_amount)
-									 FROM
-										(SELECT *
+						(SELECT *
+						 FROM
+							order_sell
+						 WHERE
+							fk_item_detail__order_sell='goods_detail01'
+						 AND
+							order_sell_status='미체결'
+						 AND
+							order_sell_per_price=(SELECT 
+													 MIN(order_sell_per_price)
+												  FROM
+													 order_sell
+												  WHERE
+													 order_sell_status='미체결'
+												  AND
+													 fk_item_detail__order_sell='goods_detail01')
+						) AS price_priority
+						WHERE
+							order_sell_date = (SELECT
+												 MIN(order_sell_date)
+											   FROM
+												 (SELECT *
+												  FROM
+													(SELECT *
+													 FROM
+														order_sell
+													 WHERE
+														fk_item_detail__order_sell='goods_detail01'
+													 AND
+														order_sell_status='미체결'
+													 AND
+														order_sell_per_price=(SELECT 
+																				MIN(order_sell_per_price)
+																			  FROM
+																				order_sell
+																			  WHERE
+																				order_sell_status='미체결'
+																			  AND
+																				fk_item_detail__order_sell='goods_detail01')
+													) AS price_priority
+											   	 ) AS time_priority
+												)
+						) AS amount_priority
+				WHERE
+					order_sell_variable_amount = (SELECT 
+											MAX(order_sell_variable_amount)
 										 FROM
-											order_sell
-										 WHERE
-											fk_item_detail__order_sell='goods_detail01'
-										 AND
-											order_sell_status='미체결'
-										 AND
-											order_sell_per_price=(SELECT 
-																	MIN(order_sell_per_price)
-																  FROM
-																	order_sell
-																  WHERE
-																	order_sell_status='미체결'
-																  AND
-																	fk_item_detail__order_sell='goods_detail01')
-										 ) AS price_priority
-									  WHERE
-										order_sell_date = (SELECT
-															 MIN(order_sell_date)
-														   FROM
-															(SELECT *
-															 FROM
+											(SELECT *
+											 FROM
+												order_sell
+											 WHERE
+												fk_item_detail__order_sell='goods_detail01'
+											 AND
+												order_sell_status='미체결'
+											 AND
+												order_sell_per_price=(SELECT 
+																		MIN(order_sell_per_price)
+																	  FROM
+																		order_sell
+																	  WHERE
+																		order_sell_status='미체결'
+																	  AND
+																		fk_item_detail__order_sell='goods_detail01')
+											 ) AS price_priority
+										  WHERE
+											order_sell_date = (SELECT
+																 MIN(order_sell_date)
+															   FROM
 																(SELECT *
 																 FROM
-																	order_sell
-																 WHERE
-																	fk_item_detail__order_sell='goods_detail01'
-																 AND
-																	order_sell_status='미체결'
-																 AND
-																	order_sell_per_price=(SELECT 
-																							 MIN(order_sell_per_price)
-																						  FROM
-																							 order_sell
-																						  WHERE
-																							 order_sell_status='미체결'
-																						  AND
-																							 fk_item_detail__order_sell='goods_detail01')
-																) AS price_priority
-															 ) AS time_priority
-															)
-											)
+																	(SELECT *
+																	 FROM
+																		order_sell
+																	 WHERE
+																		fk_item_detail__order_sell='goods_detail01'
+																	 AND
+																		order_sell_status='미체결'
+																	 AND
+																		order_sell_per_price=(SELECT 
+																								 MIN(order_sell_per_price)
+																							  FROM
+																								 order_sell
+																							  WHERE
+																								 order_sell_status='미체결'
+																							  AND
+																								 fk_item_detail__order_sell='goods_detail01')
+																	) AS price_priority
+																 ) AS time_priority
+																)
+												)
 		</select>
 	
 		<!-- order_buy 테이블에서 '가격우선원칙(최대값) -> 시간우선원칙 -> 수량우선원칙'을 만족하는 데이터 select -->
 		<select id="selectOneRowOfOrderBuyForSign" resultType="com.gift.futurestrading.sign.vo.OrderBuyVo">
-			SELECT 
+						SELECT 
 				order_buy_pk AS orderBuyPk
 				,fk_consumer__order_buy AS fkConsumerOrderBuy
 				,fk_item_detail__order_buy AS fkItemDetailOrderBuy
 				,order_buy_consumer_name AS orderBuyConsumerName
 				,order_buy_method AS orderBuyMethod
 				,order_buy_per_price AS orderBuyPerPrice
-				,order_buy_variable_amount_for_sign AS orderBuyAmount
+				,order_buy_amount AS orderBuyAmount
+				,order_buy_variable_amount AS orderBuyVariableAmount
 				,order_buy_date AS orderBuyDate
 				,order_buy_status AS orderBuyStatus
 				,order_buy_final_pay_date AS orderBuyFinalPayDate
@@ -229,8 +251,8 @@
 									 )
 				) AS amount_priority
 			WHERE
-				order_buy_amount = (SELECT 
-										MAX(order_buy_amount)
+				order_buy_variable_amount = (SELECT 
+										MAX(order_buy_variable_amount)
 									FROM
 										(SELECT *
 									 	 FROM

@@ -12,7 +12,7 @@
 			order_buy_method, 		
 			order_buy_per_price, 		
 			order_buy_amount,
-			order_buy_variable_amount_for_sign, 		
+			order_buy_variable_amount, 		
 			order_buy_date,
 			order_buy_final_pay_date			
 		) VALUES (

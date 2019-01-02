@@ -11,6 +11,7 @@
 				order_sell_method,   
 				order_sell_per_price, 
 				order_sell_amount,
+				order_sell_variable_amount,
 				order_sell_date
 				) 
 			VALUES(#{order_sell_pk},
@@ -18,6 +19,7 @@
 				(select item_detail_no_PK from item_detail where item_detail_name=#{fk_item_detail__order_sell}),
 				(select seller_name from seller where seller_id_pk=#{order_sell_seller_name}),
 				#{order_sell_method},
+				#{order_sell_per_price},
 				#{order_sell_per_price},
 				#{order_sell_amount},
 				now());

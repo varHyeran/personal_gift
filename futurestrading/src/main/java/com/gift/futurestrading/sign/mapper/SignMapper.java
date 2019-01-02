@@ -10,20 +10,20 @@ import com.gift.futurestrading.sign.vo.OrderSellVo;
 
 @Mapper
 public interface SignMapper {
+
+	/* orderSellVariableAmount 값에 따라 조건에 맞는 order_sell 테이블의 update */
+	int updateOrderSell(HashMap<String, Object> mapForOrderSell);
 	
-	/* sign 테이블에 데이터 추가 되면 order_sell 테이블의 상태 컬럼에 '미체결' -> '체결'로 update 시키기  */
-	int updateStatusOfOrderSell(String orderSellPk);
+	/* orderBuyVariableAmount 값에 따라 조건에 맞는 order_buy 테이블의 update */
+	int updateOrderBuy(HashMap<String, Object> mapForOrderBuy);
 	
-	/* sign 테이블에 데이터 추가 되면 order_buy 테이블의 상태 컬럼에 '미체결' -> '체결'로 update 시키기 */
-	int updateStatusOfOrderBuy(String orderBuyPk);
-	
-	/* order_buy, order_sell 테이블에서 각각 조회해온 데이터를 sign 테이블에 insert 시키기 */
+	/* order_buy, order_sell 테이블에서 각각 조회해온 데이터를 sign 테이블에 insert */
 	int insertSign(HashMap<String, Object> map);
 	
-	/* order_sell 테이블에서 미체결 상태인 특정 품목의 1계약당 가격 중 최소값 구하기 */
+	/* order_sell 테이블에서 '가격우선원칙->시간우선원칙->수량우선원칙'을 순서대로 만족하는 데이터 한 행을 조회하기위한 select */
 	List<OrderSellVo> selectOneRowOfOrderSellForSign();
 	
-	/* order_buy 테이블에서 미체결 상태인 특정 품목의 1계약당 가격 중 최대값 구하기 */
+	/* order_buy 테이블에서 '가격우선원칙->시간우선원칙->수량우선원칙'을 순서대로 만족하는 데이터 한 행을 조회하기위한 select */
 	List<OrderBuyVo> selectOneRowOfOrderBuyForSign();	
 	
 	/* 문자  + 숫자 조합의 primary key에서 숫자를 가져오기위한(기본키값 자동증가 구현을 위해) select */

@@ -9,10 +9,18 @@ public class OrderBuyVo {
 	private String orderBuyMethod;			// 매수방법
 	private int orderBuyPerPrice;			// 매수가격(1계약당)
 	private int orderBuyAmount;				// 매수수량
+	private int orderBuyVariableAmount;		// 체결 매수수량
 	private String orderBuyDate;			// 매수주문날짜
 	private String orderBuyStatus;			// 주문매수 상태
 	private String orderBuyFinalPayDate;	// 최종결제일(예상수취일)
-	
+		
+	public int getOrderBuyVariableAmount() {
+		return orderBuyVariableAmount;
+	}
+	public void setOrderBuyVariableAmount(int orderBuyVariableAmount) {
+		System.out.println(orderBuyVariableAmount + " <---OrderBuyVo.setOrderBuyVariableAmount() 호출");
+		this.orderBuyVariableAmount = orderBuyVariableAmount;
+	}
 	public String getOrderBuyPk() {
 		return orderBuyPk;
 	}
@@ -83,6 +91,14 @@ public class OrderBuyVo {
 		System.out.println(orderBuyFinalPayDate + " <---OrderBuyVo.setOrderBuyFinalPayDate() 호출");
 		this.orderBuyFinalPayDate = orderBuyFinalPayDate;
 	}
+	@Override
+	public String toString() {
+		return "OrderBuyVo [orderBuyPk=" + orderBuyPk + ", fkConsumerOrderBuy=" + fkConsumerOrderBuy
+				+ ", fkItemDetailOrderBuy=" + fkItemDetailOrderBuy + ", orderBuyConsumerName=" + orderBuyConsumerName
+				+ ", orderBuyMethod=" + orderBuyMethod + ", orderBuyPerPrice=" + orderBuyPerPrice + ", orderBuyAmount="
+				+ orderBuyAmount + ", orderBuyVariableAmount=" + orderBuyVariableAmount + ", orderBuyDate="
+				+ orderBuyDate + ", orderBuyStatus=" + orderBuyStatus + ", orderBuyFinalPayDate=" + orderBuyFinalPayDate
+				+ "]";
+	}
 	
-
 }
