@@ -2,8 +2,11 @@ package com.gift.futurestrading.member.service;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -11,6 +14,7 @@ import com.gift.futurestrading.member.mapper.SellerMapper;
 import com.gift.futurestrading.member.vo.AccountCheckResultVo;
 import com.gift.futurestrading.member.vo.SellerFileRequestVo;
 import com.gift.futurestrading.member.vo.SellerFileVo;
+import com.gift.futurestrading.member.vo.SellerMypageVo;
 import com.gift.futurestrading.member.vo.SellerRequestVo;
 
 /**
@@ -26,6 +30,28 @@ public class SellerService {
 	@Autowired
 	private SellerMapper sellerMapper;
 
+	/**
+	 * 회원수정 폼으로 이동하기위해 사용자가 입력한 id, password가 일치하는지 알아보기위한 메서드를 호출한다.
+	 * @author 양진선
+	 * @param sellerMypageIdPw
+	 * @return resultSelectIdPwForUpdate
+	 * @since JDK1.8
+	 */
+	public List<SellerMypageVo> selectIdPwForUpdate(HashMap<String, Object> sellerMypageIdPw) {
+		System.out.println("SellerService.selectIdPwForUpdate() 호출");	
+		/* mapper 계층의 메서드 호출 후, 리턴 받을 데이터를 저장할 변수 선언 및 생성 */
+		List<SellerMypageVo> resultSelectIdPwForUpdate = new ArrayList<SellerMypageVo>();
+		
+		/* controller로부터 전달 받은 파라미터 출력 */
+		System.out.println(sellerMypageIdPw.get("mypageId") + " <---mypageId");
+
+		/* mapper 계층의 메서드 호출 후, 리턴값 출력 */
+		resultSelectIdPwForUpdate = sellerMapper.selectIdPwForUpdate(sellerMypageIdPw);
+		System.out.println(resultSelectIdPwForUpdate.toString() + " <---resultSelectIdPwForUpdate.toString()");
+			
+		return resultSelectIdPwForUpdate;
+	}
+		
 	/**
 	 * @author 정진우
 	 * idCheck 요청 처리

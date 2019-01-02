@@ -60,14 +60,13 @@
 	                <div class="input-group-prepend">
 	                  <span class="input-group-text">ID</span>
 	                </div>
-	                <input type="text" name="mypageId" class="form-control" >
-	         
+	                <input type="text" name="mypageId" class="form-control" th:value="${sessionLogin.sessionId}">
 	            </div>
 	            <div class="input-group">
 	                <div class="input-group-prepend">
 	                  <span class="input-group-text">PASSWORD</span>
 	                </div>
-	                <input type="password" name="mypagePw" class="form-control">
+	                <input type="password" name="mypagePw" class="form-control" value="id001s">
 	            </div>
 	            <button class="btn" type="submit">확인</button>
 	        </form>

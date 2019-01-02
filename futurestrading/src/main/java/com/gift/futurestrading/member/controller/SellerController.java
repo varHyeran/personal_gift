@@ -2,6 +2,7 @@ package com.gift.futurestrading.member.controller;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.regex.Pattern;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,9 +11,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import com.gift.futurestrading.member.service.SellerService;
 import com.gift.futurestrading.member.vo.SellerFileRequestVo;
+import com.gift.futurestrading.member.vo.SellerMypageVo;
 import com.gift.futurestrading.member.vo.SellerRequestVo;
 /**
  * @author 정진우
@@ -27,7 +30,72 @@ public class SellerController {
 	@Autowired
 	private SellerService sellerService;
 	
+	/**
+	 * 회원수정 폼으로 이동하기위해 사용자가 입력한 id, password가 일치하는지 알아보기위한 메서드를 호출한다.
+	 * 
+	 * @param mypageId, mypagePw, session, model
+	 * @return returnView
+	 * @since JDK1.8
+	 */
+	@RequestMapping(value="/seller/mypage/information", method=RequestMethod.POST)
+	public String getSellerMypageInformation(@RequestParam("mypageId") String mypageId, @RequestParam("mypagePw") String mypagePw, HttpSession session, Model model) {
+		System.out.println("SellerController.getSellerMypageInformation() 호출");
+		System.out.println(mypageId + " <---mypageId");
+		/* 랜더링할 뷰의 주소를 저장할 변수 */
+		String returnView = null;
+		
+		if(session.getAttribute("sessionLoginMember") != null) {		// session 존재할 때
+			System.out.println("session 존재할 때");
+			/* service 계층의 메서드 호출할 때 넘겨줄 파라미터 */
+			HashMap<String, Object> sellerMypageIdPw = new HashMap<String, Object>();
+			sellerMypageIdPw.put("mypagePw", mypagePw);
+			sellerMypageIdPw.put("mypageId", mypageId);
+			
+			/* service 계층의 메서드 호출 후, 리턴값 출력 */
+			List<SellerMypageVo> returnValue = sellerService.selectIdPwForUpdate(sellerMypageIdPw);
+			System.out.println(returnValue + " <---returnValue");
+			
+			/* returnValue에 따라 회원수정 폼으로 이동할 수 있냐, 없냐를 결정 */
+			if(returnValue != null) {
+				System.out.println("화면에서 입력한 아이디, 비밀번호 일치");			
+				/* 랜더링 할 뷰로 모델 전달 */
+				model.addAttribute("sellerMypageInformation", returnValue.get(0));
+				model.addAttribute("sessionLogin", session.getAttribute("sessionLoginMember"));
+				returnView = "member/seller/getMemberSellerMypage";	
+			} else {
+				System.out.println("화면에서 입력한 아이디, 비밀번호 불일치");		
+				// returnView = "member/seller/mypage";
+			}	
+		} else {
+			System.out.println("session 존재하지 않을 때");		// session 존재하지 않을 때
+			returnView = "index";
+		}		
+		return returnView;
+	}
 	
+	/**
+	 * 해당 url로 요청이 들어왔을 때, 판매자 계정관리뷰로 랜더링 해준다.
+	 * @author 양진선
+	 * @param session
+	 * @param model
+	 * @return returnView
+	 * @since JDK1.8
+	 */
+	@RequestMapping(value="/seller/mypage", method=RequestMethod.GET)
+	public String sellerMypage(HttpSession session, Model model) {
+		System.out.println("SellerController.sellerMypage() 호출");
+		String returnView = "";	// 랜더링할 뷰의 주소를 저장할 변수
+		if(session.getAttribute("sessionLoginMember") != null) {	// session 존재할 때
+			System.out.println("session 존재할 때");
+			model.addAttribute("sessionLogin", session.getAttribute("sessionLoginMember"));	
+			returnView = "member/seller/getMemberSellerMypage";			
+		} else {
+			System.out.println("session 존재하지 않을 때");		// session 존재하지 않을 때
+			returnView = "index";
+		}			
+		return returnView;
+	}
+
 	/**
 	 * @author 정진우
 	 * addseller 요청
@@ -97,7 +165,7 @@ public class SellerController {
 	 * 
 	 */
 	
-	@RequestMapping(value="/seller/mypage", method=RequestMethod.GET)
+/*	@RequestMapping(value="/seller/mypage", method=RequestMethod.GET)
 	public String sellerMypage(HttpSession session, Model model) {
 		String returnView = null;
 		if(session.getAttribute("sessionLoginMember")==null) {
@@ -107,7 +175,7 @@ public class SellerController {
 		}
 		model.addAttribute("sessionLogin", session.getAttribute("sessionLoginMember"));
 		return returnView;
-	}
+	}*/
 
 	/**
 	 * @author 정진우

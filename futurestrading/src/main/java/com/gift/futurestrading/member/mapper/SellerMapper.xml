@@ -1,6 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gift.futurestrading.member.mapper.SellerMapper">
+	
+	<!-- 회원수정 폼으로 이동하기위해 id, password가 일치하는지 알아보기위한 select -->
+	<select id="selectIdPwForUpdate" parameterType="map" resultType="com.gift.futurestrading.member.vo.SellerMypageVo">
+		SELECT
+			seller_id_pk AS sellerIdPk
+			,seller_password AS sellerPassword
+			,seller_name AS sellerName
+			,seller_email AS sellerEmail
+			,seller_jumin_no AS sellerJuminNo
+			,seller_sign_up_date AS sellerSignUpDate
+			,seller_address_post_code AS sellerAddressPostCode
+			,seller_address_road AS sellerAddressRoad
+			,seller_address_detail AS sellerAddressDetail
+			,seller_corporate_name AS sellerCorporateName
+			,seller_phone AS sellerPhone
+			,seller_right AS sellerRight
+			,seller_admit_admin AS sellerAdmitAdmin
+			,seller_admit_date AS sellerAdmitDate
+		FROM
+			seller
+		WHERE
+			seller_id_pk=#{mypageId}
+		AND
+			seller_password=PASSWORD(#{mypagePw});
+		
+	</select>
 	<select id="selectIdCheck" parameterType="String" resultType="int">
 		SELECT COUNT(*) FROM view_total_id WHERE total_id = #{id};
 	</select>
