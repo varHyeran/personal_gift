@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	data-layout-decorate="~{layout/defaultLayout}">
+
+<!-- 임시 -->
+<th:block layout:fragment="css">
+	<style type="text/css">
+		.main-box{
+			text-align: left;
+			width: 500px;
+		}
+		.main-box h1{
+			text-align: center;
+			margin-bottom: 50px;
+		}
+		.title{
+			border-bottom: solid 1px gray;
+			padding-bottom: 15px
+		}
+	</style>
+</th:block>
+
+<th:block layout:fragment="script">
+	<!-- daum 주소 API -->
+	<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+	<script type="text/javascript">
+		console.log("jQuery ready !");
+		/* jQuery -> $로 씀. 여러 프레임 워크를 사용할시 풀네임 사용권장 */
+		
+		/* daum 주소API 유효성 검사 */
+		function execPostcode() {
+			new daum.Postcode({
+			    oncomplete: function(data) {
+			        // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+			
+			        // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+			        // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+			        var fullAddr = ''; // 최종 주소 변수
+			        var extraAddr = ''; // 조합형 주소 변수
+			
+			        // 사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+			        if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+			            fullAddr = data.roadAddress;
+			
+			        } else { // 사용자가 지번 주소를 선택했을 경우(J)
+			            fullAddr = data.jibunAddress;
+			        }
+			
+			        // 사용자가 선택한 주소가 도로명 타입일때 조합한다.
+			        if(data.userSelectedType === 'R'){
+			            // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+			            // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+			            if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+			                extraAddr += data.bname;
+			            }
+			            // 건물명이 있고, 공동주택일 경우 추가한다.
+			            if(data.buildingName !== '' && data.apartment === 'Y'){
+			                extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+			            }
+			            // 조합형주소의 유무에 따라 양쪽에 괄호를 추가하여 최종 주소를 만든다.
+			            fullAddr += (extraAddr !== '' ? ' ('+ extraAddr +')' : '');
+			        }
+			
+			        // 우편번호와 주소 정보를 해당 필드에 넣는다.
+			        $('#postcode').val(data.zonecode); 	// 5자리 새우편번호 사용
+			        $('#roadAddress').val(fullAddr);
+			
+			        // 커서를 상세주소 필드로 이동한다.
+			        $('#detailAddress').focus();
+			    }
+			}).open();
+		}
+
+		/* 아이디 중복확인 및 정규식에 의한 유효성 검사 */
+		var isIdCheck = 0;		// 아이디 중복 or 정규식에 맞지않은 경우 or 입력하지않은 경우 = 0, 중복이 아닐 경우(사용가능) = 1
+		
+		function checkId() {
+			console.log("::: 아이디 중복확인 유효성 검사 :::");
+			var idHelper = $('#idHelper');
+			var id = $('#id').val();	// param으로 id 던져줄 것임.
+			console.log(id+" <--id");
+			
+			$.ajax({
+				async: true,
+				type: "POST", 
+				data :id ,
+				contentType: "application/json; charset=UTF-8",
+				dataType: "json",
+				url : "/checkId",
+				success : function(data) {
+					if (data == '0') {
+						$("#id").css("background-color", "#B0F6AC");
+						idHelper.text('사용가능한 아이디입니다.');
+						isIdCheck = 1;
+					} else if (data > '0') {
+						$(".signupbtn").prop("disabled", true);
+						$(".signupbtn").css("background-color", "#aaaaaa");
+						$("#id").css("background-color", "#FF6289");
+						idHelper.text('유효하지 않은 아이디 입니다.');
+						isIdCheck = 0;
+					}
+				},
+				error: function(error) {					
+					console.log("error: "+error);
+				}
+			});
+		}
+		/* 비밀번호 유효성 검사 */
+		var isPasswordCheck = 0;
+		
+		function passwordCheck() {
+			console.log("::: 비밀번호 유효성 검사 :::");
+			
+			var re_pw = /^(?=.*[a-zA-Z])((?=.*\d)(?=.*\W)).{8,12}$/;	// pw 검사식
+		   	var pw = $('#pw');
+		   	var pwHelper = $('#pwHelper');
+		   	
+			if(re_pw.test(pw.val()) != true || pw.val() == "") {
+				pwHelper.text('유효한 비밀번호를 입력해 주세요.');
+				pw.focus();
+				isPasswordCheck = 0;
+			} else {
+				pwHelper.text('');
+				isPasswordCheck = 1;
+			}
+			console.log(isPasswordCheck+'<---isPasswordCheck');
+			
+		}		
+				
+		/* 비밀번호 확인 유효성 검사 */
+		var isPassword2Check = 0;
+		
+		function password2Check() {
+			console.log("::: 비밀번호 확인 유효성 검사 :::");
+			
+			var pw = $('#pw');
+		   	var pw2 = $('#pw2');
+		   	var pw2Helper = $('#pw2Helper');			
+			
+			if(pw.val() != pw2.val() || pw2.val() == "") {
+				pw2Helper.text('비밀번호가 일치하지 않습니다.'); 
+				pw2.focus();
+				isPassword2Check = 0;
+			} else {
+				pw2Helper.text(''); 
+				isPassword2Check = 1;
+			}
+			console.log(isPassword2Check+"<---isPassword2Check");
+			
+		}				
+		
+		/* 이름 유효성 검사 */
+		var isNameCheck = 0;
+		
+		function nameCheck() {
+			console.log("::: 이름 유효성 검사 :::");
+
+		   	var re_name = /^[가-힣]{2,4}$/;		// name 검사식			
+		   	var name = $('#name');
+		   	var nameHelper = $('#nameHelper');	
+		   	
+			if(re_name.test(name.val()) != true || name.val() == "") {
+				nameHelper.text('유효한 이름을 입력해 주세요.');
+				name.focus();
+				isNameCheck = 0;
+			} else {
+				nameHelper.text('');
+				isNameCheck = 1;
+			}	
+			console.log(isNameCheck+"<---isNameCheck");
+			
+		}
+				
+		/* 이메일 주소 유효성 검사 */
+		var isEmailCheck = 0;
+		
+		function  emailCheck() {
+			console.log("::: 이메일 유효성 검사 :::");
+			
+			var re_email = /^[a-z0-9_+.-]+@([a-z0-9-]+\.)+[a-z0-9]{2,4}$/;		// email 검사식
+		   	var email = $('#email');
+		   	var emailHelper = $('#emailHelper');		
+			
+			if(re_email.test(email.val()) != true || email.val() == "") {
+				emailHelper.text('유효한 이메일 주소를 입력해 주세요.');
+				email.focus();
+				isEmailCheck = 0;		
+			} else {
+				emailHelper.text('');
+				isEmailCheck = 1;
+			}
+			console.log(isEmailCheck+"<---isEmailCheck");
+			
+		}
+				
+		/* 주민등록번호 유효성 검사 */
+		var isJuminNoCheck = 0;
+		
+		function juminNoCheck() {
+			console.log("::: 주민등록번호 유효성 검사 :::");
+			
+		   	var re_juminNo = /^(?:[0-9]{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[1,2][0-9]|3[0,1]))-[1-4]{1}$/;	// 주민등록번호 검사식
+		   	var juminNo = $('#juminNo');
+		   	var juminNoHelper = $('#juminNoHelper');
+		   	
+			if(re_juminNo.test(juminNo.val()) != true || juminNo.val() == "") {
+				juminNoHelper.text('유효한 주민등록번호를 입력해 주세요.');
+				juminNo.focus();
+				isJuminNoCheck = 0;
+			} else {
+				juminNoHelper.text('');
+				isJuminNoCheck = 1;
+			}	   	
+			console.log(isJuminNoCheck+"<---isJuminNoCheck");
+			
+		}
+		
+		/* 전화번호 유효성 검사 */
+		var isPhoneNoCheck = 0;
+		
+		function phoneNoCheck() {
+			console.log("::: 전화번호 유효성 검사 :::");		
+			
+		   	var re_PhoneNo = /(01[016789])([1-9]{1}[0-9]{2,3})([0-9]{4})$/;		// 전화번호 검사식
+		   	var PhoneNo = $('#PhoneNo');
+		   	var PhoneNoHelper = $('#PhoneNoHelper');
+		   	
+			if(re_PhoneNo.test(PhoneNo.val()) != true || PhoneNo.val() == "") {
+				PhoneNoHelper.text('유효한 전화번호를 입력해 주세요.');
+				PhoneNo.focus();
+				isPhoneNoCheck = 0;
+			} else {
+				PhoneNoHelper.text('');
+				isPhoneNoCheck = 1;
+			}
+			console.log(isPhoneNoCheck+"<---isPhoneNoCheck");	   	   	
+			
+		}
+		var isCompanyCheck = 0;
+		
+		function companyCheck() {
+			console.log("::: 회사명  유효성 검사 :::");		
+			
+		   	var company = $('#company');
+		   	var companyHelper = $('#companyHelper');
+		   	
+			if(company.val() == "") {
+				companyHelper.text('회사명을 입력하세요');
+				company.focus();
+				isCompanyCheck = 0;
+			} else {
+				companyHelper.text('');
+				isCompanyCheck = 1;
+			}
+			console.log(isCcompanyCheck+"<---isCorporateCheck");	   	   	
+			
+		}
+
+		/* form submit할 때, 유효성 검사 */
+		function validateForm() {	   	
+		   	// 정규식을 변수에 할당
+		   	// 변수 이름을 're_'로 정한 것은 'Regular Expression(정규식)'의 머릿글자
+		   	var re_pw = /^(?=.*[a-zA-Z])((?=.*\d)(?=.*\W)).{8,12}$/;	// pw 검사식
+		   	var re_name = /^[가-힣]{2,4}$/;		// name 검사식
+		   	var re_email = /^[a-z0-9_+.-]+@([a-z0-9-]+\.)+[a-z0-9]{2,4}$/;		// email 검사식
+		   	var re_juminNo = /^(?:[0-9]{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[1,2][0-9]|3[0,1]))-[1-4]{1}$/;	// 주민등록번호 검사식
+		   	var re_PhoneNo = /(01[6789])([1-9]{1}[0-9]{2,3})([0-9]{4})$/;		// 전화번호 검사식
+		   	
+		   	// 선택할 요소를 변수에 할당
+		   	// 변수에 할당하지 않으면 매번 HTML요소를 선택해야 하기 때문에 성능에도 좋지 않음
+		   	var id = $('#id');
+		   	var idHelper = $('#idHelper');
+		   	var pw = $('#pw');
+		   	var pwHelper = $('#pwHelper');
+		   	var pw2 = $('#pw2');
+		   	var pw2Helper = $('#pw2Helper');
+		   	var name = $('#name');
+		   	var nameHelper = $('#nameHelper');
+		   	var email = $('#email');
+		   	var emailHelper = $('#emailHelper');
+		   	var juminNo = $('#juminNo');
+		   	var juminNoHelper = $('#juminNoHelper');
+		   	var PhoneNo = $('#PhoneNo');
+		   	var PhoneNoHelper = $('#PhoneNoHelper');
+		   	var postcode = $('#postcode');
+		   	var roadAddress = $('#roadAddress');
+		   	var detailAddress = $('#detailAddress');
+		   	var AddressHelper = $('#AddressHelper');
+		   	var company = $('#company');
+		   	var companyHelper = $('#companyHelper');
+		   	// 아이디 유효성 검사
+			if(isIdCheck == 0) {
+				idHelper.text('유효한 아이디를 입력해 주세요.');
+				id.focus();
+				return false;
+			} else {
+				idHelper.text('');
+			}
+
+		 	// 비밀번호 유효성 검사
+			if(isPasswordCheck == 0) {
+				pwHelper.text('유효한 비밀번호를 입력해 주세요.');
+				pw2.val('');
+				pw.focus();
+				return false;
+			} else {
+				pwHelper.text('');
+			}
+			
+			// 비밀번호 확인 유효성 검사
+			if(isPassword2Check == 0) {
+				pw2Helper.text('비밀번호를 다시 한 번 입력해 주세요.');
+				pw2.val('');
+				pw2.focus();				
+				return false;
+			} else {
+				pw2Helper.text('');
+			}			
+
+			// 이름 유효성 검사	 
+			if(isNameCheck == 0) {
+				nameHelper.text('유효한 이름을 입력해 주세요.');
+				name.val('');
+				name.focus();
+				return false;
+			} else {
+				nameHelper.text('');
+			}
+	
+			// 이메일 유효성 검사
+			if(isEmailCheck == 0) {
+				emailHelper.text('유효한 이메일을 입력해 주세요.');
+				email.val('');
+				email.focus();
+				return false;
+			} else {
+				emailHelper.text('');
+			}
+				
+			// 주민등록번호 유효성 검사
+			if(isJuminNoCheck == 0) {
+				juminNoHelper.text('유효한 주민등록번호를 입력해 주세요.');
+				juminNo.val('');
+				juminNo.focus();
+				return false;
+			} else {
+				juminNoHelper.text('');
+			}			
+
+			// 주소 유효성 검사
+			if((postcode.val() == "") && (roadAddress.val() == "")) {
+				AddressHelper.text('유효한 주소를 입력해 주세요.');
+				postcode.focus();
+				return false;
+			} else if(detailAddress.val() == "") {
+				AddressHelper.text('유효한 주소를 입력해 주세요.');
+				detailAddress.focus();
+				return false;
+			} else {
+				AddressHelper.text('');
+			}		
+		
+			// 전화번호 유효성 검사
+			if(isPhoneNoCheck == 0) {
+				PhoneNoHelper.text('유효한 전화번호를 입력해 주세요.');
+				PhoneNo.val('');
+				PhoneNo.focus();
+				return false;
+			} else {
+				PhoneNoHelper.text('');
+			}
+			
+			// 회사명 유효성 검사
+			if(isCompanyCheck == 0) {
+				companyHelper.text('상호명이 없을시 성함을 입력해주세요');
+				company.val('');
+				company.focus();
+				return false;
+			} else {
+				companyHelper.text('');
+			}	
+
+		   	return true;
+
+		  };	// end validateForm()
+		
+		  
+		  /* 가입취소 버튼 누르면 실행되는 함수 */
+		  function cancle() {
+			  console.log('::: 가입취소 :::');
+			  
+			   	var id = $('#id');
+			   	var pw = $('#pw');
+			   	var pw2 = $('#pw2');
+			   	var name = $('#name');
+			   	var email = $('#email');
+			   	var juminNo = $('#juminNo');
+			   	var PhoneNo = $('#PhoneNo');
+			   	var postcode = $('#postcode');
+			   	var roadAddress = $('#roadAddress');
+			   	var detailAddress = $('#detailAddress');
+			   	var company = $('#company');
+			   	
+			   	id.val(null);
+			   	pw.val('');
+			   	pw2.val('');
+			   	name.val('');
+			   	email.val('');
+			   	juminNo.val('');
+			   	PhoneNo.val('');
+			   	postcode.val('');
+			   	roadAddress.val('');
+			   	detailAddress.val('');
+			   	company.val('');
+  
+		  }		// end cancle()
+
+	</script>
+</th:block>
+
+<div layout:fragment="content">
+	<div class="container main-box">
+		<div class="page-header">
+			<h1 class="title">
+				회원가입 <small>Sign up</small>
+			</h1>
+		</div>
+		<div>
+			<form onsubmit="return validateForm();" id="form" action="/addseller" method="post" >
+				<div class="form-group">
+					<label for="InputId">아이디</label>
+					<input type="text" class="form-control" id="id" name="sellerIdPk" maxlength="20" placeholder="5자 이상 20자 이하로 입력해 주세요." oninput="checkId()">
+					<span id="idHelper" class="text-danger"></span>
+				</div>
+				<div class="form-group">
+					<label for="InputPassword1">비밀번호</label>
+					<input type="password" class="form-control" id="pw" name="sellerPassword" maxlength="12" placeholder="영문,숫자,특수문자를 조합하여 8자 이상 12자 이하로 입력해 주세요." oninput="passwordCheck()">
+					<span id="pwHelper" class="text-danger"></span>
+				</div>
+				<div class="form-group">
+					<label for="InputPassword2">비밀번호 확인</label>
+					<input type="password" class="form-control" id="pw2" maxlength="12" placeholder="비밀번호 확인을 해주세요." oninput="password2Check()">
+					<span id="pw2Helper" class="text-danger"></span>
+				</div>
+				<div class="form-group">
+					<label for="username">이름</label>
+					<input type="text" class="form-control" id="name" name="sellerName" maxlength="4" placeholder="이름을 입력해 주세요." oninput="nameCheck()">
+					<span id="nameHelper" class="text-danger"></span>
+				</div>
+				<div class="form-group">
+					<label for="InputEmail">이메일 주소</label>
+					<input type="email" class="form-control" id="email" name="sellerEmail" placeholder="(@)를 포함하여 이메일 주소를 입력해 주세요." oninput="emailCheck()">
+					<span id="emailHelper" class="text-danger"></span>
+				</div>
+				<div class="form-group">
+					<label for="InputEmail">주민등록번호</label>
+					<input type="text" class="form-control" id="juminNo" name="sellerJuminNo" maxlength="8" placeholder="(-)를 포함하여 7자리 주민등록번호를 입력해 주세요." oninput="juminNoCheck()">
+					<input type="button" class="btn btn-default" value="실명확인">
+					<span id="juminNoHelper" class="text-danger"></span>
+				</div>
+				<div class="form-group">
+					<label for="InputEmail">주소</label><br>
+					<!-- VO에 주소 분기 시켜 넣기 -->
+					<input type="text" class="form-control" style="width: 40%; display: inline;" id="postcode" name="postcode" placeholder="우편번호" readonly>
+					<input type="button" class="btn btn-default" onclick="execPostcode();" value="우편번호 찾기"><br>
+					<input type="text" class="form-control" style="top: 5px;" id="roadAddress" name="roadAddress" placeholder="도로명주소" readonly>
+					<input type="text" class="form-control" id="detailAddress" name="detailAddress" placeholder="상세주소를 입력해 주세요.">
+					<span id="AddressHelper" class="text-danger"></span>			
+				</div>
+				<div class="form-group">
+					<label for="InputEmail">전화번호</label>
+					<input type="text" class="form-control" id="PhoneNo" name="sellerPhone" maxlength="11" placeholder="(-)없이 전화 번호를 입력해 주세요." oninput="phoneNoCheck()">
+					<span id="PhoneNoHelper" class="text-danger"></span>
+				</div>
+				<div class="form-group">
+					<label for="corporatename">회사명</label>
+					<input type="text" class="form-control" id="company" name="corporateName"  placeholder="상호명을 입력해 주세요." oninput="companyCheck()">
+					<span id="companyHelper" class="text-danger"></span>
+				</div>
+				<div class="form-group text-center">
+					<button type="submit" class="btn btn-info">
+						회원가입
+					</button>
+					<button type="button" class="btn btn-warning" onclick="cancle()">
+						가입취소
+					</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+</html>
